@@ -16,9 +16,9 @@ input::placeholder{
 select{
     width: 50px;
     height: 25px;
-}
-select{
     margin: 15px;
-    width: 70px;
+    text-align: center;
+}
+h1{
     text-align: center;
 }

@@ -12,14 +12,14 @@ $teamOne = $_POST['team_one'];
 $teamTwo = $_POST['team_two'];
 
 //checking if exist a league
-$sqlCheck = "SELECT * FROM league WHERE name = ?";
-$query = $connect->prepare($sqlCheck);
-$query->bind_param("s", $league);
-$query->execute();
-$result = $query->get_result();
+$sqlCheck = "SELECT * FROM league WHERE name = ?"; // declerated a query
+$query = $connect->prepare($sqlCheck); // prepare to execute
+$query->bind_param("s", $league); // insert a data
+$query->execute(); // executing
+$result = $query->get_result(); // getting a result to varible
 
 // LEAGUE
-if($result->num_rows > 0){
+if($result->num_rows > 0){ // if number of rows is bigger than 0 that league exist
     // if a league is exist then count +1
     $sqlUpdate = "UPDATE league SET count = count + 1 WHERE name = ?";
     $query = $connect->prepare($sqlUpdate);
@@ -82,7 +82,8 @@ $sqlFindTeam = "SELECT id FROM teams WHERE name = ?"; // searching id from table
 $query = $connect->prepare($sqlFindLeague);
 $query->bind_param("s", $league);
 $query->execute();
-$id_league = $query->get_result();
+$result = $query->get_result();
+$id_league = $result->fetch_assoc()['id']; // id_league is a table assoc 
 
 // taking ID teams
 $teams = [$teamOne, $teamTwo];
@@ -99,10 +100,13 @@ foreach ($teams as $team){
 
 // insert teams to leagues_teams tabel
 $query = $connect->prepare($sqlInsert);
+// foreach needs a tables assoc
 foreach ($id_teams as $id_team){
     $query->bind_param("ii", $id_league, $id_team);
     $query->execute();
 }
+
+echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$league}</h1>";
 
 mysqli_close($connect);
 ?>

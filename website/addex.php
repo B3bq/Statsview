@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="container">
-        <form>
             <?php
                 $server = "localhost";
                 $login = "root";
@@ -22,39 +21,154 @@
                 $sql = "SELECT name FROM league";
                 $result = $connect->query($sql);
 
+                $leagueName = $_GET['league'] ?? '';
 
                 if($result->num_rows > 0){
-                    //echo "<form>";
-                    echo "<select name='league'>";
+                    echo "<form method='GET'>";
+                    echo "<select name='league' onchange='this.form.submit()'>"; // onchange give a value to varible $leagueName
                     while($row = mysqli_fetch_assoc($result)){
-                        echo "<option>".$row['name']."</option>";
+                        $selected = ($leagueName == $row['name']) ? "selected" : "";
+                        echo "<option value='".$row['name']."'$selected>".$row['name']."</option>";
                     }
-                    //echo "</form>";
                     echo "</select>";
+                    echo "</form>";
                 }else{
                     echo "<h1>You don't have any teams to choose</h1>";
                 }
 
+                // taking a league id
+                $queryID = "SELECT id FROM league WHERE name = ?";
+                $query = $connect->prepare($queryID);
+                $query->bind_param("s", $leagueName);
+                $query->execute();
+                $idLeagueTake = $query->get_result();
 
                 //showing a choose list of teams
-                $sql2 = "SELECT name FROM teams";
-                $result = $connect->query($sql2);
+                $sqlFindTeams = "SELECT teams.name \n"
+
+                        . "FROM teams\n"
+
+                        . "JOIN leagues_teams ON teams.id = leagues_teams.teams_id\n"
+
+                        . "JOIN league ON leagues_teams.leagues_id = league.id\n"
+
+                        . "WHERE league.name = ?;";
+
+                $query = $connect->prepare($sqlFindTeams);
+                $query->bind_param("s", $leagueName);
+                $query->execute();
+                $result = $query->get_result();
+
+
+                // choosing a first team
+                $firstTeamName = $_GET['teamOne'] ?? '';
 
                 if($result->num_rows > 0){
-                    //echo "<form>";
+                    echo "<form method='GET'>";
                     echo "<select name='teamOne'>";
                     while($row = mysqli_fetch_assoc($result)){
-                        echo "<option>".$row['name']."</option>";
+                        $selected = ($firstTeamName == $row['name']) ? "selected" : "";
+                        echo "<option value='".$row['name']."'$selected>".$row['name']."</option>";
                     }
-                    //echo "</form>";
                     echo "</select>";
+                    echo "</form>";
                 }else{
                     echo "<h1>You don't have any teams to choose</h1>";
                 }
+
+                // choosing a second team
+                $secondTeamName = $_GET['teamTwo'] ?? '';
+
+
+                $sqlFindTeams = "SELECT teams.name \n"
+
+                        . "FROM teams\n"
+
+                        . "JOIN leagues_teams ON teams.id = leagues_teams.teams_id\n"
+
+                        . "JOIN league ON leagues_teams.leagues_id = league.id\n"
+
+                        . "WHERE league.name = ?;";
+
+                $query = $connect->prepare($sqlFindTeams);
+                $query->bind_param("s", $leagueName);
+                $query->execute();
+                $result = $query->get_result();
+
+                if($result->num_rows > 0){
+                    echo "<form method='GET'>";
+                    echo "<select name='teamTwo'>";
+                    while($row = mysqli_fetch_assoc($result)){
+                        $selected = ($secondTeamName == $row['name']) ? "selected" : "";
+                        echo "<option value='".$row['name']."'$selected>".$row['name']."</option>";
+                    }
+                    echo "</select>";
+                    echo "</form>";
+                }
+
+                // entering datas to the database
+                
+                // update league to the league tabel
+                $sqlUpdate = "UPDATE league SET count = count + 1 WHERE name = ?";
+                $query = $connect->prepare($sqlUpdate);
+                $query->bind_param("s", $leagueName);
+                $query->execute();
+
+                // apdate teams to the teams tabel
+                //first team
+                $sqlUpdate = "UPDATE teams SET homeCount = homeCount + 1 WHERE name = ?";
+                $query = $connect->prepare($sqlUpdate);
+                $query->bind_param("s", $firstTeamName);
+                $query->execute();
+
+                //second team
+                $sqlUpdate = "UPDATE teams SET awayCount = awayCount + 1 WHERE name = ?";
+                $query = $connect->prepare($sqlUpdate);
+                $query->bind_param("s", $secondTeamName);
+                $query->execute();
+
+                // add link between league table and teams table to the league_teams table
+                // insert references to league_teams table
+                $sqlInsert = "INSERT IGNORE INTO leagues_teams VALUES (?, ?)";
+                $sqlFindLeague = "SELECT id FROM league WHERE name = ?"; // searching id from table league
+                $sqlFindTeam = "SELECT id FROM teams WHERE name = ?"; // searching id from table teams
+                
+                // taking id from league table
+                $query = $connect->prepare($sqlFindLeague);
+                $query->bind_param("s", $leagueName);
+                $query->execute();
+                $result = $query->get_result();
+                $id_league = $result->fetch_assoc()['id']; // id_league is a table assoc 
+
+                // taking ID teams
+                $teams = [$firstTeamName, $secondTeamName];
+                $id_teams = [];
+
+                // taking id for teams from teams table
+                $query = $connect->prepare($sqlFindTeam);
+                foreach ($teams as $team){
+                    $query->bind_param("s", $team);
+                    $query->execute();
+                    $result = $query->get_result();
+                    $id_teams[] = $result->fetch_assoc()['id'];
+                }
+
+                // insert teams to leagues_teams tabel
+                $query = $connect->prepare($sqlInsert);
+                // foreach needs a tables assoc
+                foreach ($id_teams as $id_team){
+                    $query->bind_param("ii", $id_league, $id_team);
+                    $query->execute();
+                }
+
+                echo "<input type='submit' value='ADD'>";
+
+                echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
+
 
                 mysqli_close($connect);
                 ?>
-            </form>
+                <!--<input type='submit' value='ADD'>-->
     </div>
 </body>
 </html>
