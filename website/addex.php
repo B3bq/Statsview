@@ -107,68 +107,83 @@
                 }
 
                 // entering datas to the database
+                // if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save'])){
+                //     $selectedLeague = $_POST['selectedLeague'] ?? '';
+                //     $selectedFirstTeam = $_POST['selectedFirstTeam'] ?? '';
+                //     $selectedSecondTeam = $_POST['selectedSecondTeam'] ?? '';
+
+                //     if(!empty($selectedLeague) && !empty($selectedFirstTeam) && !empty($selectedSecondTeam)){
+                //         // update league to the league tabel
+                //         $sqlUpdate = "UPDATE league SET count = count + 1 WHERE name = ?";
+                //         $query = $connect->prepare($sqlUpdate);
+                //         $query->bind_param("s", $selectedLeague);
+                //         $query->execute();
+
+                //         // apdate teams to the teams tabel
+                //         //first team
+                //         $sqlUpdate = "UPDATE teams SET homeCount = homeCount + 1 WHERE name = ?";
+                //         $query = $connect->prepare($sqlUpdate);
+                //         $query->bind_param("s", $selectedFirstTeam);
+                //         $query->execute();
+
+                //         //second team
+                //         $sqlUpdate = "UPDATE teams SET awayCount = awayCount + 1 WHERE name = ?";
+                //         $query = $connect->prepare($sqlUpdate);
+                //         $query->bind_param("s", $selectedSecondTeam);
+                //         $query->execute();
+
+                //         // add link between league table and teams table to the league_teams table
+                //         // insert references to league_teams table
+                //         $sqlInsert = "INSERT IGNORE INTO leagues_teams VALUES (?, ?)";
+                //         $sqlFindLeague = "SELECT id FROM league WHERE name = ?"; // searching id from table league
+                //         $sqlFindTeam = "SELECT id FROM teams WHERE name = ?"; // searching id from table teams
                 
-                // update league to the league tabel
-                $sqlUpdate = "UPDATE league SET count = count + 1 WHERE name = ?";
-                $query = $connect->prepare($sqlUpdate);
-                $query->bind_param("s", $leagueName);
-                $query->execute();
+                //         // taking id from league table
+                //         $query = $connect->prepare($sqlFindLeague);
+                //         $query->bind_param("s", $selectedLeague);
+                //         $query->execute();
+                //         $result = $query->get_result();
+                //         $id_league = $result->fetch_assoc()['id']; // id_league is a table assoc 
 
-                // apdate teams to the teams tabel
-                //first team
-                $sqlUpdate = "UPDATE teams SET homeCount = homeCount + 1 WHERE name = ?";
-                $query = $connect->prepare($sqlUpdate);
-                $query->bind_param("s", $firstTeamName);
-                $query->execute();
+                //         // taking ID teams
+                //         $teams = [$selectedFirstTeam, $selectedSecondTeam];
+                //         $id_teams = [];
 
-                //second team
-                $sqlUpdate = "UPDATE teams SET awayCount = awayCount + 1 WHERE name = ?";
-                $query = $connect->prepare($sqlUpdate);
-                $query->bind_param("s", $secondTeamName);
-                $query->execute();
+                //         // taking id for teams from teams table
+                //         $query = $connect->prepare($sqlFindTeam);
+                //         foreach ($teams as $team){
+                //             $query->bind_param("s", $team);
+                //             $query->execute();
+                //             $result = $query->get_result();
+                //             $id_teams[] = $result->fetch_assoc()['id'];
+                //         }
 
-                // add link between league table and teams table to the league_teams table
-                // insert references to league_teams table
-                $sqlInsert = "INSERT IGNORE INTO leagues_teams VALUES (?, ?)";
-                $sqlFindLeague = "SELECT id FROM league WHERE name = ?"; // searching id from table league
-                $sqlFindTeam = "SELECT id FROM teams WHERE name = ?"; // searching id from table teams
-                
-                // taking id from league table
-                $query = $connect->prepare($sqlFindLeague);
-                $query->bind_param("s", $leagueName);
-                $query->execute();
-                $result = $query->get_result();
-                $id_league = $result->fetch_assoc()['id']; // id_league is a table assoc 
+                //         // insert teams to leagues_teams tabel
+                //         $query = $connect->prepare($sqlInsert);
+                //         // foreach needs a tables assoc
+                //         foreach ($id_teams as $id_team){
+                //             $query->bind_param("ii", $id_league, $id_team);
+                //             $query->execute();
+                //         }
+                //     }
+                // }
 
-                // taking ID teams
-                $teams = [$firstTeamName, $secondTeamName];
-                $id_teams = [];
-
-                // taking id for teams from teams table
-                $query = $connect->prepare($sqlFindTeam);
-                foreach ($teams as $team){
-                    $query->bind_param("s", $team);
-                    $query->execute();
-                    $result = $query->get_result();
-                    $id_teams[] = $result->fetch_assoc()['id'];
+                // second form for save the data to database
+                if(!empty($leagueName)){
+                    echo "<form action='script.php' method='POST'>";
+                    echo "<input type='hidden' name='league' value='$leagueName'>";
+                    echo "<input type='hidden' name='team_one' value='$firstTeamName'>";
+                    echo "<input type='hidden' name='team_two' value='$secondTeamName'>";
+                    echo "<input type='submit' name='save' value='ADD'>";
+                    echo "</form>";
                 }
 
-                // insert teams to leagues_teams tabel
-                $query = $connect->prepare($sqlInsert);
-                // foreach needs a tables assoc
-                foreach ($id_teams as $id_team){
-                    $query->bind_param("ii", $id_league, $id_team);
-                    $query->execute();
-                }
 
-                echo "<input type='submit' value='ADD'>";
-
-                echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
+                //echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
 
 
                 mysqli_close($connect);
                 ?>
-                <!--<input type='submit' value='ADD'>-->
     </div>
 </body>
 </html>
