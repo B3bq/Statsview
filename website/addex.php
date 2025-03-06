@@ -169,20 +169,27 @@
                 // }
 
                 // second form for save the data to database
-                if(!empty($leagueName)){
+                // if(!empty($leagueName)){
+                //     echo "<form action='script.php' method='POST'>";
+                //     echo "<input type='hidden' name='league' value='$leagueName'>";
+                //     echo "<input type='hidden' name='team_one' value='$firstTeamName'>";
+                //     echo "<input type='hidden' name='team_two' value='$secondTeamName'>";
+                //     echo "<input type='submit' name='save' value='ADD'>";
+                //     echo "</form>";
+                // }
+
+                //echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
+
+
+                mysqli_close($connect);
+                ?>
+                <?php
                     echo "<form action='script.php' method='POST'>";
                     echo "<input type='hidden' name='league' value='$leagueName'>";
                     echo "<input type='hidden' name='team_one' value='$firstTeamName'>";
                     echo "<input type='hidden' name='team_two' value='$secondTeamName'>";
                     echo "<input type='submit' name='save' value='ADD'>";
                     echo "</form>";
-                }
-
-
-                //echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
-
-
-                mysqli_close($connect);
                 ?>
     </div>
 </body>
