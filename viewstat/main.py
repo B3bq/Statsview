@@ -1,5 +1,6 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
+import add_new
 
 class Program(QWidget):
     def __init__(self):
@@ -7,30 +8,35 @@ class Program(QWidget):
 
         self.setup()
 
+
     def setup(self):
 
-        #league choose
-        self.league_choose = QComboBox()
-        self.league_choose.addItems(["opcja1, opcja2"])#make the choose list
-        
-        #input teams boxes
-        self.team_one_input = QLineEdit("Team1", self)
-        self.team_one_input.setFixedSize(150, 50)
-        self.team_one_input.move(300, 150)
+        #menu
+        addEX_btn = QPushButton("Add Exists Teams", self)
+        addEX_btn.setFixedSize(200, 50)
+        addEX_btn.move(400, 50)
 
-        self.team_two_input = QLineEdit("Team2", self)
-        self.team_two_input.setFixedSize(150, 50)
-        self.team_two_input.move(500, 150)
+        addNew_btn = QPushButton("Add New Teams", self)
+        addNew_btn.setFixedSize(200, 50)
+        addNew_btn.move(400, 100)
+        addNew_btn.clicked.connect(self.open_add_new)
 
-        #add to base button
-        submit_btn = QPushButton("Submit", self)
-        submit_btn.move(700, 300)
+        viewStats_btn = QPushButton("See stats", self)
+        viewStats_btn.setFixedSize(200, 50)
+        viewStats_btn.move(400, 150)        
 
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
 
         self.show()
+
+    def open_add_new(self):
+            self.add_window = add_new.Program()
+            self.add_window.show()
+            self.close()
+
+
 
 
 if __name__ == "__main__":
