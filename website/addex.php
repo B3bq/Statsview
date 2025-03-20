@@ -18,71 +18,40 @@
         $selectedFirstTeam = $_POST['team_one'] ?? '';
         $selectedSecondTeam = $_POST['team_two'] ?? '';
 
-        if(!empty($selectedLeague) && !empty($selectedFirstTeam) && !empty($selectedSecondTeam)){
-                    // update league to the league tabel
-                    $sqlUpdate = "UPDATE league SET count = count + 1 WHERE name = ?";
-                    $query = $connect->prepare($sqlUpdate);
-                    $query->bind_param("s", $selectedLeague);
-                    $query->execute();
+        //showing a choose list of leagues
+        $sql = "SELECT name FROM league";
+        $result = $connect->query($sql);
 
-                    // apdate teams to the teams tabel
-                    //first team
-                    $sqlUpdate = "UPDATE teams SET homeCount = homeCount + 1 WHERE name = ?";
-                    $query = $connect->prepare($sqlUpdate);
-                    $query->bind_param("s", $selectedFirstTeam);
-                    $query->execute();
+        //showing a choose list of teams
+        $sqlFindTeams = "SELECT teams.name \n"
 
-                    //second team
-                    $sqlUpdate = "UPDATE teams SET awayCount = awayCount + 1 WHERE name = ?";
-                    $query = $connect->prepare($sqlUpdate);
-                    $query->bind_param("s", $selectedSecondTeam);
-                    $query->execute();
+        . "FROM teams\n"
 
-                    // add link between league table and teams table to the league_teams table
-                    $sqlInsert = "INSERT IGNORE INTO leagues_teams VALUES (?, ?)"; // insert references to league_teams table
-                    $sqlFindLeague = "SELECT id FROM league WHERE name = ?"; // searching id from table league
-                    $sqlFindTeam = "SELECT id FROM teams WHERE name = ?"; // searching id from table teams
-            
-                    // taking id from league table
-                    $query = $connect->prepare($sqlFindLeague);
-                    $query->bind_param("s", $selectedLeague);
-                    $query->execute();
-                    $result = $query->get_result();
-                    $id_league = $result->fetch_assoc()['id']; // id_league is a table assoc 
+        . "JOIN leagues_teams ON teams.id = leagues_teams.teams_id\n"
 
-                    // taking ID teams
-                    $teams = [$selectedFirstTeam, $selectedSecondTeam];
-                    $id_teams = [];
+        . "JOIN league ON leagues_teams.leagues_id = league.id\n"
 
-                    // taking id for teams from teams table
-                    $query = $connect->prepare($sqlFindTeam);
-                    foreach ($teams as $team){
-                        $query->bind_param("s", $team);
-                        $query->execute();
-                        $result = $query->get_result();
-                        $id_teams[] = $result->fetch_assoc()['id'];
-                    }
+        . "WHERE league.name = ?;";
 
-                    // insert teams to leagues_teams tabel
-                    $query = $connect->prepare($sqlInsert);
-                    // foreach needs a tables assoc
-                    foreach ($id_teams as $id_team){
-                        $query->bind_param("ii", $id_league, $id_team);
-                        $query->execute();
-                    }
-                }
-
-            echo "<h1>Added teams {$teams[0]} and {$teams[1]} to the competition {$leagueName}</h1>";
+        $query = $connect->prepare($sqlFindTeams);
+        $query->bind_param("s", $leagueName);
+        $query->execute();
+        $resultTeam = $query->get_result();
 
     ?>
     <form method="POST">
         <select name="league">
-                <?php
-                    while ()
-                ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <option value="<?= $row['id']; ?>" <?= ($selectedLeague == $row['name']) ? 'selected' : ''; ?>>
+                <?= $row['name']; ?>
+            </option>
+        <?php endwhile; ?>\
         </select>
         <slecet name="team_one">
-
+            <?php while($row = $resultTeam->fetch_assoc()):?>
+                <option value="<?php $row['id']; ?>" <?php ($selectedFirstTeam == $row['id']) ? 'selected' : '';?>>
+                    <?php $row['name']?>
+                </option>
         </slecet>
         <slecet name="team_two">
 
