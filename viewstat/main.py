@@ -1,5 +1,6 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
+import datetime
 import add_new, add_ex
 
 class Program(QWidget):
@@ -10,6 +11,10 @@ class Program(QWidget):
 
 
     def setup(self):
+
+        # date for view statistics
+        end_date = datetime.date(2025, 3, 22)
+        today = datetime.date.today()
 
         #menu
         addEX_btn = QPushButton("Add Exists Teams", self)
@@ -24,7 +29,12 @@ class Program(QWidget):
 
         viewStats_btn = QPushButton("See stats", self)
         viewStats_btn.setFixedSize(200, 50)
-        viewStats_btn.move(400, 150)    
+        viewStats_btn.move(400, 150)
+        # checking date
+        if(today == end_date):
+             viewStats_btn.show()
+        else:
+             viewStats_btn.hide()  
 
         #close button
         close_btn = QPushButton("Close", self)
