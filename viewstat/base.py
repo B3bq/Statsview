@@ -3,13 +3,19 @@ import mysql.connector
 mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    password = ""
+    password = "",
+    base = "stats"
 )
 
 mycursor = mydb.cursor()
 
-mycursor.execute("SHOW DATABASES")#execute function execute a sql query
+sql_league_check = "SELECT * FROM league WHERE name = %s"
+LeagueName = "pl"
+
+mycursor.execute(sql_league_check, LeagueName)#execute function execute a sql query
+
+myresult = mycursor.fetchall()
 
 #show all tables
-for x in mycursor:
+for x in myresult:
     print(x)
