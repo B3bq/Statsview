@@ -1,3 +1,10 @@
+## version: 0.0.5 (2025-03-23)
+
+### Added
+- menu for python app
+- connecting to database
+- insert datas to database
+
 ## version: 0.0.4 (2025-02-17)
 
 ### Modify
