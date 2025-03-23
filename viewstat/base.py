@@ -1,21 +1,80 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "",
-    base = "stats"
-)
+def add_datas_to_base(league_name, teamOne_name, teamTwo_name):
+    connect = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        password = "",
+        database = "stats"
+    )
 
-mycursor = mydb.cursor()
+    mycursor = connect.cursor()
 
-sql_league_check = "SELECT * FROM league WHERE name = %s"
-LeagueName = "pl"
+    # getting varibles
+    LeagueName = [league_name]
+    team_one = [teamOne_name]
+    team_two = [teamTwo_name]
 
-mycursor.execute(sql_league_check, LeagueName)#execute function execute a sql query
+    # checking if exist a league
+    sql_league_check = "SELECT * FROM league WHERE name = %s"
+    mycursor.execute(sql_league_check, LeagueName) #execute function execute a sql query
+    myresult_league = mycursor.fetchall() #getting a result to list
 
-myresult = mycursor.fetchall()
+    if myresult_league != []:
+        sql_update_league = "UPDATE league SET count = count + 1 WHERE name = %s"
+        mycursor.execute(sql_update_league, LeagueName)
+    else:
+        sql_insert_league = "INSERT INTO league (id, name, count, img) VALUES (NULL, %s, 1, '')"
+        mycursor.execute(sql_insert_league, LeagueName)
 
-#show all tables
-for x in myresult:
-    print(x)
+
+    # checking if team one exist
+    sql_team_one_check = "SELECT * FROM teams WHERE name = %s"
+    mycursor.execute(sql_team_one_check, team_one)
+    myresult_team_one = mycursor.fetchall()
+
+    if myresult_team_one != []:
+        sql_update_teamone = "UPDATE teams SET homeCount = homeCount + 1 WHERE name = %s"
+        mycursor.execute(sql_update_teamone, team_one)
+    else:
+        sql_insert_teamone = "INSERT INTO teams (id, name, homeCount, awayCount, img) VALUES (NULL, %s, 1, 0, '')"
+        mycursor.execute(sql_insert_teamone, team_one)
+
+    # checking if team two exist
+    sql_team_one_check = "SELECT * FROM teams WHERE name = %s"
+    mycursor.execute(sql_team_one_check, team_two)
+    myresult_team_one = mycursor.fetchall()
+
+    if myresult_team_one != []:
+        sql_update_teamone = "UPDATE teams SET awayCount = awayCount + 1 WHERE name = %s"
+        mycursor.execute(sql_update_teamone, team_two)
+    else:
+        sql_insert_teamone = "INSERT INTO teams (id, name, homeCount, awayCount, img) VALUES (NULL, %s, 0, 1, '')"
+        mycursor.execute(sql_insert_teamone, team_two)
+
+    # taking id from league table
+    sql_take_idleague = "SELECT id FROM league WHERE name = %s"
+    mycursor.execute(sql_take_idleague, LeagueName)
+    result = mycursor.fetchone() # take first record
+    idLeague = result[0] # take id
+
+    # taking id for teams
+    teams = [team_one[0], team_two[0]]
+    idTeams = []
+
+    sql_take_idteam = "SELECT id FROM teams WHERE name = %s"
+    for item in teams:
+        mycursor.execute(sql_take_idteam, (item,))
+        result = mycursor.fetchone()
+        idTeam = result[0]
+        idTeams.append(idTeam)
+
+    # insert teams to leagues_teams table
+    sql_insert = "INSERT IGNORE INTO leagues_teams VALUES (%s, %s)"
+    for item in idTeams:
+            mycursor.execute(sql_insert, (idLeague, item))
+
+    print(f"Added teams {teams[0]} and {teams[1]} to the competition {LeagueName[0]}")
+
+    connect.commit()
+    connect.close()
