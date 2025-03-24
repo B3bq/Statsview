@@ -1,6 +1,6 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
-from base import add_datas_to_base # import function
+from insert_new import add_datas_to_base # import function
 
 
 class Add_New(QWidget):

@@ -17,7 +17,7 @@
 
                 $connect = mysqli_connect($server, $login, $password, $base); //connecting to database
 
-                //shoing a choose list of leagues
+                //showing a choose list of leagues
                 $sql = "SELECT name FROM league";
                 $result = $connect->query($sql);
 
