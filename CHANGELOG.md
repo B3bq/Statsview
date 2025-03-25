@@ -1,3 +1,8 @@
+## version: 0.0.6 (2025-03-24)
+
+### Added
+- choose list option, which show leagues and teams
+
 ## version: 0.0.5 (2025-03-23)
 
 ### Added
