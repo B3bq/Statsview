@@ -1,6 +1,6 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
-from insert_new import add_datas_to_base # import function
+from insert import add_datas_to_base # import function
 
 
 class Add_New(QWidget):
@@ -27,7 +27,7 @@ class Add_New(QWidget):
         teamOne_name = self.team_one_input.text()
         teamTwo_name = self.team_two_input.text()
 
-        add_datas_to_base(league_name, teamOne_name, teamTwo_name)
+        add_datas_to_base(league_name, teamOne_name, teamTwo_name) # insert datas to database
 
         # hidding inputs
         self.league_input.hide()
@@ -37,7 +37,7 @@ class Add_New(QWidget):
 
         # show text and add more button
         self.label = QLabel(f"Added {teamOne_name} and {teamTwo_name} to the competition {league_name}", self)
-        self.label.move(375, 150)
+        self.label.move(365, 150)
         self.label.show()
         self.add_next.show()
 

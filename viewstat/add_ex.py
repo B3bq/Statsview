@@ -1,6 +1,7 @@
 from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
 from PySide6.QtWidgets import *
 from show_ex import show_leagues, show_teams
+from insert import add_datas_to_base
 
 
 class Add_Exist(QWidget):
@@ -8,6 +9,11 @@ class Add_Exist(QWidget):
         super().__init__()
 
         self.menu = menu
+
+        # add more button
+        self.add_more_btn = QPushButton("Add more", self)
+        self.add_more_btn.move(670, 300)
+        self.add_more_btn.hide()
 
         self.setup()
 
@@ -25,6 +31,30 @@ class Add_Exist(QWidget):
 
         self.team_one_box.addItems(team_names)
         self.team_two_box.addItems(team_names)
+
+    def submit(self):
+        # taking a varibles
+        league_name = self.league_box.currentText()
+        first_team = self.team_one_box.currentText()
+        second_team = self.team_two_box.currentText()
+
+        add_datas_to_base(league_name, first_team, second_team) # insert datas to database
+
+        # hide lists
+        self.LeagueLabel.hide()
+        self.TeamOneLabel.hide()
+        self.TeamTwoLabel.hide()
+        self.league_box.hide()
+        self.team_one_box.hide()
+        self.team_two_box.hide()
+        self.submit_btn.hide()
+
+        # show text and add more button
+        self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
+        self.label.move(365,150)
+        self.label.show()
+        self.add_more_btn.show()
+
 
     def setup(self):
 
@@ -60,8 +90,9 @@ class Add_Exist(QWidget):
         self.team_two_box.move(600, 150)
 
         # submit button
-        submit_btn = QPushButton("Submit", self)
-        submit_btn.move(670, 300)
+        self.submit_btn = QPushButton("Submit", self)
+        self.submit_btn.move(670, 300)
+        self.submit_btn.clicked.connect(self.submit)
 
         # back button
         back_btn =QPushButton("Back", self)
