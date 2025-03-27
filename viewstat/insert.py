@@ -78,3 +78,4 @@ def add_datas_to_base(league_name, teamOne_name, teamTwo_name):
 
     connect.commit()
     connect.close()
+    
