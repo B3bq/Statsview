@@ -1,3 +1,11 @@
+## version: 0.0.7 (2025-03-27)
+
+### Added
+- buttons to adding more datas (after clicked they show choose list or inputs again)
+
+## Fixed
+- submit button in add_ex insert datas to database
+
 ## version: 0.0.6 (2025-03-24)
 
 ### Added
