@@ -13,7 +13,6 @@ class Add_New(QWidget):
         self.add_next = QPushButton("Add more", self)
         self.add_next.move(670, 300)
         self.add_next.hide()
-        self.add_next.clicked.connect(self.setup)
 
         self.setup()
 
@@ -40,6 +39,22 @@ class Add_New(QWidget):
         self.label.move(365, 150)
         self.label.show()
         self.add_next.show()
+        self.add_next.clicked.connect(self.restart)
+
+    def restart(self):
+        # hide text and add button
+        self.label.hide()
+        self.add_next.hide()
+
+        # show and clear inputs
+        self.league_input.clear()
+        self.team_one_input.clear()
+        self.team_two_input.clear()
+        
+        self.league_input.show()
+        self.team_one_input.show()
+        self.team_two_input.show()
+        self.submit_btn.show()
 
     def setup(self):
 
