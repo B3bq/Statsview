@@ -54,7 +54,21 @@ class Add_Exist(QWidget):
         self.label.move(365,150)
         self.label.show()
         self.add_more_btn.show()
+        self.add_more_btn.clicked.connect(self.reset)
 
+    def reset(self):
+        # hide text and button
+        self.label.hide()
+        self.add_more_btn.hide()
+
+        # show a old form
+        self.LeagueLabel.show()
+        self.league_box.show()
+        self.TeamOneLabel.show()
+        self.team_one_box.show()
+        self.TeamTwoLabel.show()
+        self.team_two_box.show()
+        self.submit_btn.show()
 
     def setup(self):
 
@@ -98,6 +112,8 @@ class Add_Exist(QWidget):
         back_btn =QPushButton("Back", self)
         back_btn.move(250, 300)
         back_btn.clicked.connect(self.back)
+
+        self.show()
 
         #basic window settings
         self.setFixedSize(1000, 400)
