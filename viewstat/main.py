@@ -1,7 +1,7 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
 import datetime
-import add_new, add_ex
+import add_new, add_ex, summary_window
 
 class Program(QWidget):
     def __init__(self):
@@ -13,7 +13,7 @@ class Program(QWidget):
     def setup(self):
 
         # date for view statistics
-        end_date = datetime.date(2025, 3, 22)
+        end_date = datetime.date(2025, 3, 28)
         today = datetime.date.today()
 
         #menu
@@ -33,6 +33,7 @@ class Program(QWidget):
         # checking date
         if(today == end_date):
              viewStats_btn.show()
+             viewStats_btn.clicked.connect(self.open_summary)
         else:
              viewStats_btn.hide()  
 
@@ -69,6 +70,10 @@ class Program(QWidget):
             self.add_window.show()
             self.hide()
 
+    def open_summary(self):
+         self.add_window = summary_window.Summary(self)
+         self.add_window.show()
+         self.hide()
 
 
 if __name__ == "__main__":
