@@ -1,7 +1,7 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
 import datetime
-import add_new, add_ex
+import add_new, add_ex, summary_window
 
 class Program(QWidget):
     def __init__(self):
@@ -13,7 +13,7 @@ class Program(QWidget):
     def setup(self):
 
         # date for view statistics
-        end_date = datetime.date(2025, 3, 22)
+        end_date = [datetime.date(2025, 3, 29), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
         today = datetime.date.today()
 
         #menu
@@ -27,14 +27,24 @@ class Program(QWidget):
         addNew_btn.move(400, 100)
         addNew_btn.clicked.connect(self.open_add_new) # open file to insert datas
 
-        viewStats_btn = QPushButton("See stats", self)
-        viewStats_btn.setFixedSize(200, 50)
-        viewStats_btn.move(400, 150)
+        viewStats_btn_s = QPushButton("Season summary", self)
+        viewStats_btn_s.setFixedSize(200, 50)
+        viewStats_btn_s.move(400, 150)
+        viewStats_btn_y = QPushButton("Year summary", self)
+        viewStats_btn_y.setFixedSize(200, 50)
+        viewStats_btn_y.move(400, 150)
         # checking date
-        if(today == end_date):
-             viewStats_btn.show()
+        if today in end_date[:5]:
+             viewStats_btn_y.hide()
+             viewStats_btn_s.show()
+             viewStats_btn_s.clicked.connect(self.open_summary)
+        elif today in end_date[5:]:
+             viewStats_btn_s.hide()
+             viewStats_btn_y.show()
+             viewStats_btn_y.clicked.connect(self.open_summary)
         else:
-             viewStats_btn.hide()  
+             viewStats_btn_s.hide()
+             viewStats_btn_y.hide()
 
         #close button
         close_btn = QPushButton("Close", self)
@@ -69,6 +79,10 @@ class Program(QWidget):
             self.add_window.show()
             self.hide()
 
+    def open_summary(self):
+         self.add_window = summary_window.Summary(self)
+         self.add_window.show()
+         self.hide()
 
 
 if __name__ == "__main__":
