@@ -72,9 +72,19 @@ class Add_Exist(QWidget):
 
     def setup(self):
 
+        # choose a sport
+        self.SportLabel = QLabel("Choose a sport:", self)
+        self.SportLabel.move(155, 130)
+
+        self.sport_box = QComboBox(self)
+        self.sport_box.setPlaceholderText("Sport")
+        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
+        self.sport_box.setFixedSize(150, 50)
+        self.sport_box.move(150, 150)
+
         # choose league list
         self.LeagueLabel = QLabel("Choose a league:", self)
-        self.LeagueLabel.move(255, 130)
+        self.LeagueLabel.move(330, 130)
 
         league_names = show_leagues()
 
@@ -82,35 +92,35 @@ class Add_Exist(QWidget):
         self.league_box.setPlaceholderText("Leagues")
         self.league_box.addItems(league_names) # adding opitons to list
         self.league_box.setFixedSize(150, 50)
-        self.league_box.move(250, 150)
+        self.league_box.move(325, 150)
         self.league_box.currentTextChanged.connect(self.take_league_name)
         
         # choose team_one list
         self.TeamOneLabel = QLabel("Choose First Team:", self)
-        self.TeamOneLabel.move(430, 130)
+        self.TeamOneLabel.move(505, 130)
 
         self.team_one_box = QComboBox(self)
         self.team_one_box.setPlaceholderText("First team")
         self.team_one_box.setFixedSize(150, 50)
-        self.team_one_box.move(425, 150)
+        self.team_one_box.move(500, 150)
 
         # choose team_two list
         self.TeamTwoLabel = QLabel("Choose Seond Team:", self)
-        self.TeamTwoLabel.move(605, 130)
+        self.TeamTwoLabel.move(680, 130)
 
         self.team_two_box = QComboBox(self)
         self.team_two_box.setPlaceholderText("Second team")
         self.team_two_box.setFixedSize(150, 50)
-        self.team_two_box.move(600, 150)
+        self.team_two_box.move(675, 150)
 
         # submit button
         self.submit_btn = QPushButton("Submit", self)
-        self.submit_btn.move(670, 300)
+        self.submit_btn.move(745, 300)
         self.submit_btn.clicked.connect(self.submit)
 
         # back button
         back_btn =QPushButton("Back", self)
-        back_btn.move(250, 300)
+        back_btn.move(150, 300)
         back_btn.clicked.connect(self.back)
 
         self.show()
