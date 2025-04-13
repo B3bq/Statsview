@@ -1,3 +1,11 @@
+## version: 0.0.8 (2025-04-13)
+
+### Added
+- log in screen
+- sign up screen
+- adding new user to database
+- checking if user exist and checking password
+
 ## version: 0.0.7 (2025-03-27)
 
 ### Added

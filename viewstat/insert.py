@@ -1,4 +1,5 @@
 import mysql.connector
+import bcrypt # to password encryption
 
 def add_datas_to_base(league_name, teamOne_name, teamTwo_name):
     connect = mysql.connector.connect(
@@ -79,3 +80,63 @@ def add_datas_to_base(league_name, teamOne_name, teamTwo_name):
     connect.commit()
     connect.close()
     
+def insert_user(name, password):
+    connect = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        password = "",
+        database = "test"
+    )
+
+    mycursor = connect.cursor()
+
+    # changing varibles to list
+    Name = [name]
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
+    # checking user
+    sql_check = "SELECT * FROM users WHERE login = %s"
+    mycursor.execute(sql_check, Name)
+    myresult = mycursor.fetchall()
+
+    if myresult != []:
+        return False
+    else:
+        sql_insert = "INSERT INTO users (id, login, pass) VALUES (NULL, %s, %s)"
+        mycursor.execute(sql_insert, (name, hashed))
+
+    connect.commit()
+    connect.close()
+    return True
+
+def check_user(login, password):
+    connect = mysql.connector.connect(
+        host = 'localhost',
+        user = 'root',
+        password = '',
+        database = 'test'
+    )
+
+    mycursor = connect.cursor()
+
+    login = [login]
+
+    sql_check = "SELECT login FROM users WHERE login = %s"
+    mycursor.execute(sql_check, login)
+    myresult = mycursor.fetchall()
+
+    if myresult != []:
+        sql_pass_check = "SELECT pass FROM users WHERE login = %s"
+        mycursor.execute(sql_pass_check, login)
+        myresult = mycursor.fetchone()
+        hash_pass = myresult[0].encode()
+        
+        connect.close()
+        if bcrypt.checkpw(password.encode(), hash_pass):
+            return True
+        else:
+            text = "Incorrect password"
+            return text
+    else:
+        text = "User don't exist"
+        return text
