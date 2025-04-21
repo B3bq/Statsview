@@ -1,18 +1,26 @@
 import mysql.connector
 
 # function to show league names
-def show_leagues():
+def show_leagues(sport):
     connection = mysql.connector.connect(
         host = "localhost",
         user = "root",
         password = "",
-        database = "stats"
+        database = "test"
     )
 
     mycursor = connection.cursor()
 
+    match sport:
+        case "League of legends":
+            sport = "lol_leagues"
+        case "Counter Strike":
+            sport = "cs_leagues"
+        case _:
+            sport = sport + "_leagues"
+
     # league options
-    sql_league = "SELECT name FROM league"
+    sql_league = f"SELECT name FROM {sport}"
     mycursor.execute(sql_league)
     league_names = mycursor.fetchall()
 
@@ -24,17 +32,32 @@ def show_leagues():
     return league_names
 
 # function to show team names
-def show_teams(league_name):
+def show_teams(league_name, sport):
     connection = mysql.connector.connect(
         host = "localhost",
         user = "root",
         password = "",
-        database = "stats"
+        database = "test"
     )
 
     mycursor = connection.cursor()
 
-    sql_find_teams = "SELECT teams.name FROM teams JOIN leagues_teams ON teams.id = leagues_teams.teams_id JOIN league ON leagues_teams.leagues_id = league.id WHERE league.name = %s"
+    # match correct tables
+    match sport:
+        case "League of legends":
+            tabel_league = "lol_leagues"
+            tabel_broker = "lol_broker"
+            tabel_teams = "lol_teams"
+        case "Counter Strike":
+            tabel_league = "cs_leagues"
+            tabel_broker = "cs_broker"
+            tabel_teams = "cs_teams"
+        case _:
+            tabel_league = sport + "_leagues"
+            tabel_broker = sport + "_broker"
+            tabel_teams = sport + "_teams"
+
+    sql_find_teams = f"SELECT {tabel_teams}.name FROM {tabel_teams} JOIN {tabel_broker} ON {tabel_teams}.id = {tabel_broker}.id_teams JOIN {tabel_league} ON {tabel_broker}.id_league = {tabel_league}.id WHERE {tabel_league}.name = %s"
     mycursor.execute(sql_find_teams, league_name)
     team_names = mycursor.fetchall()
 

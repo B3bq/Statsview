@@ -12,7 +12,7 @@ class Add_Exist(QWidget):
 
         # add more button
         self.add_more_btn = QPushButton("Add more", self)
-        self.add_more_btn.move(670, 300)
+        self.add_more_btn.move(745, 300)
         self.add_more_btn.hide()
 
         self.setup()
@@ -23,8 +23,9 @@ class Add_Exist(QWidget):
 
     def take_league_name(self):
         league_name = [self.league_box.currentText()]
+        sport_name = self.sport_box.currentText()
 
-        team_names = show_teams(league_name)
+        team_names = show_teams(league_name, sport_name)
 
         self.team_one_box.clear()
         self.team_two_box.clear()
@@ -32,15 +33,25 @@ class Add_Exist(QWidget):
         self.team_one_box.addItems(team_names)
         self.team_two_box.addItems(team_names)
 
+    def take_sport(self):
+        sport_name = self.sport_box.currentText()
+
+        league_names = show_leagues(sport_name)
+
+        self.league_box.addItems(league_names)
+
     def submit(self):
         # taking a varibles
+        sport_name = self.sport_box.currentText()
         league_name = self.league_box.currentText()
         first_team = self.team_one_box.currentText()
         second_team = self.team_two_box.currentText()
 
-        add_datas_to_base(league_name, first_team, second_team) # insert datas to database
+        add_datas_to_base(sport_name, league_name, first_team, second_team) # insert datas to database
 
         # hide lists
+        self.SportLabel.hide()
+        self.sport_box.hide()
         self.LeagueLabel.hide()
         self.TeamOneLabel.hide()
         self.TeamTwoLabel.hide()
@@ -62,6 +73,8 @@ class Add_Exist(QWidget):
         self.add_more_btn.hide()
 
         # show a old form
+        self.SportLabel.show()
+        self.sport_box.show()
         self.LeagueLabel.show()
         self.league_box.show()
         self.TeamOneLabel.show()
@@ -81,16 +94,15 @@ class Add_Exist(QWidget):
         self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(150, 150)
+        self.sport_box.currentTextChanged.connect(self.take_sport)
 
         # choose league list
         self.LeagueLabel = QLabel("Choose a league:", self)
         self.LeagueLabel.move(330, 130)
 
-        league_names = show_leagues()
 
         self.league_box = QComboBox(self)
         self.league_box.setPlaceholderText("Leagues")
-        self.league_box.addItems(league_names) # adding opitons to list
         self.league_box.setFixedSize(150, 50)
         self.league_box.move(325, 150)
         self.league_box.currentTextChanged.connect(self.take_league_name)

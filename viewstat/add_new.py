@@ -11,7 +11,7 @@ class Add_New(QWidget):
 
         # add next button
         self.add_next = QPushButton("Add more", self)
-        self.add_next.move(670, 300)
+        self.add_next.move(745, 300)
         self.add_next.hide()
 
         self.setup()
@@ -22,13 +22,16 @@ class Add_New(QWidget):
 
     def submit(self):
         # taking a varibles
+        sport_name = self.sport_box.currentText()
         league_name = self.league_input.text()
         teamOne_name = self.team_one_input.text()
         teamTwo_name = self.team_two_input.text()
 
-        add_datas_to_base(league_name, teamOne_name, teamTwo_name) # insert datas to database
+        add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name) # insert datas to database
 
         # hidding inputs
+        self.SportLabel.hide()
+        self.sport_box.hide()
         self.league_input.hide()
         self.team_one_input.hide()
         self.team_two_input.hide()
@@ -98,4 +101,3 @@ class Add_New(QWidget):
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
-

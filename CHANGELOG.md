@@ -1,3 +1,9 @@
+## version: 0.0.9 (2025-04-21)
+
+### Updated
+- adding datas to database
+- lists of leagus and teams (they changed depends which sport was selected)
+
 ## version: 0.0.8 (2025-04-13)
 
 ### Added

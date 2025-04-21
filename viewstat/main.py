@@ -2,11 +2,25 @@ from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
 import datetime
 import add_new, add_ex, summary_window
-from insert import insert_user, check_user # functions to insert user datas to database and check log in 
+from insert import insert_user, check_user, User # functions to insert user datas to database and check log in 
+
+
 
 class Program(QWidget):
     def __init__(self):
         super().__init__()
+
+        # login input
+        self.name = QLineEdit(self)
+        self.name.setPlaceholderText("Login")
+        self.name.setFixedSize(200, 50)
+        self.name.move(400, 50)
+        # password input
+        self.password = QLineEdit(self)
+        self.password.setEchoMode(QLineEdit.Password)
+        self.password.setPlaceholderText("Password")
+        self.password.setFixedSize(200, 50)
+        self.password.move(400, 100)
 
         # back button
         self.back_btn = QPushButton("Back", self)
@@ -58,19 +72,10 @@ class Program(QWidget):
         self.re_password.hide()
         self.create_btn.hide()
 
-        #logni
-        self.name = QLineEdit(self)
-        self.name.setPlaceholderText("Login")
-        self.name.setFixedSize(200, 50)
-        self.name.move(400, 50)
+        #login
         self.name.show()
 
         #password
-        self.password = QLineEdit(self)
-        self.password.setEchoMode(QLineEdit.Password)
-        self.password.setPlaceholderText("Password")
-        self.password.setFixedSize(200, 50)
-        self.password.move(400, 100)
         self.password.show()
         
         self.show_pass.move(400, 150)
@@ -184,9 +189,9 @@ class Program(QWidget):
         login = self.name.text()
 
         # encrypting password
-        isuser = check_user(login, password)
+        User.user_id = check_user(login, password)
 
-        if isuser == True:
+        if type(User.user_id) == int:
                 # hiding screen
                 self.name.hide()
                 self.password.hide()
@@ -196,10 +201,10 @@ class Program(QWidget):
 
                 # open menu
                 self.setup()
-        elif isuser == "Incorrect password":
+        elif User.user_id == "Incorrect password":
             self.ck_label.hide()
             self.ck_label2.show()
-        elif isuser == "User don't exist":
+        elif User.user_id == "User don't exist":
             self.ck_label.show()
             self.ck_label2.hide()
 
