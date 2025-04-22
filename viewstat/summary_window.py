@@ -10,20 +10,69 @@ class Summary(QWidget):
 
         self.menu = menu
 
+        # choose a sport
+        self.SportLabel = QLabel("Choose a sport:", self)
+        self.SportLabel.move(420, 130)
+
+        self.sport_box = QComboBox(self)
+        self.sport_box.setPlaceholderText("Sport")
+        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
+        self.sport_box.setFixedSize(150, 50)
+        self.sport_box.move(415, 150)
+
+        # submit choice
+        self.submit_btn = QPushButton('Submit', self)
+        self.submit_btn.move(500, 300)
+        self.submit_btn.clicked.connect(self.summary)
+
+        # summary properies
+        self.top_league_text = QLabel("TOP 5 LEAGUES", self)
+        self.top_league_text.move(200, 75)
+        self.count_league_text = QLabel("Count", self)
+        self.count_league_text.move(300, 85)
+        self.top_teams_text = QLabel("TOP 5 TEAMS", self)
+        self.top_teams_text.move(700, 75)
+        self.count_teams_text = QLabel("Count", self)
+        self.count_teams_text.move(800, 85)
+        self.top_home_text = QLabel("HOME FAVOURITE", self)
+        self.top_home_text.move(440, 25)
+        self.top_away_text = QLabel("YOUR TRAVELED WITH THEM MOST OFTEN", self)
+        self.top_away_text.move(375, 150)
+
+        # back to menu button
+        self.back_btn = QPushButton("Back", self)
+        self.back_btn.clicked.connect(self.back_menu)
+
+
+        #basic window settings
+        self.setFixedSize(1000, 400)
+        self.setWindowTitle("Statsview")
+
         self.setup()
 
     def back_menu(self):
         self.menu.show()
         self.close()
 
-    def setup(self):
-    
+    def summary(self):
+
+        # hiding
+        self.SportLabel.hide()
+        self.sport_box.hide()
+        self.submit_btn.hide()
+        self.back_btn.hide()
+
+        # changing back button
+        self.back_btn.move(450, 300)
+        self.back_btn.show()
+
+        # taking sport
+        sport = self.sport_box.currentText()
+
         # list of top 5 leagus
-        top_league_text = QLabel("TOP 5 LEAGUES", self)
-        top_league_text.move(200, 75)
-        count_league_text = QLabel("Count", self)
-        count_league_text.move(300, 85)
-        league_names = top_leagues() # taking a list of tuples
+        self.top_league_text.show()
+        self.count_league_text.show()
+        league_names = top_leagues(sport) # taking a list of tuples
         y = 100 # position y for each text
         # loop to show top 5
         for i, (name, count, img_data) in enumerate(league_names, start=1):
@@ -34,22 +83,23 @@ class Summary(QWidget):
                 pixmap = QPixmap()
                 pixmap.loadFromData(img_data) # load an image form BLOB
                 # QLavel for image
-                img_label = QLabel(self)
-                img_label.setPixmap(pixmap.scaled(15, 15))
-                img_label.move(285, y)
-            label_league = QLabel(f"{i}. {name}", self)
-            label_league.move(200 , y)
-            count_league = QLabel(f"{count}", self)
-            count_league.move(310, y)
+                self.img_label = QLabel(self)
+                self.img_label.setPixmap(pixmap.scaled(15, 15))
+                self.img_label.move(285, y)
+                self.img_label.show()
+            self.label_league = QLabel(f"{i}. {name}", self)
+            self.label_league.move(200 , y)
+            self.label_league.show()
+            self.count_league = QLabel(f"{count}", self)
+            self.count_league.move(310, y)
+            self.count_league.show()
             y+=25 # space between each numeral text
             i+=1
 
         # list of top 5 teams
-        top_teams_text = QLabel("TOP 5 TEAMS", self)
-        top_teams_text.move(700, 75)
-        count_teams_text = QLabel("Count", self)
-        count_teams_text.move(800, 85)
-        teams_table = top_teams() # taking a list of tuples
+        self.top_teams_text.show()
+        self.count_teams_text.show()
+        teams_table = top_teams(sport) # taking a list of tuples
         # the same like above
         y = 100
         # making this list
@@ -61,20 +111,22 @@ class Summary(QWidget):
                 pixmap = QPixmap()
                 pixmap.loadFromData(img_data) # load an image from BLOB
                 # Qlabel for image
-                img_label = QLabel(self)
-                img_label.setPixmap(pixmap.scaled(15, 15)) # think about a bigger size or table
-                img_label.move(785, y)
-            label_teams = QLabel(f"{i}. {name}", self)
-            label_teams.move(700, y)
-            count_team = QLabel(f"{count}", self)
-            count_team.move(810, y)
+                self.img_label = QLabel(self)
+                self.img_label.setPixmap(pixmap.scaled(15, 15)) # think about a bigger size or table
+                self.img_label.move(785, y)
+                self.img_label.show()
+            self.label_teams = QLabel(f"{i}. {name}", self)
+            self.label_teams.move(700, y)
+            self.label_teams.show()
+            self.count_team = QLabel(f"{count}", self)
+            self.count_team.move(810, y)
+            self.count_team.show()
             y+=25
             i+=1
             
         # showing the most watched home team
-        top_home_text = QLabel("HOME FAVOURITE", self)
-        top_home_text.move(440, 25)
-        top_home = home_team()
+        self.top_home_text.show()
+        top_home = home_team(sport)
 
         for name, count, img_data in top_home:
             if img_data:
@@ -84,16 +136,17 @@ class Summary(QWidget):
                 pixmap = QPixmap()
                 pixmap.loadFromData(img_data) # load an image from BLOB
                 # QLabel for image
-                img_label = QLabel(self)
-                img_label.setPixmap(pixmap.scaled(50, 50))
-                img_label. move(465, 60)
+                self.img_label = QLabel(self)
+                self.img_label.setPixmap(pixmap.scaled(50, 50))
+                self.img_label. move(465, 60)
+                self.img_label.show()
             self.label_top_home = QLabel(f"{name} ({count})",self)
             self.label_top_home.move(465, 125)
+            self.label_top_home.show()
 
         # shoing the most watched away team
-        top_away_text = QLabel("YOUR TRAVELED WITH THEM MOST OFTEN", self)
-        top_away_text.move(375, 150)
-        top_away = away_team()
+        self.top_away_text.show()
+        top_away = away_team(sport)
 
         for name, count, img_data in top_away:
             if img_data:
@@ -103,17 +156,30 @@ class Summary(QWidget):
                 pixmap = QPixmap()
                 pixmap.loadFromData(img_data) # load an image from BLOB
                 # QLabel for image
-                img_label = QLabel(self)
-                img_label.setPixmap(pixmap.scaled(50,50))
-                img_label.move(465, 185)
+                self.img_label = QLabel(self)
+                self.img_label.setPixmap(pixmap.scaled(50,50))
+                self.img_label.move(465, 185)
+                self.img_label.show()
             self.label_top_away = QLabel(f"{name} ({count})",self)
             self.label_top_away.move(465, 250)
+            self.label_top_away.show()
 
-        # back to menu button
-        back_btn = QPushButton("Back", self)
-        back_btn.move(450, 300)
-        back_btn.clicked.connect(self.back_menu)
+    def setup(self):
+        # hiding things
+        self.top_league_text.hide()
+        self.count_league_text.hide()
+        self.top_teams_text.hide()
+        self.count_teams_text.hide()
+        self.top_home_text.hide()
+        self.top_away_text.hide()
+    
+        # sport choose
+        self.SportLabel.show()
+        self.sport_box.show()
 
-        #basic window settings
-        self.setFixedSize(1000, 400)
-        self.setWindowTitle("Statsview")
+        # submit
+        self.submit_btn.show()
+
+        # back
+        self.back_btn.move(400, 300)
+        self.back_btn.show()

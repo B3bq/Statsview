@@ -54,6 +54,8 @@ class Add_New(QWidget):
         self.team_one_input.clear()
         self.team_two_input.clear()
         
+        self.SportLabel.show()
+        self.sport_box.show()
         self.league_input.show()
         self.team_one_input.show()
         self.team_two_input.show()

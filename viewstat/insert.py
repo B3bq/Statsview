@@ -155,6 +155,7 @@ def check_user(login, password):
             mycursor.execute(sql_user_id, login)
             result = mycursor.fetchone()
             user_id = result[0]
+            print(user_id)
 
             connect.close()
             return user_id
