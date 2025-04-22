@@ -52,6 +52,10 @@ class Program(QWidget):
         self.ck_label.move(400, 175)
         self.ck_label2 = QLabel("Incorrect password", self)
         self.ck_label2.move(400, 175)
+        self.label1 = QLabel("User exist", self)
+        self.label1.move(490, 225)
+        self.label2 = QLabel("Passwords are incorrect", self)
+        self.label2.move(400, 225)
 
 
         self.login_screen()
@@ -71,11 +75,15 @@ class Program(QWidget):
         self.back_btn.hide()
         self.re_password.hide()
         self.create_btn.hide()
+        self.label1.hide()
+        self.label2.hide()
 
         #login
+        self.name.clear()
         self.name.show()
 
         #password
+        self.password.clear()
         self.password.show()
         
         self.show_pass.move(400, 150)
@@ -101,6 +109,8 @@ class Program(QWidget):
         # hiding login
         self.btn_login.hide()
         self.btn_signin.hide()
+        self.ck_label.hide()
+        self.ck_label2.hide()
 
         self.re_password.show()
 
@@ -130,7 +140,7 @@ class Program(QWidget):
         self.ck_label2.hide()
 
         # date for view statistics
-        end_date = [datetime.date(2025, 3, 29), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
+        end_date = [datetime.date(2025, 4, 22), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
         today = datetime.date.today()
 
         #menu
@@ -212,16 +222,21 @@ class Program(QWidget):
         pass1 = self.password.text()
         pass2 = self.re_password.text()
         login = self.name.text()
+        self.label1.hide()
+        self.label2.hide()
+
 
         if(pass1 == pass2):
             isuser = insert_user(login, pass1)
             if(isuser == True):
                 # hide all
                 self.create_btn.hide()
+                self.back_btn.hide()
                 self.name.hide()
                 self.password.hide()
                 self.re_password.hide()
                 self.show_pass.hide()
+                
 
                 # show info
                 self.label.setText(f"Added user {login}")
@@ -230,13 +245,9 @@ class Program(QWidget):
                 self.back.show()
                 self.back.clicked.connect(self.login_screen)
             else:
-                label = QLabel("User exist", self)
-                label.move(490, 225)
-                label.show()
+                self.label1.show()
         else:
-            label = QLabel("Passwords are incorrect", self)
-            label.move(400, 225)
-            label.show()
+            self.label2.show()
 
     # close app event
     def closeEvent(self, event: QCloseEvent):

@@ -35,6 +35,7 @@ class Add_Exist(QWidget):
 
     def take_sport(self):
         sport_name = self.sport_box.currentText()
+        self.league_box.clear()
 
         league_names = show_leagues(sport_name)
 
@@ -71,6 +72,8 @@ class Add_Exist(QWidget):
         # hide text and button
         self.label.hide()
         self.add_more_btn.hide()
+
+        self.league_box.clear()
 
         # show a old form
         self.SportLabel.show()
