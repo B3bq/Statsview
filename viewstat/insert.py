@@ -13,12 +13,7 @@ def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
         database = "test"
     )
 
-    mycursor = connect.cursor()
-
-    # getting varibles
-    LeagueName = [league_name]
-    team_one = [teamOne_name]
-    team_two = [teamTwo_name]
+    mycursor = connect.cursor(buffered=True)
 
     # where push datas
     match sport_name:
@@ -31,70 +26,85 @@ def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
             tabel_broker = "cs_broker"
             tabel_teams = "cs_teams"
         case _:
-            tabel_league = sport_name + "_leagues"
-            tabel_broker = sport_name + "_broker"
-            tabel_teams = sport_name + "_teams"
+            tabel_league = sport_name.lower() + "_leagues"
+            tabel_broker = sport_name.lower() + "_broker"
+            tabel_teams = sport_name.lower() + "_teams"
 
     # checking if exist a league
-    sql_league_check = f"SELECT * FROM {tabel_league} WHERE name = %s"
-    mycursor.execute(sql_league_check, LeagueName) #execute function execute a sql query
+    sql_league_check = f"SELECT * FROM {tabel_league} WHERE name = %s AND id_user = %s"
+    mycursor.execute(sql_league_check, (league_name, User.user_id)) #execute function execute a sql query
     myresult_league = mycursor.fetchall() #getting a result to list
 
     if myresult_league != []:
-        sql_update_league = f"UPDATE {tabel_league} SET count = count + 1 WHERE name = %s"
-        mycursor.execute(sql_update_league, LeagueName)
+        sql_update_league = f"UPDATE {tabel_league} SET count = count + 1 WHERE name = %s AND id_user = %s"
+        mycursor.execute(sql_update_league, (league_name, User.user_id))
     else:
         sql_insert_league = f"INSERT INTO {tabel_league} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, '')"
         mycursor.execute(sql_insert_league, (User.user_id, league_name))
 
+    connect.commit()
 
     # checking if team one exist
-    sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s"
-    mycursor.execute(sql_team_one_check, team_one)
+    sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s AND id_user = %s"
+    mycursor.execute(sql_team_one_check, (teamOne_name, User.user_id))
     myresult_team_one = mycursor.fetchall()
 
     if myresult_team_one != []:
-        sql_update_teamone = f"UPDATE {tabel_teams} SET homeCount = homeCount + 1 WHERE name = %s"
-        mycursor.execute(sql_update_teamone, team_one)
+        sql_update_teamone = f"UPDATE {tabel_teams} SET homeCount = homeCount + 1 WHERE name = %s AND id_user = %s"
+        mycursor.execute(sql_update_teamone, (teamOne_name, User.user_id))
     else:
         sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
         mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name))
 
+    connect.commit()
+
     # checking if team two exist
-    sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s"
-    mycursor.execute(sql_team_one_check, team_two)
+    sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s AND id_user = %s"
+    mycursor.execute(sql_team_one_check, (teamTwo_name, User.user_id))
     myresult_team_one = mycursor.fetchall()
 
     if myresult_team_one != []:
-        sql_update_teamone = f"UPDATE {tabel_teams} SET awayCount = awayCount + 1 WHERE name = %s"
-        mycursor.execute(sql_update_teamone, team_two)
+        sql_update_teamone = f"UPDATE {tabel_teams} SET awayCount = awayCount + 1 WHERE name = %s AND id_user = %s"
+        mycursor.execute(sql_update_teamone, (teamTwo_name, User.user_id))
     else:
         sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 0, 1, '')"
         mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name))
 
+    connect.commit()
+
     # taking id from league table
     sql_take_idleague = f"SELECT id FROM {tabel_league} WHERE name = %s"
-    mycursor.execute(sql_take_idleague, LeagueName)
+    mycursor.execute(sql_take_idleague, (league_name,))
     result = mycursor.fetchone() # take first record
     idLeague = result[0] # take id
 
     # taking id for teams
-    teams = [team_one[0], team_two[0]]
+    teams = [teamOne_name, teamTwo_name]
     idTeams = []
 
     sql_take_idteam = f"SELECT id FROM {tabel_teams} WHERE name = %s"
+    sql_check_exist = f"SELECT id_teams FROM {tabel_broker} JOIN {tabel_teams} ON {tabel_broker}.id_teams = {tabel_teams}.id WHERE {tabel_broker}.id_league = %s AND {tabel_teams}.name = %s LIMIT 1"
     for item in teams:
+        mycursor.execute(sql_check_exist, (idLeague, item))
+        exists = mycursor.fetchone()
+
+        if exists:
+            print(f"⚠ Team {item} is already exist")
+            continue
+
         mycursor.execute(sql_take_idteam, (item,))
         result = mycursor.fetchone()
-        idTeam = result[0]
-        idTeams.append(idTeam)
+        
+        if result:
+            idTeam = result[0]
+            idTeams.append(idTeam)
 
     # insert teams to leagues_teams table
     sql_insert = f"INSERT IGNORE INTO {tabel_broker} VALUES (%s, %s)"
     for item in idTeams:
             mycursor.execute(sql_insert, (idLeague, item))
 
-    print(f"Added teams {teams[0]} and {teams[1]} to the competition {LeagueName[0]}")
+    print(f"Added teams {teams[0]} and {teams[1]} to the competition {league_name}")
 
     connect.commit()
     connect.close()

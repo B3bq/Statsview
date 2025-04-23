@@ -140,7 +140,7 @@ class Program(QWidget):
         self.ck_label2.hide()
 
         # date for view statistics
-        end_date = [datetime.date(2025, 4, 22), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
+        end_date = [datetime.date(2025, 4, 23), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
         today = datetime.date.today()
 
         #menu

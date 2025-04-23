@@ -19,7 +19,7 @@ def top_leagues(sport):
         case "Counter Strike":
             sport = "cs_leagues"
         case _:
-            sport = sport + "_leagues"
+            sport = sport.lower() + "_leagues"
 
     sql_query = f"SELECT name, count, img FROM {sport} WHERE id_user = {User.user_id} ORDER BY count DESC LIMIT 5"
     mycursor.execute(sql_query)
