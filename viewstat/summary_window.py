@@ -1,8 +1,6 @@
 from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
 from PySide6.QtWidgets import *
 from summary import *
-import io
-from PIL import Image
 
 class Summary(QWidget):
     def __init__(self, menu):
@@ -27,13 +25,13 @@ class Summary(QWidget):
 
         # summary properies
         self.top_league_text = QLabel("TOP 5 LEAGUES", self)
-        self.top_league_text.move(200, 75)
+        self.top_league_text.move(175, 75)
         self.count_league_text = QLabel("Count", self)
-        self.count_league_text.move(300, 85)
+        self.count_league_text.move(325, 85)
         self.top_teams_text = QLabel("TOP 5 TEAMS", self)
         self.top_teams_text.move(700, 75)
         self.count_teams_text = QLabel("Count", self)
-        self.count_teams_text.move(800, 85)
+        self.count_teams_text.move(850, 85)
         self.top_home_text = QLabel("HOME FAVOURITE", self)
         self.top_home_text.move(440, 25)
         self.top_away_text = QLabel("YOUR TRAVELED WITH THEM MOST OFTEN", self)
@@ -85,13 +83,13 @@ class Summary(QWidget):
                 # QLavel for image
                 self.img_label = QLabel(self)
                 self.img_label.setPixmap(pixmap.scaled(15, 15))
-                self.img_label.move(285, y)
+                self.img_label.move(300, y)
                 self.img_label.show()
             self.label_league = QLabel(f"{i}. {name}", self)
-            self.label_league.move(200 , y)
+            self.label_league.move(175 , y)
             self.label_league.show()
             self.count_league = QLabel(f"{count}", self)
-            self.count_league.move(310, y)
+            self.count_league.move(335, y)
             self.count_league.show()
             y+=25 # space between each numeral text
             i+=1
@@ -113,13 +111,13 @@ class Summary(QWidget):
                 # Qlabel for image
                 self.img_label = QLabel(self)
                 self.img_label.setPixmap(pixmap.scaled(15, 15)) # think about a bigger size or table
-                self.img_label.move(785, y)
+                self.img_label.move(825, y)
                 self.img_label.show()
             self.label_teams = QLabel(f"{i}. {name}", self)
             self.label_teams.move(700, y)
             self.label_teams.show()
             self.count_team = QLabel(f"{count}", self)
-            self.count_team.move(810, y)
+            self.count_team.move(860, y)
             self.count_team.show()
             y+=25
             i+=1

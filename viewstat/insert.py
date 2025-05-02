@@ -5,12 +5,12 @@ class User:
     user_id = ''
 
 
-def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
+def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
     connect = mysql.connector.connect(
         host = "localhost",
         user = "root",
         password = "",
-        database = "test"
+        database = "statsview"
     )
 
     mycursor = connect.cursor(buffered=True)
@@ -42,7 +42,7 @@ def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
         sql_insert_league = f"INSERT INTO {tabel_league} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, '')"
         mycursor.execute(sql_insert_league, (User.user_id, league_name))
 
-    connect.commit()
+
 
     # checking if team one exist
     sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s AND id_user = %s"
@@ -56,7 +56,7 @@ def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
         sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
         mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name))
 
-    connect.commit()
+
 
     # checking if team two exist
     sql_team_one_check = f"SELECT * FROM {tabel_teams} WHERE name = %s AND id_user = %s"
@@ -70,34 +70,44 @@ def add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name):
         sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 0, 1, '')"
         mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name))
 
-    connect.commit()
+
 
     # taking id from league table
     sql_take_idleague = f"SELECT id FROM {tabel_league} WHERE name = %s"
     mycursor.execute(sql_take_idleague, (league_name,))
     result = mycursor.fetchone() # take first record
     idLeague = result[0] # take id
+    print(idLeague)
 
     # taking id for teams
     teams = [teamOne_name, teamTwo_name]
     idTeams = []
+    print(teams)
 
     sql_take_idteam = f"SELECT id FROM {tabel_teams} WHERE name = %s"
-    sql_check_exist = f"SELECT id_teams FROM {tabel_broker} JOIN {tabel_teams} ON {tabel_broker}.id_teams = {tabel_teams}.id WHERE {tabel_broker}.id_league = %s AND {tabel_teams}.name = %s LIMIT 1"
     for item in teams:
-        mycursor.execute(sql_check_exist, (idLeague, item))
-        exists = mycursor.fetchone()
-
-        if exists:
-            print(f"⚠ Team {item} is already exist")
-            continue
-
         mycursor.execute(sql_take_idteam, (item,))
         result = mycursor.fetchone()
-        
-        if result:
-            idTeam = result[0]
-            idTeams.append(idTeam)
+
+        idTeam = result[0]
+        idTeams.append(idTeam)
+    #sql_check_exist = f"SELECT id_teams FROM {tabel_broker} JOIN {tabel_teams} ON {tabel_broker}.id_teams = {tabel_teams}.id WHERE {tabel_broker}.id_league = %s AND {tabel_teams}.name = %s LIMIT 1"
+    #for item in teams:
+    #    mycursor.execute(sql_check_exist, (idLeague, item))
+    #    exists = mycursor.fetchone()
+    
+    #    if exists:
+    #        print(f"⚠ Team {item} is already exist")
+    #        continue
+
+    #    mycursor.execute(sql_take_idteam, (item,))
+    #    result = mycursor.fetchone()
+    #    
+    #    if result:
+    #        idTeam = result[0]
+    #        idTeams.append(idTeam)
+
+    print(idTeams)
 
     # insert teams to leagues_teams table
     sql_insert = f"INSERT IGNORE INTO {tabel_broker} VALUES (%s, %s)"
@@ -114,7 +124,7 @@ def insert_user(name, password):
         host = "localhost",
         user = "root",
         password = "",
-        database = "test"
+        database = "statsview"
     )
 
     mycursor = connect.cursor()
@@ -131,7 +141,7 @@ def insert_user(name, password):
     if myresult != []:
         return False
     else:
-        sql_insert = "INSERT INTO users (id, login, pass) VALUES (NULL, %s, %s)"
+        sql_insert = "INSERT INTO users (id, login, password) VALUES (NULL, %s, %s)"
         mycursor.execute(sql_insert, (name, hashed))
 
     connect.commit()
@@ -143,7 +153,7 @@ def check_user(login, password):
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'test'
+        database = 'statsview'
     )
 
     mycursor = connect.cursor()
@@ -155,7 +165,7 @@ def check_user(login, password):
     myresult = mycursor.fetchall()
 
     if myresult != []:
-        sql_pass_check = "SELECT pass FROM users WHERE login = %s"
+        sql_pass_check = "SELECT password FROM users WHERE login = %s"
         mycursor.execute(sql_pass_check, login)
         myresult = mycursor.fetchone()
         hash_pass = myresult[0].encode()

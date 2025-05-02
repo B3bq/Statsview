@@ -48,7 +48,7 @@ class Add_Exist(QWidget):
         first_team = self.team_one_box.currentText()
         second_team = self.team_two_box.currentText()
 
-        add_datas_to_base(sport_name, league_name, first_team, second_team) # insert datas to database
+        add_datas_to_base(sport_name, league_name=league_name, teamOne_name=first_team, teamTwo_name=second_team) # insert datas to database
 
         # hide lists
         self.SportLabel.hide()

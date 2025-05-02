@@ -27,7 +27,7 @@ class Add_New(QWidget):
         teamOne_name = self.team_one_input.text()
         teamTwo_name = self.team_two_input.text()
 
-        add_datas_to_base(sport_name, league_name, teamOne_name, teamTwo_name) # insert datas to database
+        add_datas_to_base(sport_name, league_name=league_name, teamOne_name=teamOne_name, teamTwo_name=teamTwo_name) # insert datas to database
 
         # hidding inputs
         self.SportLabel.hide()
