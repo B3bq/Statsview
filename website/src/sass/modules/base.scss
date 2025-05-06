@@ -1,0 +1,16 @@
+@use 'varibles' as *;
+:root{
+    font-size: 87.5%;
+    font-family: $mainFont;
+    box-sizing: border-box;
+}
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+body{
+    margin: 0;
+    background-color: $primaryColor;
+}
+.container{
+    text-align: center;
+}
