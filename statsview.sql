@@ -1,431 +1,621 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 04:35 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `statsview`
---
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `basketball_broker`
---
-
-CREATE TABLE `basketball_broker` (
-  `id_league` int(11) NOT NULL,
-  `id_teams` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `basketball_leagues`
---
-
-CREATE TABLE `basketball_leagues` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `count` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `basketball_teams`
---
-
-CREATE TABLE `basketball_teams` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `homeCount` int(11) NOT NULL,
-  `awayCount` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `cs_broker`
---
-
-CREATE TABLE `cs_broker` (
-  `id_league` int(11) NOT NULL,
-  `id_teams` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `cs_leagues`
---
-
-CREATE TABLE `cs_leagues` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `count` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `cs_teams`
---
-
-CREATE TABLE `cs_teams` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `homeCount` int(11) NOT NULL,
-  `awayCount` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `football_broker`
---
-
-CREATE TABLE `football_broker` (
-  `id_league` int(11) NOT NULL,
-  `id_teams` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `football_leagues`
---
-
-CREATE TABLE `football_leagues` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `count` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `football_teams`
---
-
-CREATE TABLE `football_teams` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `homeCount` int(11) NOT NULL,
-  `awayCount` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `lol_broker`
---
-
-CREATE TABLE `lol_broker` (
-  `id_league` int(11) NOT NULL,
-  `id_teams` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `lol_leagues`
---
-
-CREATE TABLE `lol_leagues` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `count` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `lol_teams`
---
-
-CREATE TABLE `lol_teams` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `homeCount` int(11) NOT NULL,
-  `awayCount` int(11) NOT NULL,
-  `img` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `login` varchar(15) NOT NULL,
-  `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Indeksy dla zrzutów tabel
---
-
---
--- Indeksy dla tabeli `basketball_broker`
---
-ALTER TABLE `basketball_broker`
-  ADD PRIMARY KEY (`id_league`,`id_teams`),
-  ADD KEY `fk_bteam` (`id_teams`);
-
---
--- Indeksy dla tabeli `basketball_leagues`
---
-ALTER TABLE `basketball_leagues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_basketl_user` (`id_user`);
-
---
--- Indeksy dla tabeli `basketball_teams`
---
-ALTER TABLE `basketball_teams`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_baskett_user` (`id_user`);
-
---
--- Indeksy dla tabeli `cs_broker`
---
-ALTER TABLE `cs_broker`
-  ADD PRIMARY KEY (`id_teams`,`id_league`),
-  ADD KEY `fk_league_cs` (`id_league`);
-
---
--- Indeksy dla tabeli `cs_leagues`
---
-ALTER TABLE `cs_leagues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_csleague_user` (`id_user`);
-
---
--- Indeksy dla tabeli `cs_teams`
---
-ALTER TABLE `cs_teams`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_csteam_user` (`id_user`);
-
---
--- Indeksy dla tabeli `football_broker`
---
-ALTER TABLE `football_broker`
-  ADD PRIMARY KEY (`id_teams`),
-  ADD KEY `fk_footabll_league` (`id_league`);
-
---
--- Indeksy dla tabeli `football_leagues`
---
-ALTER TABLE `football_leagues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_footabll_user` (`id_user`);
-
---
--- Indeksy dla tabeli `football_teams`
---
-ALTER TABLE `football_teams`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_footabllt_user` (`id_user`);
-
---
--- Indeksy dla tabeli `lol_broker`
---
-ALTER TABLE `lol_broker`
-  ADD PRIMARY KEY (`id_league`,`id_teams`),
-  ADD KEY `fk_team_lol` (`id_teams`);
-
---
--- Indeksy dla tabeli `lol_leagues`
---
-ALTER TABLE `lol_leagues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_lolleague_user` (`id_user`);
-
---
--- Indeksy dla tabeli `lol_teams`
---
-ALTER TABLE `lol_teams`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_lolteam_user` (`id_user`);
-
---
--- Indeksy dla tabeli `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `basketball_leagues`
---
-ALTER TABLE `basketball_leagues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `basketball_teams`
---
-ALTER TABLE `basketball_teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cs_leagues`
---
-ALTER TABLE `cs_leagues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cs_teams`
---
-ALTER TABLE `cs_teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `football_leagues`
---
-ALTER TABLE `football_leagues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `football_teams`
---
-ALTER TABLE `football_teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lol_leagues`
---
-ALTER TABLE `lol_leagues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lol_teams`
---
-ALTER TABLE `lol_teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `basketball_broker`
---
-ALTER TABLE `basketball_broker`
-  ADD CONSTRAINT `fk_bleague` FOREIGN KEY (`id_league`) REFERENCES `basketball_leagues` (`id`),
-  ADD CONSTRAINT `fk_bteam` FOREIGN KEY (`id_teams`) REFERENCES `basketball_teams` (`id`);
-
---
--- Constraints for table `basketball_leagues`
---
-ALTER TABLE `basketball_leagues`
-  ADD CONSTRAINT `fk_basketl_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `basketball_teams`
---
-ALTER TABLE `basketball_teams`
-  ADD CONSTRAINT `fk_baskett_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `cs_broker`
---
-ALTER TABLE `cs_broker`
-  ADD CONSTRAINT `fk_league_cs` FOREIGN KEY (`id_league`) REFERENCES `cs_leagues` (`id`),
-  ADD CONSTRAINT `fk_team_cs` FOREIGN KEY (`id_teams`) REFERENCES `cs_teams` (`id`);
-
---
--- Constraints for table `cs_leagues`
---
-ALTER TABLE `cs_leagues`
-  ADD CONSTRAINT `fk_csleague_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `cs_teams`
---
-ALTER TABLE `cs_teams`
-  ADD CONSTRAINT `fk_csteam_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `football_broker`
---
-ALTER TABLE `football_broker`
-  ADD CONSTRAINT `fk_footabll_league` FOREIGN KEY (`id_league`) REFERENCES `football_leagues` (`id`),
-  ADD CONSTRAINT `fk_footabll_team` FOREIGN KEY (`id_teams`) REFERENCES `football_teams` (`id`);
-
---
--- Constraints for table `football_leagues`
---
-ALTER TABLE `football_leagues`
-  ADD CONSTRAINT `fk_footabll_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `football_teams`
---
-ALTER TABLE `football_teams`
-  ADD CONSTRAINT `fk_footabllt_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `lol_broker`
---
-ALTER TABLE `lol_broker`
-  ADD CONSTRAINT `fk_league_lol` FOREIGN KEY (`id_league`) REFERENCES `lol_leagues` (`id`),
-  ADD CONSTRAINT `fk_team_lol` FOREIGN KEY (`id_teams`) REFERENCES `lol_teams` (`id`);
-
---
--- Constraints for table `lol_leagues`
---
-ALTER TABLE `lol_leagues`
-  ADD CONSTRAINT `fk_lolleague_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `lol_teams`
---
-ALTER TABLE `lol_teams`
-  ADD CONSTRAINT `fk_lolteam_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- MySQL Script generated by MySQL Workbench
+-- Wed May  7 21:45:22 2025
+-- Model: New Model    Version: 1.0
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema stat
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema stat
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `stat` DEFAULT CHARACTER SET utf8 ;
+USE `stat` ;
+
+-- -----------------------------------------------------
+-- Table `stat`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`users` (
+  `idusers` INT NOT NULL AUTO_INCREMENT,
+  `mail` VARCHAR(320) NULL,
+  `name` VARCHAR(45) NULL,
+  `pass` VARCHAR(45) NULL,
+  PRIMARY KEY (`idusers`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`images`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`images` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `img` BLOB NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_season` (
+  `idleagues` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(15) NOT NULL,
+  `count` INT NOT NULL,
+  `img` INT NULL,
+  `id_user` INT NULL,
+  PRIMARY KEY (`idleagues`),
+  INDEX `id_user_idx` (`id_user` ASC) ,
+  INDEX `league_img_idx` (`img` ASC) ,
+  CONSTRAINT `id_user_f_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `league_img_f_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_teams_season` (
+  `idteams` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `homeCount` INT NOT NULL,
+  `awayCount` INT NOT NULL,
+  `img` INT NULL,
+  `id_user` INT NULL,
+  PRIMARY KEY (`idteams`),
+  INDEX `id_user_idx` (`id_user` ASC) ,
+  INDEX `team_img_idx` (`img` ASC) ,
+  CONSTRAINT `id_user_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `team_img_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_broker_season` (
+  `league_id` INT NOT NULL,
+  `teams_id` INT NOT NULL,
+  PRIMARY KEY (`league_id`, `teams_id`),
+  INDEX `team_idx` (`teams_id` ASC) ,
+  CONSTRAINT `league_unknown`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `stat`.`football_leagues_season` (`idleagues`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `team_unknown`
+    FOREIGN KEY (`teams_id`)
+    REFERENCES `stat`.`football_teams_season` (`idteams`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user_unknown_2`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_broker_season` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league_unknown_2`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`basketball_leagues_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`basketball_teams_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_year` (
+  `idleagues` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(15) NOT NULL,
+  `count` INT NOT NULL,
+  `img` INT NULL,
+  `id_user` INT NULL,
+  PRIMARY KEY (`idleagues`),
+  INDEX `id_user_idx` (`id_user` ASC) ,
+  INDEX `league_img_idx` (`img` ASC) ,
+  CONSTRAINT `id_user0_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `league_img0_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_teams_year` (
+  `idteams` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `homeCount` INT NOT NULL,
+  `awayCount` INT NOT NULL,
+  `img` INT NULL,
+  `id_user` INT NULL,
+  PRIMARY KEY (`idteams`),
+  INDEX `id_user_idx` (`id_user` ASC) ,
+  INDEX `team_img_idx` (`img` ASC) ,
+  CONSTRAINT `id_user1_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `team_img0_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`football_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`football_broker_year` (
+  `league_id` INT NOT NULL,
+  `teams_id` INT NOT NULL,
+  PRIMARY KEY (`league_id`, `teams_id`),
+  INDEX `team_idx` (`teams_id` ASC) ,
+  CONSTRAINT `league0_unknown`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `stat`.`football_leagues_year` (`idleagues`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `team0_unknown`
+    FOREIGN KEY (`teams_id`)
+    REFERENCES `stat`.`football_teams_year` (`idteams`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user0_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img0_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user1_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img0_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`basketball_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`basketball_broker_year` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league1_unknown`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`basketball_leagues_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams0_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`basketball_teams_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user00_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img00_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user2_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img1_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user3_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img1_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_broker_season` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league2_unknown`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`cs_leagues_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams1_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`cs_teams_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user10_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img00_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`cs_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`cs_broker_year` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league10_unknown`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`cs_leagues_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams00_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`cs_teams_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`lol_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`lol_leagues_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user01_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img01_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`loll_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`loll_leagues_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kleague_img_idx` (`img` ASC) ,
+  CONSTRAINT `user4_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kleague_img2_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`lol_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_season` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user5_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img2_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`lol_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`lol_broker_season` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league3_unknown`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`loll_leagues_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams2_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`lol_teams_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`lol_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_year` (
+  `id` INT NOT NULL,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_idx` (`id_user` ASC) ,
+  INDEX `kteams_img_idx` (`img` ASC) ,
+  CONSTRAINT `user11_unknown`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `stat`.`users` (`idusers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `kteams_img01_unknown`
+    FOREIGN KEY (`img`)
+    REFERENCES `stat`.`images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stat`.`loll_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stat`.`loll_broker_year` (
+  `id_league` INT NOT NULL,
+  `id_teams` INT NOT NULL,
+  PRIMARY KEY (`id_league`, `id_teams`),
+  INDEX `teams_idx` (`id_teams` ASC) ,
+  CONSTRAINT `league11_unknown`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `stat`.`lol_leagues_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `teams01_unknown`
+    FOREIGN KEY (`id_teams`)
+    REFERENCES `stat`.`lol_teams_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
