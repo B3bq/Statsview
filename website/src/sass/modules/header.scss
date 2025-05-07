@@ -1,0 +1,86 @@
+@use 'varibles' as *;
+
+body > header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    a{
+        text-decoration: none;
+
+        @media (min-width: $laptopBreakPoint) {
+            transform: translateY(0);
+            transition: all 0.3s ease-in-out;
+        }
+    
+        &:hover {
+          @media (min-width: $laptopBreakPoint) {
+            text-decoration: underline;
+            transform: translateY(0.25em);
+            transition: all 0.3s ease-in-out;
+          }
+    
+        }
+    }
+
+   nav{
+    button{
+        background-color: transparent;
+
+        @media (min-width: $laptopBreakPoint){
+            display: none;
+        }
+    }
+
+    ul{
+        display: none;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        @media (min-width: $laptopBreakPoint){
+            display: flex;
+            flex-direction: row;
+        }
+        &.active{
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background-color: rgb(46, 46, 46, 95%);
+            padding: 10px;
+
+            a{
+                height: 48px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: $primaryColor;
+
+                &:before{
+                    content: '>';
+                }
+            }
+        }
+    }
+
+    li{
+        @media (min-width: $laptopBreakPoint){
+            padding: 10px;
+        }
+    }
+   }
+}
+
+main > header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    
+}
+
