@@ -1,5 +1,7 @@
-from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
+from PySide6.QtGui import QPixmap, QCloseEvent, QIcon, QPalette, QColor
 from PySide6.QtWidgets import *
+from PySide6.QtCore import QRegularExpression
+import re
 import datetime
 import add_new, add_ex, summary_window
 from insert import insert_user, check_user, User # functions to insert user datas to database and check log in 
@@ -14,31 +16,35 @@ class Program(QWidget):
         self.name = QLineEdit(self)
         self.name.setPlaceholderText("Login")
         self.name.setFixedSize(200, 50)
-        self.name.move(400, 50)
+        # mail input
+        self.mail = QLineEdit(self)
+        self.mail.setPlaceholderText("E-mail")
+        self.mail.setFixedSize(200, 50)
+        self.mail.move(295, 100)
         # password input
         self.password = QLineEdit(self)
         self.password.setEchoMode(QLineEdit.Password)
         self.password.setPlaceholderText("Password")
         self.password.setFixedSize(200, 50)
-        self.password.move(400, 100)
+        
 
         # back button
         self.back_btn = QPushButton("Back", self)
         self.back_btn.setFixedSize(100, 50)
-        self.back_btn.move(400, 250)
+        self.back_btn.move(295, 200)
         # reapet a password
         self.re_password = QLineEdit(self)
         self.re_password.setEchoMode(QLineEdit.Password)
         self.re_password.setPlaceholderText("Reapet password")
         self.re_password.setFixedSize(200, 50)
-        self.re_password.move(400, 150)
+        self.re_password.move(505, 100)
         #checkbox to show pass
         self.show_pass = QCheckBox("Show password", self)
         self.show_pass.move(400, 150)
         # create new account btn
         self.create_btn = QPushButton("Create account", self)
         self.create_btn.setFixedSize(100, 50)
-        self.create_btn.move(500, 250)
+        self.create_btn.move(600, 200)
 
         # things after add user
         self.label = QLabel("", self)
@@ -77,15 +83,18 @@ class Program(QWidget):
         self.create_btn.hide()
         self.label1.hide()
         self.label2.hide()
+        self.mail.hide()
 
         #login
         self.name.clear()
         self.name.show()
+        self.name.move(400, 50)
 
         #password
         self.password.clear()
         self.password.show()
-        
+        self.password.move(400, 100)
+
         self.show_pass.move(400, 150)
         self.show_pass.show()
         self.show_pass.stateChanged.connect(self.toggle_password_visibility) 
@@ -113,13 +122,20 @@ class Program(QWidget):
         self.ck_label2.hide()
 
         self.re_password.show()
+        self.mail.show()
 
-        self.show_pass.move(400, 200)
+        self.name.move(295, 50)
+        self.password.move(505, 50)
+        self.show_pass.move(505, 160)
 
         # clearing inputs
         self.name.clear()
+        self.mail.clear()
         self.password.clear()
         self.re_password.clear()
+
+        # checking mail is correctly wrote
+        self.mail.textChanged.connect(self.validate_mail)
 
         self.create_btn.show()
         self.create_btn.clicked.connect(self.pass_check)
@@ -194,6 +210,23 @@ class Program(QWidget):
             self.password.setEchoMode(QLineEdit.Password)
             self.re_password.setEchoMode(QLineEdit.Password)
 
+    # validate emial
+    def validate_mail(self, text):
+        regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if re.match(regex, text):
+            self.input_color(valid=True)
+        else:
+            self.input_color(valid=False)
+
+    # changing input color
+    def input_color(self, valid):
+        palette = self.mail.palette()
+        if valid:
+            palette.setColor(QPalette.Base, QColor('gray'))
+        else:
+            palette.setColor(QPalette.Base, QColor("#ffcccc"))
+        self.mail.setPalette(palette) 
+
     def check_user(self):
         password = self.password.text()
         login = self.name.text()
@@ -222,17 +255,19 @@ class Program(QWidget):
         pass1 = self.password.text()
         pass2 = self.re_password.text()
         login = self.name.text()
+        mail = self.mail.text()
         self.label1.hide()
         self.label2.hide()
 
 
         if(pass1 == pass2):
-            isuser = insert_user(login, pass1)
+            isuser = insert_user(login, mail, pass1)
             if(isuser == True):
                 # hide all
                 self.create_btn.hide()
                 self.back_btn.hide()
                 self.name.hide()
+                self.mail.hide()
                 self.password.hide()
                 self.re_password.hide()
                 self.show_pass.hide()

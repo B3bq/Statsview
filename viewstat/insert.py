@@ -119,30 +119,31 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
     connect.commit()
     connect.close()
     
-def insert_user(name, password):
+def insert_user(name, mail, password):
     connect = mysql.connector.connect(
         host = "localhost",
         user = "root",
         password = "",
-        database = "statsview"
+        database = "stat"
     )
 
     mycursor = connect.cursor()
 
     # changing varibles to list
     Name = [name]
+    mail = mail
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     # checking user
-    sql_check = "SELECT * FROM users WHERE login = %s"
+    sql_check = "SELECT * FROM users WHERE name = %s"
     mycursor.execute(sql_check, Name)
     myresult = mycursor.fetchall()
 
     if myresult != []:
         return False
     else:
-        sql_insert = "INSERT INTO users (id, login, password) VALUES (NULL, %s, %s)"
-        mycursor.execute(sql_insert, (name, hashed))
+        sql_insert = "INSERT INTO users (idusers, mail, name, pass) VALUES (NULL, %s, %s, %s)"
+        mycursor.execute(sql_insert, (mail, name, hashed))
 
     connect.commit()
     connect.close()
@@ -153,26 +154,24 @@ def check_user(login, password):
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'statsview'
+        database = 'stat'
     )
 
     mycursor = connect.cursor()
 
-    login = [login]
-
-    sql_check = "SELECT login FROM users WHERE login = %s"
-    mycursor.execute(sql_check, login)
+    sql_check = "SELECT mail, name FROM users WHERE mail = %s or name = %s"
+    mycursor.execute(sql_check, (login, login))
     myresult = mycursor.fetchall()
 
     if myresult != []:
-        sql_pass_check = "SELECT password FROM users WHERE login = %s"
-        mycursor.execute(sql_pass_check, login)
+        sql_pass_check = "SELECT pass FROM users WHERE name = %s or mail = %s"
+        mycursor.execute(sql_pass_check, (login, login))
         myresult = mycursor.fetchone()
         hash_pass = myresult[0].encode()
         
         if bcrypt.checkpw(password.encode(), hash_pass):
-            sql_user_id = "SELECT id FROM users WHERE login = %s"
-            mycursor.execute(sql_user_id, login)
+            sql_user_id = "SELECT idusers FROM users WHERE name = %s or mail = %s"
+            mycursor.execute(sql_user_id, (login, login))
             result = mycursor.fetchone()
             user_id = result[0]
             print(user_id)
