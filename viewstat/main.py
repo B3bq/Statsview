@@ -26,12 +26,19 @@ class Program(QWidget):
         self.password.setEchoMode(QLineEdit.Password)
         self.password.setPlaceholderText("Password")
         self.password.setFixedSize(200, 50)
+        self.password.move(400, 100)
         
 
         # back button
         self.back_btn = QPushButton("Back", self)
         self.back_btn.setFixedSize(100, 50)
         self.back_btn.move(295, 200)
+        # password for create window
+        self.password_create = QLineEdit(self)
+        self.password_create.setEchoMode(QLineEdit.Password)
+        self.password_create.setPlaceholderText("Password")
+        self.password_create.setFixedSize(200, 50)
+        self.password_create.move(505, 50)
         # reapet a password
         self.re_password = QLineEdit(self)
         self.re_password.setEchoMode(QLineEdit.Password)
@@ -59,11 +66,11 @@ class Program(QWidget):
         self.ck_label2 = QLabel("Incorrect password", self)
         self.ck_label2.move(400, 175)
         self.label1 = QLabel("User exist", self)
-        self.label1.move(490, 225)
+        self.label1.move(440, 215)
         self.label2 = QLabel("Passwords are incorrect", self)
-        self.label2.move(400, 225)
-        self.labelMail = QLabel("Incorrect e-mail address")
-        self.labelMail.move(400, 225)
+        self.label2.move(440, 215)
+        self.labelMail = QLabel("Incorrect e-mail address", self)
+        self.labelMail.move(440, 215)
 
 
         self.login_screen()
@@ -87,6 +94,7 @@ class Program(QWidget):
         self.label2.hide()
         self.mail.hide()
         self.labelMail.hide()
+        self.password_create.hide()
 
         #login
         self.name.clear()
@@ -96,7 +104,7 @@ class Program(QWidget):
         #password
         self.password.clear()
         self.password.show()
-        self.password.move(400, 100)
+        self.password.setPalette(QPalette()) 
 
         self.show_pass.move(400, 150)
         self.show_pass.show()
@@ -123,21 +131,23 @@ class Program(QWidget):
         self.btn_signin.hide()
         self.ck_label.hide()
         self.ck_label2.hide()
+        self.password.hide()
 
+        # show needed elements
         self.re_password.show()
         self.mail.show()
+        self.password_create.show()
 
         self.name.move(295, 50)
-        self.password.move(505, 50)
         self.show_pass.move(505, 160)
 
         # clearing inputs
         self.name.clear()
         self.mail.clear()
-        self.password.clear()
+        self.password_create.clear()
 
         # checking a value of strong password
-        self.password.textChanged.connect(self.pass_strong)
+        self.password_create.textChanged.connect(self.pass_strong)
 
         self.re_password.clear()
 
@@ -212,9 +222,11 @@ class Program(QWidget):
     def toggle_password_visibility(self, state):
         if state == 2: # chackbox is checked
             self.password.setEchoMode(QLineEdit.Normal)
+            self.password_create.setEchoMode(QLineEdit.Normal)
             self.re_password.setEchoMode(QLineEdit.Normal)
         else:
             self.password.setEchoMode(QLineEdit.Password)
+            self.password_create.setEchoMode(QLineEdit.Password)
             self.re_password.setEchoMode(QLineEdit.Password)
 
     # validate emial
@@ -243,7 +255,7 @@ class Program(QWidget):
 
     # changing input color
     def input_color(self, value):
-        palette = self.password.palette()
+        palette = self.password_create.palette()
         match value:
             case 1:
                 # red
@@ -261,9 +273,9 @@ class Program(QWidget):
                 # green
                 palette.setColor(QPalette.Base, QColor('#00ff00'))
             case _:
-                palette.setColor(QPalette.Base, QColor('gray'))    
+                palette.setColor(QPalette.Base, QColor('#2D2D2D'))
     
-        self.password.setPalette(palette) 
+        self.password_create.setPalette(palette) 
 
     def check_user(self):
         password = self.password.text()
@@ -290,7 +302,7 @@ class Program(QWidget):
             self.ck_label2.hide()
 
     def pass_check(self):
-        pass1 = self.password.text()
+        pass1 = self.password_create.text()
         pass2 = self.re_password.text()
         login = self.name.text()
         mail = self.mail.text().lower()
@@ -309,9 +321,10 @@ class Program(QWidget):
                     self.back_btn.hide()
                     self.name.hide()
                     self.mail.hide()
-                    self.password.hide()
+                    self.password_create.hide()
                     self.re_password.hide()
                     self.show_pass.hide()
+                    self.label1.hide()
                 
 
                     # show info

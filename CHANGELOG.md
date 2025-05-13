@@ -1,3 +1,9 @@
+## version 0.1.0 (2025-05-13)
+
+### Changed
+- sign in screen
+- structure of database (added e-mail column)
+
 ## version: 0.0.9 (2025-04-21)
 
 ### Updated
