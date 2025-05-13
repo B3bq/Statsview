@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `stat` DEFAULT CHARACTER SET utf8 ;
 USE `stat` ;
 
 -- -----------------------------------------------------
--- Table `stat`.`users`
+-- Table `users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `idusers` INT NOT NULL AUTO_INCREMENT,
   `mail` VARCHAR(320) NULL,
   `name` VARCHAR(45) NULL,
@@ -30,9 +30,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`images`
+-- Table `images`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`images` (
+CREATE TABLE IF NOT EXISTS `images` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `img` BLOB NULL,
@@ -41,9 +41,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_leagues_season`
+-- Table `football_leagues_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_season` (
+CREATE TABLE IF NOT EXISTS `football_leagues_season` (
   `idleagues` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NOT NULL,
   `count` INT NOT NULL,
@@ -54,21 +54,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_season` (
   INDEX `league_img_idx` (`img` ASC) ,
   CONSTRAINT `id_user_f_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `league_img_f_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_teams_season`
+-- Table `football_teams_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_teams_season` (
+CREATE TABLE IF NOT EXISTS `football_teams_season` (
   `idteams` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `homeCount` INT NOT NULL,
@@ -80,42 +80,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`football_teams_season` (
   INDEX `team_img_idx` (`img` ASC) ,
   CONSTRAINT `id_user_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `team_img_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_broker_season`
+-- Table `football_broker_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_broker_season` (
+CREATE TABLE IF NOT EXISTS `football_broker_season` (
   `league_id` INT NOT NULL,
   `teams_id` INT NOT NULL,
   PRIMARY KEY (`league_id`, `teams_id`),
   INDEX `team_idx` (`teams_id` ASC) ,
   CONSTRAINT `league_unknown`
     FOREIGN KEY (`league_id`)
-    REFERENCES `stat`.`football_leagues_season` (`idleagues`)
+    REFERENCES `football_leagues_season` (`idleagues`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `team_unknown`
     FOREIGN KEY (`teams_id`)
-    REFERENCES `stat`.`football_teams_season` (`idteams`)
+    REFERENCES `football_teams_season` (`idteams`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_leagues_season`
+-- Table `basketball_leagues_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_season` (
+CREATE TABLE IF NOT EXISTS `basketball_leagues_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -126,21 +126,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_season` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_teams_season`
+-- Table `basketball_teams_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_season` (
+CREATE TABLE IF NOT EXISTS `basketball_teams_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -152,42 +152,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_season` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user_unknown_2`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_broker_season`
+-- Table `basketball_broker_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_broker_season` (
+CREATE TABLE IF NOT EXISTS `basketball_broker_season` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league_unknown_2`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`basketball_leagues_season` (`id`)
+    REFERENCES `basketball_leagues_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`basketball_teams_season` (`id`)
+    REFERENCES `basketball_teams_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_leagues_year`
+-- Table `football_leagues_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_year` (
+CREATE TABLE IF NOT EXISTS `football_leagues_year` (
   `idleagues` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NOT NULL,
   `count` INT NOT NULL,
@@ -198,21 +198,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`football_leagues_year` (
   INDEX `league_img_idx` (`img` ASC) ,
   CONSTRAINT `id_user0_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `league_img0_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_teams_year`
+-- Table `football_teams_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_teams_year` (
+CREATE TABLE IF NOT EXISTS `football_teams_year` (
   `idteams` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `homeCount` INT NOT NULL,
@@ -224,42 +224,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`football_teams_year` (
   INDEX `team_img_idx` (`img` ASC) ,
   CONSTRAINT `id_user1_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `team_img0_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`football_broker_year`
+-- Table `football_broker_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`football_broker_year` (
+CREATE TABLE IF NOT EXISTS `football_broker_year` (
   `league_id` INT NOT NULL,
   `teams_id` INT NOT NULL,
   PRIMARY KEY (`league_id`, `teams_id`),
   INDEX `team_idx` (`teams_id` ASC) ,
   CONSTRAINT `league0_unknown`
     FOREIGN KEY (`league_id`)
-    REFERENCES `stat`.`football_leagues_year` (`idleagues`)
+    REFERENCES `football_leagues_year` (`idleagues`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `team0_unknown`
     FOREIGN KEY (`teams_id`)
-    REFERENCES `stat`.`football_teams_year` (`idteams`)
+    REFERENCES `football_teams_year` (`idteams`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_leagues_year`
+-- Table `basketball_leagues_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_year` (
+CREATE TABLE IF NOT EXISTS `basketball_leagues_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -270,21 +270,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`basketball_leagues_year` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user0_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img0_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_teams_year`
+-- Table `basketball_teams_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_year` (
+CREATE TABLE IF NOT EXISTS `basketball_teams_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -296,42 +296,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`basketball_teams_year` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user1_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img0_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`basketball_broker_year`
+-- Table `basketball_broker_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`basketball_broker_year` (
+CREATE TABLE IF NOT EXISTS `basketball_broker_year` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league1_unknown`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`basketball_leagues_year` (`id`)
+    REFERENCES `basketball_leagues_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams0_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`basketball_teams_year` (`id`)
+    REFERENCES `basketball_teams_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_leagues_year`
+-- Table `cs_leagues_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_year` (
+CREATE TABLE IF NOT EXISTS `cs_leagues_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -342,21 +342,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_year` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user00_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img00_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_leagues_season`
+-- Table `cs_leagues_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_season` (
+CREATE TABLE IF NOT EXISTS `cs_leagues_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -367,21 +367,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`cs_leagues_season` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user2_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img1_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_teams_season`
+-- Table `cs_teams_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_season` (
+CREATE TABLE IF NOT EXISTS `cs_teams_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -393,42 +393,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_season` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user3_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img1_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_broker_season`
+-- Table `cs_broker_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_broker_season` (
+CREATE TABLE IF NOT EXISTS `cs_broker_season` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league2_unknown`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`cs_leagues_season` (`id`)
+    REFERENCES `cs_leagues_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams1_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`cs_teams_season` (`id`)
+    REFERENCES `cs_teams_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_teams_year`
+-- Table `cs_teams_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_year` (
+CREATE TABLE IF NOT EXISTS `cs_teams_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -440,42 +440,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`cs_teams_year` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user10_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img00_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`cs_broker_year`
+-- Table `cs_broker_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`cs_broker_year` (
+CREATE TABLE IF NOT EXISTS `cs_broker_year` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league10_unknown`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`cs_leagues_year` (`id`)
+    REFERENCES `cs_leagues_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams00_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`cs_teams_year` (`id`)
+    REFERENCES `cs_teams_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`lol_leagues_year`
+-- Table `lol_leagues_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`lol_leagues_year` (
+CREATE TABLE IF NOT EXISTS `lol_leagues_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -486,21 +486,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`lol_leagues_year` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user01_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img01_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`loll_leagues_season`
+-- Table `loll_leagues_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`loll_leagues_season` (
+CREATE TABLE IF NOT EXISTS `loll_leagues_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -511,21 +511,21 @@ CREATE TABLE IF NOT EXISTS `stat`.`loll_leagues_season` (
   INDEX `kleague_img_idx` (`img` ASC) ,
   CONSTRAINT `user4_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kleague_img2_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`lol_teams_season`
+-- Table `lol_teams_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_season` (
+CREATE TABLE IF NOT EXISTS `lol_teams_season` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -537,42 +537,42 @@ CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_season` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user5_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img2_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`lol_broker_season`
+-- Table `lol_broker_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`lol_broker_season` (
+CREATE TABLE IF NOT EXISTS `lol_broker_season` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league3_unknown`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`loll_leagues_season` (`id`)
+    REFERENCES `loll_leagues_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams2_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`lol_teams_season` (`id`)
+    REFERENCES `lol_teams_season` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`lol_teams_year`
+-- Table `lol_teams_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_year` (
+CREATE TABLE IF NOT EXISTS `lol_teams_year` (
   `id` INT NOT NULL,
   `id_user` INT NULL,
   `name` VARCHAR(45) NULL,
@@ -584,33 +584,33 @@ CREATE TABLE IF NOT EXISTS `stat`.`lol_teams_year` (
   INDEX `kteams_img_idx` (`img` ASC) ,
   CONSTRAINT `user11_unknown`
     FOREIGN KEY (`id_user`)
-    REFERENCES `stat`.`users` (`idusers`)
+    REFERENCES `users` (`idusers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `kteams_img01_unknown`
     FOREIGN KEY (`img`)
-    REFERENCES `stat`.`images` (`id`)
+    REFERENCES `images` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stat`.`loll_broker_year`
+-- Table `loll_broker_year`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stat`.`loll_broker_year` (
+CREATE TABLE IF NOT EXISTS `loll_broker_year` (
   `id_league` INT NOT NULL,
   `id_teams` INT NOT NULL,
   PRIMARY KEY (`id_league`, `id_teams`),
   INDEX `teams_idx` (`id_teams` ASC) ,
   CONSTRAINT `league11_unknown`
     FOREIGN KEY (`id_league`)
-    REFERENCES `stat`.`lol_leagues_year` (`id`)
+    REFERENCES `lol_leagues_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `teams01_unknown`
     FOREIGN KEY (`id_teams`)
-    REFERENCES `stat`.`lol_teams_year` (`id`)
+    REFERENCES `lol_teams_year` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
