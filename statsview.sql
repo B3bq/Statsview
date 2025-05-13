@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `stat`.`users` (
   `idusers` INT NOT NULL AUTO_INCREMENT,
   `mail` VARCHAR(320) NULL,
   `name` VARCHAR(45) NULL,
-  `pass` VARCHAR(45) NULL,
+  `pass` VARCHAR(100) NULL,
   PRIMARY KEY (`idusers`))
 ENGINE = InnoDB;
 
