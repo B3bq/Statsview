@@ -62,6 +62,8 @@ class Program(QWidget):
         self.label1.move(490, 225)
         self.label2 = QLabel("Passwords are incorrect", self)
         self.label2.move(400, 225)
+        self.labelMail = QLabel("Incorrect e-mail address")
+        self.labelMail.move(400, 225)
 
 
         self.login_screen()
@@ -84,6 +86,7 @@ class Program(QWidget):
         self.label1.hide()
         self.label2.hide()
         self.mail.hide()
+        self.labelMail.hide()
 
         #login
         self.name.clear()
@@ -132,10 +135,14 @@ class Program(QWidget):
         self.name.clear()
         self.mail.clear()
         self.password.clear()
+
+        # checking a value of strong password
+        self.password.textChanged.connect(self.pass_strong)
+
         self.re_password.clear()
 
         # checking mail is correctly wrote
-        self.mail.textChanged.connect(self.validate_mail)
+        #self.mail.textChanged.connect(self.validate_mail)
 
         self.create_btn.show()
         self.create_btn.clicked.connect(self.pass_check)
@@ -211,21 +218,52 @@ class Program(QWidget):
             self.re_password.setEchoMode(QLineEdit.Password)
 
     # validate emial
-    def validate_mail(self, text):
-        regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-        if re.match(regex, text):
-            self.input_color(valid=True)
-        else:
-            self.input_color(valid=False)
+    def pass_strong(self, signal):
+        # level of password
+        lvl = 0
+
+        # lenght of pass
+        if len(signal) >= 8:
+            lvl+=1
+        if len(signal) >= 12:
+            lvl+=1
+
+        # are a small or big letters
+        if re.search(r"[a-z]", signal) and re.search(r"[A-Z]", signal):
+            lvl+=1
+
+        # are numbers
+        if re.search(r"\d", signal):
+            lvl+=1
+
+        if re.search(r"[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]", signal):
+            lvl+=1
+
+        self.input_color(value=lvl)
 
     # changing input color
-    def input_color(self, valid):
-        palette = self.mail.palette()
-        if valid:
-            palette.setColor(QPalette.Base, QColor('gray'))
-        else:
-            palette.setColor(QPalette.Base, QColor("#ffcccc"))
-        self.mail.setPalette(palette) 
+    def input_color(self, value):
+        palette = self.password.palette()
+        match value:
+            case 1:
+                # red
+                palette.setColor(QPalette.Base, QColor('#e60000')) # set a color of input's background 
+            case 2:
+                # orange
+                palette.setColor(QPalette.Base, QColor('#ffa31a'))
+            case 3:
+                # yellow
+                palette.setColor(QPalette.Base, QColor('#ffff00'))
+            case 4:
+                # light green
+                palette.setColor(QPalette.Base, QColor('#bfff00'))
+            case 5:
+                # green
+                palette.setColor(QPalette.Base, QColor('#00ff00'))
+            case _:
+                palette.setColor(QPalette.Base, QColor('gray'))    
+    
+        self.password.setPalette(palette) 
 
     def check_user(self):
         password = self.password.text()
@@ -255,34 +293,39 @@ class Program(QWidget):
         pass1 = self.password.text()
         pass2 = self.re_password.text()
         login = self.name.text()
-        mail = self.mail.text()
+        mail = self.mail.text().lower()
         self.label1.hide()
         self.label2.hide()
+        self.labelMail.hide()
 
+        pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
 
-        if(pass1 == pass2):
-            isuser = insert_user(login, mail, pass1)
-            if(isuser == True):
-                # hide all
-                self.create_btn.hide()
-                self.back_btn.hide()
-                self.name.hide()
-                self.mail.hide()
-                self.password.hide()
-                self.re_password.hide()
-                self.show_pass.hide()
+        if re.match(pattern, mail):
+            if(pass1 == pass2):
+                isuser = insert_user(login, mail, pass1)
+                if(isuser == True):
+                    # hide all
+                    self.create_btn.hide()
+                    self.back_btn.hide()
+                    self.name.hide()
+                    self.mail.hide()
+                    self.password.hide()
+                    self.re_password.hide()
+                    self.show_pass.hide()
                 
 
-                # show info
-                self.label.setText(f"Added user {login}")
-                self.label.show()
+                    # show info
+                    self.label.setText(f"Added user {login}")
+                    self.label.show()
 
-                self.back.show()
-                self.back.clicked.connect(self.login_screen)
+                    self.back.show()
+                    self.back.clicked.connect(self.login_screen)
+                else:
+                    self.label1.show()
             else:
-                self.label1.show()
+                self.label2.show()
         else:
-            self.label2.show()
+            self.labelMail.show()
 
     # close app event
     def closeEvent(self, event: QCloseEvent):
