@@ -12,6 +12,26 @@ class Program(QWidget):
     def __init__(self):
         super().__init__()
 
+        # setup buttons
+        self.addEX_btn = QPushButton("Add Exists Teams", self)
+        self.addEX_btn.setFixedSize(200, 50)
+        self.addEX_btn.move(400, 50)
+        self.addNew_btn = QPushButton("Add New Teams", self)
+        self.addNew_btn.setFixedSize(200, 50)
+        self.addNew_btn.move(400, 100)
+        self.viewStats_btn_s = QPushButton("Season summary", self)
+        self.viewStats_btn_s.setFixedSize(200, 50)
+        self.viewStats_btn_s.move(400, 150)
+        self.viewStats_btn_y = QPushButton("Year summary", self)
+        self.viewStats_btn_y.setFixedSize(200, 50)
+        self.viewStats_btn_y.move(400, 150)
+        self.log_out_btn = QPushButton("Log out", self)
+        self.log_out_btn.setFixedSize(200, 50)
+        self.log_out_btn.move(400, 200)
+        self.close_btn = QPushButton("Close", self)
+        self.close_btn.setFixedSize(200, 50)
+        self.close_btn.move(400, 250)
+
         # login input
         self.name = QLineEdit(self)
         self.name.setPlaceholderText("Login")
@@ -27,7 +47,9 @@ class Program(QWidget):
         self.password.setPlaceholderText("Password")
         self.password.setFixedSize(200, 50)
         self.password.move(400, 100)
-        
+        # checkbox remember me
+        self.remember_me = QCheckBox("Remember me", self)
+        self.remember_me.move(400, 170)
 
         # back button
         self.back_btn = QPushButton("Back", self)
@@ -95,6 +117,16 @@ class Program(QWidget):
         self.mail.hide()
         self.labelMail.hide()
         self.password_create.hide()
+        self.addEX_btn.hide()
+        self.addNew_btn.hide()
+        self.viewStats_btn_s.hide()
+        self.viewStats_btn_y.hide()
+        self.log_out_btn.hide()
+        self.close_btn.hide()
+
+        # reset user id
+        User.user_id = ''
+        print(User.user_id)
 
         #login
         self.name.clear()
@@ -108,7 +140,9 @@ class Program(QWidget):
 
         self.show_pass.move(400, 150)
         self.show_pass.show()
-        self.show_pass.stateChanged.connect(self.toggle_password_visibility) 
+        self.show_pass.stateChanged.connect(self.toggle_password_visibility) # password visibility
+
+        self.remember_me.show() # remember me button
 
         #log in btn
         self.btn_login = QPushButton("Log in", self)
@@ -173,50 +207,36 @@ class Program(QWidget):
         self.ck_label2.hide()
 
         # date for view statistics
-        end_date = [datetime.date(2025, 5, 2), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
+        end_date = [datetime.date(2025, 5, 14), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
         today = datetime.date.today()
 
         #menu
-        addEX_btn = QPushButton("Add Exists Teams", self)
-        addEX_btn.setFixedSize(200, 50)
-        addEX_btn.move(400, 50)
-        addEX_btn.show()
-        addEX_btn.clicked.connect(self.open_add_exist) # open file to insert exist
+        self.addEX_btn.show()
+        self.addEX_btn.clicked.connect(self.open_add_exist) # open file to insert exist
 
-        addNew_btn = QPushButton("Add New Teams", self)
-        addNew_btn.setFixedSize(200, 50)
-        addNew_btn.move(400, 100)
-        addNew_btn.show()
-        addNew_btn.clicked.connect(self.open_add_new) # open file to insert datas
+        self.addNew_btn.show()
+        self.addNew_btn.clicked.connect(self.open_add_new) # open file to insert datas
 
-        viewStats_btn_s = QPushButton("Season summary", self)
-        viewStats_btn_s.setFixedSize(200, 50)
-        viewStats_btn_s.move(400, 150)
-        viewStats_btn_y = QPushButton("Year summary", self)
-        viewStats_btn_y.setFixedSize(200, 50)
-        viewStats_btn_y.move(400, 150)
         # checking date
         if today in end_date[:5]:
-             viewStats_btn_y.hide()
-             viewStats_btn_s.show()
-             viewStats_btn_s.clicked.connect(self.open_summary)
+            self.viewStats_btn_y.hide()
+            self.viewStats_btn_s.show()
+            self.viewStats_btn_s.clicked.connect(self.open_summary)
         elif today in end_date[5:]:
-             viewStats_btn_s.hide()
-             viewStats_btn_y.show()
-             viewStats_btn_y.clicked.connect(self.open_summary)
+            self.viewStats_btn_s.hide()
+            self.viewStats_btn_y.show()
+            self.viewStats_btn_y.clicked.connect(self.open_summary)
         else:
-             viewStats_btn_s.hide()
-             viewStats_btn_y.hide()
+            self.viewStats_btn_s.hide()
+            self.viewStats_btn_y.hide()
 
         #log out
-
+        self.log_out_btn.show()
+        self.log_out_btn.clicked.connect(self.login_screen)
 
         #close button
-        close_btn = QPushButton("Close", self)
-        close_btn.setFixedSize(200, 50)
-        close_btn.move(400, 250)
-        close_btn.show()
-        close_btn.clicked.connect(QApplication.instance().quit)
+        self.close_btn.show()
+        self.close_btn.clicked.connect(QApplication.instance().quit)
 
     #show pass function
     def toggle_password_visibility(self, state):
@@ -276,6 +296,12 @@ class Program(QWidget):
                 palette.setColor(QPalette.Base, QColor('#2D2D2D'))
     
         self.password_create.setPalette(palette) 
+
+    # log out function
+    def log_out(self):
+        User.user_id = ''
+
+
 
     def check_user(self):
         password = self.password.text()
