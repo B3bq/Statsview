@@ -1,8 +1,7 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon, QPalette, QColor
 from PySide6.QtWidgets import *
 from PySide6.QtCore import QRegularExpression
-import re
-import datetime
+import re, datetime, json, os
 import add_new, add_ex, summary_window
 from insert import insert_user, check_user, User # functions to insert user datas to database and check log in 
 
@@ -95,7 +94,15 @@ class Program(QWidget):
         self.labelMail.move(440, 215)
 
 
-        self.login_screen()
+        # checking if user is log in
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+        # here must be if user is log in 
+        if user_data["user_id"] != 0:
+            self.setup() # true then show main screen
+        else:
+            self.login_screen() # false then show login screen
 
         #basic window settings
         self.setFixedSize(1000, 400)
@@ -128,6 +135,16 @@ class Program(QWidget):
         User.user_id = ''
         print(User.user_id)
 
+        # reset locl file which save user id
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+
+        user_data["user_id"] = 0
+
+        with open(file_path, 'wt') as file:
+            json.dump(user_data, file)
+
         #login
         self.name.clear()
         self.name.show()
@@ -143,6 +160,7 @@ class Program(QWidget):
         self.show_pass.stateChanged.connect(self.toggle_password_visibility) # password visibility
 
         self.remember_me.show() # remember me button
+        self.remember_me.clicked.connect(self.rem_me)
 
         #log in btn
         self.btn_login = QPushButton("Log in", self)
@@ -166,6 +184,7 @@ class Program(QWidget):
         self.ck_label.hide()
         self.ck_label2.hide()
         self.password.hide()
+        self.remember_me.hide()
 
         # show needed elements
         self.re_password.show()
@@ -200,11 +219,9 @@ class Program(QWidget):
         #hiding login screen
         self.name.hide()
         self.password.hide()
-        self.btn_login.hide()
-        self.btn_signin.hide()
-        self.show_pass.hide()
         self.ck_label.hide()
-        self.ck_label2.hide()
+        self.ck_label2.hide()        
+        self.remember_me.hide()
 
         # date for view statistics
         end_date = [datetime.date(2025, 5, 14), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
@@ -297,11 +314,25 @@ class Program(QWidget):
     
         self.password_create.setPalette(palette) 
 
-    # log out function
-    def log_out(self):
-        User.user_id = ''
+    # remeber me
+    def rem_me(self):
+        # reading data from json file
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
 
+        # taking user id
+        password = self.password.text()
+        login = self.name.text()
 
+        user_id = check_user(login, password)
+        if type(user_id) == int: 
+            user_data["user_id"] = user_id
+        else:
+            user_data["user_id"] = 0
+        
+        with open(file_path, "wt") as file:
+            json.dump(user_data, file)
 
     def check_user(self):
         password = self.password.text()
