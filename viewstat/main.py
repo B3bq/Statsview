@@ -101,6 +101,7 @@ class Program(QWidget):
         # here must be if user is log in 
         if user_data["user_id"] != 0:
             self.setup() # true then show main screen
+            User.user_id = user_data["user_id"] # set class user to user whose is remember
         else:
             self.login_screen() # false then show login screen
 
