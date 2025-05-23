@@ -31,6 +31,14 @@ class Program(QWidget):
         self.close_btn.setFixedSize(200, 50)
         self.close_btn.move(400, 250)
 
+        # log in buttons
+        self.btn_login = QPushButton("Log in", self)
+        self.btn_login.setFixedSize(200, 50)
+        self.btn_login.move(400, 200)
+        self.btn_signin = QPushButton("Sign up", self)
+        self.btn_signin.setFixedSize(200, 50)
+        self.btn_signin.move(400, 250)
+
         # login input
         self.name = QLineEdit(self)
         self.name.setPlaceholderText("Login")
@@ -164,16 +172,10 @@ class Program(QWidget):
         self.remember_me.clicked.connect(self.rem_me)
 
         #log in btn
-        self.btn_login = QPushButton("Log in", self)
-        self.btn_login.setFixedSize(200, 50)
-        self.btn_login.move(400, 200)
         self.btn_login.show()
         self.btn_login.clicked.connect(self.check_user)
 
         #sign in btn
-        self.btn_signin = QPushButton("Sign up", self)
-        self.btn_signin.setFixedSize(200, 50)
-        self.btn_signin.move(400, 250)
         self.btn_signin.show()
         self.btn_signin.clicked.connect(self.create_new)
 
@@ -220,9 +222,23 @@ class Program(QWidget):
         #hiding login screen
         self.name.hide()
         self.password.hide()
-        self.ck_label.hide()
-        self.ck_label2.hide()        
+        self.show_pass.hide()
+        self.btn_login.hide()
+        self.btn_signin.hide()
+        self.mail.hide()
+        self.password_create.hide()
         self.remember_me.hide()
+        self.re_password.hide()
+        self.create_btn.hide()
+        self.back_btn.hide()
+        self.back.hide()
+        self.ck_label2.hide()
+        self.ck_label.hide()
+        self.label.hide()
+        self.label1.hide()
+        self.label2.hide()
+        self.labelMail.hide()
+    
 
         # date for view statistics
         end_date = [datetime.date(2025, 5, 14), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
