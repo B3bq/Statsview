@@ -2,6 +2,7 @@
   font-size: 87.5%;
   font-family: Roboto, sans-serif;
   box-sizing: border-box;
+  color: #1C1C1E;
 }
 
 *, *::before, *::after {
@@ -10,12 +11,26 @@
 
 body {
   margin: 0;
-  background-color: yellow;
+  background-color: #a7b5be;
+  display: flex;
+  flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Roboto, sans-serif;
   margin: 3%;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+footer > img {
+  width: 40px;
+  height: 40px;
 }
 
 body > header {
@@ -24,6 +39,7 @@ body > header {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  background-color: #2ECC71;
 }
 body > header a {
   text-decoration: none;
@@ -75,7 +91,7 @@ body > header nav ul.active a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: yellow;
+  color: #2ECC71;
 }
 body > header nav ul.active a:before {
   content: ">";
@@ -91,6 +107,21 @@ main > header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+section > p {
+  margin-left: 1em;
+}
+
+.sign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sign input {
+  margin-left: 1em;
+  width: 50%;
 }
 
 /*# sourceMappingURL=style.css.map */

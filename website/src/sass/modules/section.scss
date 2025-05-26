@@ -1,0 +1,17 @@
+@use 'varibles.scss' as *;
+
+section > p{
+    margin-left: 1em;
+}
+.sign{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    input{
+        margin-left: 1em;
+        width: 50%;
+    }
+    
+}
