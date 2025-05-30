@@ -6,12 +6,24 @@ section > p{
 .sign{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    margin: 20px 0px 20px 0px;
+    height: auto;
 
     input{
-        margin-left: 1em;
+        height: 50px;
         width: 50%;
+        border: 1px solid $secondaryColor;
+        border-radius: 10%;
     }
-    
+
+
+    p{
+        margin: 0;
+        font-size: 1.5rem;
+    }
+    p > input{
+        height: 20px;
+        width: auto;
+    }
 }

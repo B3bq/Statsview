@@ -116,12 +116,23 @@ section > p {
 .sign {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin: 20px 0px 20px 0px;
+  height: auto;
 }
 .sign input {
-  margin-left: 1em;
+  height: 50px;
   width: 50%;
+  border: 1px solid #a7b5be;
+  border-radius: 10%;
+}
+.sign p {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.sign p > input {
+  height: 20px;
+  width: auto;
 }
 
 /*# sourceMappingURL=style.css.map */
