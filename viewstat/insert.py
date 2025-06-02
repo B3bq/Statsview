@@ -10,7 +10,7 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
         host = "localhost",
         user = "root",
         password = "",
-        database = "stat"
+        database = "database"
     )
 
     mycursor = connect.cursor(buffered=True)
@@ -48,15 +48,31 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
         sql_update_league = f"UPDATE {tabel_league_y} SET count = count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_league, (league_name, User.user_id))       
     else:
-        sql_insert_league = f"INSERT INTO {tabel_league_y} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, '')"
-        mycursor.execute(sql_insert_league, (User.user_id, league_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of league image
+        mycursor.execute(sql_img_search, (league_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist league name then img equal one (basic image for league)
+        if img == []:
+            img = 1
+
+        sql_insert_league = f"INSERT INTO {tabel_league_y} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
+        mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
 
     if myresult_league_s != []:
         sql_update_league = f"UPDATE {tabel_league_s} SET count = count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_league, (league_name, User.user_id))
     else:
-        sql_insert_league = f"INSERT INTO {tabel_league_s} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, '')"
-        mycursor.execute(sql_insert_league, (User.user_id, league_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of league image
+        mycursor.execute(sql_img_search, (league_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist league name then img equal one (basic image for league)
+        if img == []:
+            img = 1
+
+        sql_insert_league = f"INSERT INTO {tabel_league_s} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
+        mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
 
 
 
@@ -69,41 +85,73 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
     myresult_team_one_s = mycursor.fetchall()
 
     if myresult_team_one_y != []:
-        sql_update_teamone = f"UPDATE {tabel_teams_y} SET homeCount = homeCount + 1 WHERE name = %s AND id_user = %s"
+        sql_update_teamone = f"UPDATE {tabel_teams_y} SET home_count = home_count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_teamone, (teamOne_name, User.user_id))
     else:
-        sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
-        mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of team image
+        mycursor.execute(sql_img_search, (teamOne_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist team name then img equal two (basic image for team)
+        if img == []:
+            img = 2
+
+        sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
+        mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
 
     if myresult_team_one_s != []:
-        sql_update_teamone = f"UPDATE {tabel_teams_s} SET homeCount = homeCount + 1 WHERE name = %s AND id_user = %s"
+        sql_update_teamone = f"UPDATE {tabel_teams_s} SET home_count = home_count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_teamone, (teamOne_name, User.user_id))
     else:
-        sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
-        mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of team image
+        mycursor.execute(sql_img_search, (teamOne_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist team name then img equal two (basic image for team)
+        if img == []:
+            img = 2
+
+        sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
+        mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
 
 
     # checking if team two exist
     sql_team_two_check = f"SELECT * FROM {tabel_teams_y} WHERE name = %s AND id_user = %s"
-    mycursor.execute(sql_team_one_check, (teamTwo_name, User.user_id))
+    mycursor.execute(sql_team_two_check, (teamTwo_name, User.user_id))
     myresult_team_two_y = mycursor.fetchall()
     sql_team_two_check = f"SELECT * FROM {tabel_teams_s} WHERE name = %s AND id_user = %s"
-    mycursor.execute(sql_team_one_check, (teamTwo_name, User.user_id))
+    mycursor.execute(sql_team_two_check, (teamTwo_name, User.user_id))
     myresult_team_two_s = mycursor.fetchall()
 
     if myresult_team_two_y != []:
-        sql_update_teamone = f"UPDATE {tabel_teams_y} SET homeCount = homeCount + 1 WHERE name = %s AND id_user = %s"
+        sql_update_teamone = f"UPDATE {tabel_teams_y} SET home_count = home_count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_teamone, (teamTwo_name, User.user_id))
     else:
-        sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
-        mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of team image
+        mycursor.execute(sql_img_search, (teamTwo_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist team name then img equal one (basic image for team)
+        if img == []:
+            img = 2
+
+        sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
+        mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))
 
     if myresult_team_two_s != []:
-        sql_update_teamone = f"UPDATE {tabel_teams_s} SET homeCount = homeCount + 1 WHERE name = %s AND id_user = %s"
+        sql_update_teamone = f"UPDATE {tabel_teams_s} SET home_count = home_count + 1 WHERE name = %s AND id_user = %s"
         mycursor.execute(sql_update_teamone, (teamTwo_name, User.user_id))
     else:
-        sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, homeCount, awayCount, img) VALUES (NULL, %s, %s, 1, 0, '')"
-        mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name))
+        sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of team image
+        mycursor.execute(sql_img_search, (teamTwo_name,))
+        img = mycursor.fetchone()
+
+        # if don't exist team name then img equal one (basic image for team)
+        if img == []:
+            img = 2
+
+        sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
+        mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))
 
 
     # taking id from league table
@@ -180,7 +228,7 @@ def insert_user(name, mail, password):
         host = "localhost",
         user = "root",
         password = "",
-        database = "stat"
+        database = "database"
     )
 
     mycursor = connect.cursor()
@@ -198,7 +246,7 @@ def insert_user(name, mail, password):
     if myresult != []:
         return False
     else:
-        sql_insert = "INSERT INTO users (idusers, mail, name, pass) VALUES (NULL, %s, %s, %s)"
+        sql_insert = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, %s, %s, %s)"
         mycursor.execute(sql_insert, (mail, name, hashed))
 
     connect.commit()
@@ -210,7 +258,7 @@ def check_user(login, password):
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'stat'
+        database = 'database'
     )
 
     mycursor = connect.cursor()
@@ -220,13 +268,13 @@ def check_user(login, password):
     myresult = mycursor.fetchall()
 
     if myresult != []:
-        sql_pass_check = "SELECT pass FROM users WHERE name = %s or mail = %s"
+        sql_pass_check = "SELECT password FROM users WHERE name = %s or mail = %s"
         mycursor.execute(sql_pass_check, (login, login))
         myresult = mycursor.fetchone()
         hash_pass = myresult[0].encode()
         
         if bcrypt.checkpw(password.encode(), hash_pass):
-            sql_user_id = "SELECT idusers FROM users WHERE name = %s or mail = %s"
+            sql_user_id = "SELECT id_users FROM users WHERE name = %s or mail = %s"
             mycursor.execute(sql_user_id, (login, login))
             result = mycursor.fetchone()
             user_id = result[0]
