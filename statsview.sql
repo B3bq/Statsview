@@ -166,7 +166,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `footabll_broker_season`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `footabll_broker_season` (
+CREATE TABLE IF NOT EXISTS `football_broker_season` (
   `id_league` INT NULL,
   `id_team` INT NULL,
   PRIMARY KEY (`id_league`, `id_team`),
