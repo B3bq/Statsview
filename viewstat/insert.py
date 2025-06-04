@@ -3,6 +3,7 @@ import bcrypt # to password encryption
 
 class User:
     user_id = ''
+    season = ''
 
 
 def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
@@ -38,6 +39,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist league name then img equal one (basic image for league)
                 if img == []:
                     img = 1
+                else:
+                    img = img[0]
 
                 sql_insert_league = f"INSERT INTO {tabel_league} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
                 mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
@@ -58,6 +61,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal two (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
@@ -68,7 +73,7 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
             myresult_team_two = mycursor.fetchall()
 
             if myresult_team_two != []:
-                sql_update_teamone = f"UPDATE {tabel_teams} SET home_count = home_count + 1 WHERE name = %s AND id_user = %s"
+                sql_update_teamone = f"UPDATE {tabel_teams} SET away_count = away_count + 1 WHERE name = %s AND id_user = %s"
                 mycursor.execute(sql_update_teamone, (teamTwo_name, User.user_id))
             else:
                 sql_img_search = f"SELECT id FROM images WHERE name = %s" # taking id of team image
@@ -78,8 +83,10 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal one (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
-                sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
+                sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 0, 1, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))
             
             # taking id from league table
@@ -126,6 +133,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist league name then img equal one (basic image for league)
                 if img == []:
                     img = 1
+                else:
+                    img = img[0]
 
                 sql_insert_league = f"INSERT INTO {tabel_league} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
                 mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
@@ -146,6 +155,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal two (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
@@ -166,6 +177,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal one (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 0, 1, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))
@@ -224,6 +237,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist league name then img equal one (basic image for league)
                 if img == []:
                     img = 1
+                else:
+                    img = img[0]
 
                 sql_insert_league = f"INSERT INTO {tabel_league_y} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
                 mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
@@ -239,6 +254,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist league name then img equal one (basic image for league)
                 if img == []:
                     img = 1
+                else:
+                    img = img[0]
 
                 sql_insert_league = f"INSERT INTO {tabel_league_s} (id, id_user, name, count, img) VALUES (NULL, %s, %s, 1, %s)"
                 mycursor.execute(sql_insert_league, (User.user_id, league_name, img))
@@ -264,6 +281,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal two (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
@@ -279,6 +298,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal two (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 1, 0, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamOne_name, img))
@@ -303,6 +324,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal one (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams_y} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 0, 1, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))
@@ -318,6 +341,8 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
                 # if don't exist team name then img equal one (basic image for team)
                 if img == []:
                     img = 2
+                else:
+                    img = img[0]
 
                 sql_insert_teamone = f"INSERT INTO {tabel_teams_s} (id, id_user, name, home_count, away_count, img) VALUES (NULL, %s, %s, 0, 1, %s)"
                 mycursor.execute(sql_insert_teamone, (User.user_id, teamTwo_name, img))

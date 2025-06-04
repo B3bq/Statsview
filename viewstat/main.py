@@ -253,10 +253,12 @@ class Program(QWidget):
 
         # checking date
         if today in end_date[:5]:
+            User.season = 'season'
             self.viewStats_btn_y.hide()
             self.viewStats_btn_s.show()
             self.viewStats_btn_s.clicked.connect(self.open_summary)
         elif today in end_date[5:]:
+            User.season = 'year'
             self.viewStats_btn_s.hide()
             self.viewStats_btn_y.show()
             self.viewStats_btn_y.clicked.connect(self.open_summary)
