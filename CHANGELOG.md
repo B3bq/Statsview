@@ -1,3 +1,9 @@
+## version 0.1.1 (2025-06-04)
+
+### Changed
+- structure of database
+- refactor inserting data code
+
 ## version 0.1.0 (2025-05-13)
 
 ### Changed
