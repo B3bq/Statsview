@@ -12,9 +12,9 @@ section > p{
 
     input{
         height: 50px;
-        width: 50%;
+        width: 90%;
         border: 1px solid $secondaryColor;
-        border-radius: 10%;
+        border-radius: 15px;
     }
 
 
@@ -25,5 +25,34 @@ section > p{
     p > input{
         height: 20px;
         width: auto;
+    }
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0px 20px 0px;
+    
+    input{
+        height: 50px;
+        width: 90%;
+        border: 1px solid $secondaryColor;
+        border-radius: 15px;
+
+        
+    }
+    input[type="text"], input[type="password"]{
+        padding-left: 10px;
+    }
+
+
+    p > input{
+        height: 20px;
+        width: auto;
+    }
+
+    a{
+        margin: 5px;
     }
 }
