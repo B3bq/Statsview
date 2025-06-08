@@ -241,8 +241,9 @@ class Program(QWidget):
     
 
         # date for view statistics
-        end_date = [datetime.date(2025, 5, 14), datetime.date(2025, 6, 1), datetime.date(2025, 6, 2), datetime.date(2025, 6, 3), datetime.date(2025, 6, 4), datetime.date(2026, 1, 1), datetime.date(2026, 1, 2), datetime.date(2026, 1, 3), datetime.date(2026, 1, 4)]
         today = datetime.date.today()
+        end_date = [datetime.date(datetime.date.today().year, 6, 8), datetime.date(datetime.date.today().year, 7, 1), datetime.date(datetime.date.today().year, 7, 2), datetime.date(datetime.date.today().year, 7, 3), datetime.date(datetime.date.today().year, 7, 4), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
+        
 
         #menu
         self.addEX_btn.show()
