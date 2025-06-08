@@ -383,21 +383,6 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
 
                 idTeam = result[0]
                 idTeams_s.append(idTeam)
-            #sql_check_exist = f"SELECT id_teams FROM {tabel_broker} JOIN {tabel_teams} ON {tabel_broker}.id_teams = {tabel_teams}.id WHERE {tabel_broker}.id_league = %s AND {tabel_teams}.name = %s LIMIT 1"
-            #for item in teams:
-            #    mycursor.execute(sql_check_exist, (idLeague, item))
-            #    exists = mycursor.fetchone()
-
-            #    if exists:
-            #        print(f"⚠ Team {item} is already exist")
-            #        continue
-
-            #    mycursor.execute(sql_take_idteam, (item,))
-            #    result = mycursor.fetchone()
-            #    
-            #    if result:
-            #        idTeam = result[0]
-            #        idTeams.append(idTeam)
 
             print(idTeams_y)
             print(idTeams_s)
