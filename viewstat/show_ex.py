@@ -6,7 +6,7 @@ def show_leagues(sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connection.cursor()
@@ -43,7 +43,7 @@ def show_teams(league_name, sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connection.cursor()

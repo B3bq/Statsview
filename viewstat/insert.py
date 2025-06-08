@@ -11,7 +11,7 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connect.cursor(buffered=True)
@@ -407,7 +407,7 @@ def insert_user(name, mail, password):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connect.cursor()
@@ -437,7 +437,7 @@ def check_user(login, password):
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'database'
+        database = 'statsview'
     )
 
     mycursor = connect.cursor()

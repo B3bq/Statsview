@@ -8,7 +8,7 @@ def top_leagues(sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connction.cursor()
@@ -40,7 +40,7 @@ def top_teams(sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connction.cursor()
@@ -72,7 +72,7 @@ def home_team(sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connction.cursor()
@@ -104,7 +104,7 @@ def away_team(sport):
         host = "localhost",
         user = "root",
         password = "",
-        database = "database"
+        database = "statsview"
     )
 
     mycursor = connction.cursor()
