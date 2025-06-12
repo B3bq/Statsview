@@ -1,9 +1,10 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon, QPalette, QColor
 from PySide6.QtWidgets import *
 from PySide6.QtCore import QRegularExpression
-import re, datetime, json, os
+import re, datetime, json, os, random
 import add_new, add_ex, summary_window
-from insert import insert_user, check_user, User # functions to insert user datas to database and check log in 
+from insert import insert_user, check_user, User # functions to insert user datas to database and check log in
+from mail import * # import mail script
 
 
 
@@ -74,6 +75,17 @@ class Program(QWidget):
         self.re_password.setPlaceholderText("Reapet password")
         self.re_password.setFixedSize(200, 50)
         self.re_password.move(505, 100)
+        # verification code
+        self.ver_code = QLineEdit(self)
+        self.ver_code.setPlaceholderText("Enter verification code")
+        self.ver_code.setFixedSize(200, 50)
+        self.ver_code.move(400, 150)
+        # label for verification
+        self.label_ver = QLabel("Incorrect code", self)
+        self.label_ver.move(450, 205)
+        # verification button
+        self.btn_verification = QPushButton("Verify", self)
+        self.btn_verification.move(450, 220)
         #checkbox to show pass
         self.show_pass = QCheckBox("Show password", self)
         self.show_pass.move(400, 150)
@@ -139,6 +151,8 @@ class Program(QWidget):
         self.viewStats_btn_y.hide()
         self.log_out_btn.hide()
         self.close_btn.hide()
+        self.ver_code.hide()
+        self.label_ver.hide()
 
         # reset user id
         User.user_id = ''
@@ -188,6 +202,8 @@ class Program(QWidget):
         self.ck_label2.hide()
         self.password.hide()
         self.remember_me.hide()
+        self.ver_code.hide()
+        self.label_ver.hide()
 
         # show needed elements
         self.re_password.show()
@@ -238,6 +254,8 @@ class Program(QWidget):
         self.label1.hide()
         self.label2.hide()
         self.labelMail.hide()
+        self.ver_code.hide()
+        self.label_ver.hide()
     
 
         # date for view statistics
@@ -386,13 +404,19 @@ class Program(QWidget):
         self.label1.hide()
         self.label2.hide()
         self.labelMail.hide()
+        
 
         pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
 
         if re.match(pattern, mail):
             if(pass1 == pass2):
-                isuser = insert_user(login, mail, pass1)
-                if(isuser == True):
+                # sending verification code
+                code = random.randrange(1000, 9999) # generate a code
+                print(f"code: {code}")
+                # sending email to user
+                sent = mail_sent(mail, code)
+
+                if sent == True:
                     # hide all
                     self.create_btn.hide()
                     self.back_btn.hide()
@@ -402,16 +426,25 @@ class Program(QWidget):
                     self.re_password.hide()
                     self.show_pass.hide()
                     self.label1.hide()
+
+
+                    self.ver_code.show()
+                    user_ver_code = self.ver_code.text()
                 
+                # if code equal user code statment
+                if code == user_ver_code:  
+                    isuser = insert_user(login, mail, pass1)
+                    if(isuser == True):
+                        # show info
+                        self.label.setText(f"Added user {login}")
+                        self.label.show()
 
-                    # show info
-                    self.label.setText(f"Added user {login}")
-                    self.label.show()
-
-                    self.back.show()
-                    self.back.clicked.connect(self.login_screen)
+                        self.back.show()
+                        self.back.clicked.connect(self.login_screen)
+                    else:
+                        self.label1.show()
                 else:
-                    self.label1.show()
+                    self.label_ver.show()
             else:
                 self.label2.show()
         else:
