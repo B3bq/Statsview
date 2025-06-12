@@ -2,3 +2,4 @@ __pycache__
 /img
 /mobile
 /viewstat/save.json
+.env
