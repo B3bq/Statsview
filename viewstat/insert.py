@@ -401,7 +401,30 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
 
     connect.commit()
     connect.close()
-    
+
+def check_name(name):
+    connect = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        password = "",
+        database = "statsview"
+    )
+
+    mycursor = connect.cursor()
+
+    # changing varibles to list
+    Name = [name]
+
+    # checking user
+    sql_check = "SELECT * FROM users WHERE name = %s"
+    mycursor.execute(sql_check, Name)
+    myresult = mycursor.fetchall()
+
+    if myresult != []:
+        return False
+    else:
+        return True
+
 def insert_user(name, mail, password):
     connect = mysql.connector.connect(
         host = "localhost",
