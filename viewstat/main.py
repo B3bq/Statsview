@@ -3,7 +3,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import QRegularExpression
 import re, datetime, json, os, random
 import add_new, add_ex, summary_window
-from insert import insert_user, check_user, User # functions to insert user datas to database and check log in
+from insert import * # functions to insert user datas to database and check log in
 from mail import * # import mail script
 
 
@@ -82,10 +82,11 @@ class Program(QWidget):
         self.ver_code.move(400, 150)
         # label for verification
         self.label_ver = QLabel("Incorrect code", self)
-        self.label_ver.move(450, 205)
+        self.label_ver.move(458, 205)
         # verification button
         self.btn_verification = QPushButton("Verify", self)
-        self.btn_verification.move(450, 220)
+        self.btn_verification.setCheckable(True)
+        self.btn_verification.move(460, 220)
         #checkbox to show pass
         self.show_pass = QCheckBox("Show password", self)
         self.show_pass.move(400, 150)
@@ -153,10 +154,10 @@ class Program(QWidget):
         self.close_btn.hide()
         self.ver_code.hide()
         self.label_ver.hide()
+        self.btn_verification.hide()
 
         # reset user id
         User.user_id = ''
-        print(User.user_id)
 
         # reset locl file which save user id
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
@@ -204,6 +205,7 @@ class Program(QWidget):
         self.remember_me.hide()
         self.ver_code.hide()
         self.label_ver.hide()
+        self.ver_code.hide()
 
         # show needed elements
         self.re_password.show()
@@ -256,6 +258,8 @@ class Program(QWidget):
         self.labelMail.hide()
         self.ver_code.hide()
         self.label_ver.hide()
+        self.ver_code.hide()
+        self.btn_verification.hide()
     
 
         # date for view statistics
@@ -399,8 +403,8 @@ class Program(QWidget):
     def pass_check(self):
         pass1 = self.password_create.text()
         pass2 = self.re_password.text()
-        login = self.name.text()
         mail = self.mail.text().lower()
+        login = self.name.text()
         self.label1.hide()
         self.label2.hide()
         self.labelMail.hide()
@@ -410,45 +414,57 @@ class Program(QWidget):
 
         if re.match(pattern, mail):
             if(pass1 == pass2):
-                # sending verification code
-                code = random.randrange(1000, 9999) # generate a code
-                print(f"code: {code}")
-                # sending email to user
-                sent = mail_sent(mail, code)
+                name = check_name(login) # checikng if login is free
+                if name == True:
+                    # sending verification code
+                    self.code = random.randrange(1000, 9999) # generate a code
+                    # sending email to user
+                    sent = mail_sent(mail, self.code)
 
-                if sent == True:
-                    # hide all
-                    self.create_btn.hide()
-                    self.back_btn.hide()
-                    self.name.hide()
-                    self.mail.hide()
-                    self.password_create.hide()
-                    self.re_password.hide()
-                    self.show_pass.hide()
-                    self.label1.hide()
-
-
-                    self.ver_code.show()
-                    user_ver_code = self.ver_code.text()
-                
-                # if code equal user code statment
-                if code == user_ver_code:  
-                    isuser = insert_user(login, mail, pass1)
-                    if(isuser == True):
-                        # show info
-                        self.label.setText(f"Added user {login}")
-                        self.label.show()
-
-                        self.back.show()
-                        self.back.clicked.connect(self.login_screen)
-                    else:
-                        self.label1.show()
+                    if sent == True:
+                        # hide all
+                        self.create_btn.hide()
+                        self.back_btn.hide()
+                        self.name.hide()
+                        self.mail.hide()
+                        self.password_create.hide()
+                        self.re_password.hide()
+                        self.show_pass.hide()
+                        self.label1.hide()
+                        self.ver_code.show()
+                        self.btn_verification.show()
+                        self.btn_verification.clicked.connect(self.verification_mail)
                 else:
-                    self.label_ver.show()
+                    self.label1.show()   
             else:
                 self.label2.show()
         else:
             self.labelMail.show()
+
+    def verification_mail(self):
+        # taking datas
+        login = self.name.text()
+        mail = self.mail.text()
+        pass1 = self.password_create.text()
+        user_ver_code = int(self.ver_code.text())
+
+        # if code equal user code statment
+        if self.code == user_ver_code:
+            isuser = insert_user(login, mail, pass1)
+            if(isuser == True):
+                # hide useless things
+                self.ver_code.hide()
+                self.btn_verification.hide()
+                self.label_ver.hide()
+
+                # show info
+                self.label.setText(f"Added user {login}")
+                self.label.show()
+
+                self.back.show()
+                self.back.clicked.connect(self.login_screen)
+        else:
+            self.label_ver.show()
 
     # close app event
     def closeEvent(self, event: QCloseEvent):
