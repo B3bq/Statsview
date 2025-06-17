@@ -1,3 +1,8 @@
+## version 0.1.2 (2025-06-15)
+
+### Added
+- sending code verification to user by e-mail in app
+
 ## version 0.1.1 (2025-06-04)
 
 ### Changed
