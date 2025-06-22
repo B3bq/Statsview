@@ -21,12 +21,12 @@ def show_leagues(sport):
             sport2 = sport + "_leagues_season"
 
     # league options
-    sql_league = f"SELECT name FROM {sport}"
+    sql_league = f"SELECT name FROM {sport} ORDER BY name ASC"
     mycursor.execute(sql_league)
     league_names = mycursor.fetchall()
 
     if league_names == []:
-        sql_league = f"SELECT name FROM {sport2}"
+        sql_league = f"SELECT name FROM {sport2} ORDER BY name ASC"
         mycursor.execute(sql_league)
         league_names = mycursor.fetchall()
 
@@ -67,12 +67,12 @@ def show_teams(league_name, sport):
             tabel_broker2 = sport + "_broker_season"
             tabel_teams2 = sport + "_teams_season"
 
-    sql_find_teams = f"SELECT {tabel_teams}.name FROM {tabel_teams} JOIN {tabel_broker} ON {tabel_teams}.id = {tabel_broker}.id_team JOIN {tabel_league} ON {tabel_broker}.id_league = {tabel_league}.id WHERE {tabel_league}.name = %s"
+    sql_find_teams = f"SELECT {tabel_teams}.name FROM {tabel_teams} JOIN {tabel_broker} ON {tabel_teams}.id = {tabel_broker}.id_team JOIN {tabel_league} ON {tabel_broker}.id_league = {tabel_league}.id WHERE {tabel_league}.name = %s ORDER BY {tabel_teams}.name ASC"
     mycursor.execute(sql_find_teams, league_name)
     team_names = mycursor.fetchall()
 
     if team_names == []:
-        sql_find_teams = f"SELECT {tabel_teams2}.name FROM {tabel_teams2} JOIN {tabel_broker2} ON {tabel_teams2}.id = {tabel_broker2}.id_team JOIN {tabel_league2} ON {tabel_broker2}.id_league = {tabel_league2}.id WHERE {tabel_league2}.name = %s"
+        sql_find_teams = f"SELECT {tabel_teams2}.name FROM {tabel_teams2} JOIN {tabel_broker2} ON {tabel_teams2}.id = {tabel_broker2}.id_team JOIN {tabel_league2} ON {tabel_broker2}.id_league = {tabel_league2}.id WHERE {tabel_league2}.name = %s ORDER BY {tabel_teams2}.name ASC"
         mycursor.execute(sql_find_teams, league_name)
         team_names = mycursor.fetchall()
 
