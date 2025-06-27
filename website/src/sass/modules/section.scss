@@ -1,15 +1,9 @@
 @use 'varibles.scss' as *;
 
-main{
-    margin: 150px 0px 100px 0px;
-}
-
-section > p{
-    margin-left: 1em;
-}
-.sign{
+.sign, .sign__form{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin: 20px 0px 20px 0px;
     height: auto;
@@ -19,16 +13,30 @@ section > p{
         width: 90%;
         border: 1px solid $secondaryColor;
         border-radius: 15px;
+        margin: 5px 0px 5px 0px;
+        padding-left: 10px;
     }
-
+    
 
     p{
         margin: 0;
         font-size: 1.5rem;
     }
-    p > input{
+
+
+    div > input{
         height: 20px;
-        width: auto;
+        width: 20px;
+    }
+}
+.sign{
+    &::before{
+        position: relative;
+        content: '';
+        display: block;
+        width: 90%;
+        height: 0.25em;
+        background: $fifthColor;
     }
 }
 
@@ -43,17 +51,36 @@ section > p{
         width: 90%;
         border: 1px solid $secondaryColor;
         border-radius: 15px;
-
-        
+        margin: 5px 0px 5px 0px;
     }
     input[type="text"], input[type="password"]{
         padding-left: 10px;
     }
 
+    &__checkboxes{
+        width: 100%;
+        padding: 0px 25px 0px 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 
-    p > input{
-        height: 20px;
-        width: auto;
+
+        input{
+            height: 20px;
+            width: 20px;
+        }
+
+        &-remember, &-showpassword{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            
+            input, p{
+                margin: 0px 5px 0px 0px;
+            }
+        }
     }
 
     a{

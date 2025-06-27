@@ -12,8 +12,10 @@
 body {
   margin: 0;
   background-color: #a7b5be;
-  display: flex;
-  flex-direction: column;
+}
+
+main {
+  margin: 150px 0px 100px 0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -21,16 +23,27 @@ h1, h2, h3, h4, h5, h6 {
   margin: 3%;
 }
 
+section > p {
+  margin-left: 1em;
+}
+
 footer {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px;
+  padding: 10px 5px 30px 5px;
+  background-color: #73787a;
 }
-
-footer > img {
+footer img {
   width: 40px;
   height: 40px;
+}
+footer a svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
 body > header {
@@ -109,34 +122,38 @@ main > header {
   align-items: center;
 }
 
-main {
-  margin: 150px 0px 100px 0px;
-}
-
-section > p {
-  margin-left: 1em;
-}
-
-.sign {
+.sign, .sign__form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin: 20px 0px 20px 0px;
   height: auto;
 }
-.sign input {
+.sign input, .sign__form input {
   height: 50px;
   width: 90%;
   border: 1px solid #a7b5be;
   border-radius: 15px;
+  margin: 5px 0px 5px 0px;
+  padding-left: 10px;
 }
-.sign p {
+.sign p, .sign__form p {
   margin: 0;
   font-size: 1.5rem;
 }
-.sign p > input {
+.sign div > input, .sign__form div > input {
   height: 20px;
-  width: auto;
+  width: 20px;
+}
+
+.sign::before {
+  position: relative;
+  content: "";
+  display: block;
+  width: 90%;
+  height: 0.25em;
+  background: #73787a;
 }
 
 .login {
@@ -150,16 +167,51 @@ section > p {
   width: 90%;
   border: 1px solid #a7b5be;
   border-radius: 15px;
+  margin: 5px 0px 5px 0px;
 }
 .login input[type=text], .login input[type=password] {
   padding-left: 10px;
 }
-.login p > input {
+.login__checkboxes {
+  width: 100%;
+  padding: 0px 25px 0px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.login__checkboxes input {
   height: 20px;
-  width: auto;
+  width: 20px;
+}
+.login__checkboxes-remember, .login__checkboxes-showpassword {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.login__checkboxes-remember input, .login__checkboxes-remember p, .login__checkboxes-showpassword input, .login__checkboxes-showpassword p {
+  margin: 0px 5px 0px 0px;
 }
 .login a {
   margin: 5px;
+}
+
+.forgot {
+  margin: 200px 0px 200px 0px;
+}
+.forgot__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.forgot__block input {
+  height: 50px;
+  width: 90%;
+  border: 1px solid #a7b5be;
+  border-radius: 15px;
+  margin: 5px 0px 5px 0px;
+  padding-left: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
