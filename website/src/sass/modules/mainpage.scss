@@ -1,0 +1,14 @@
+@use 'varibles' as *;
+
+.mainpage{
+    button{
+        width: 150px;
+        height: 70px;
+        border-radius: 15px;
+        border: none;
+        background-color: $primaryColor;
+        color: $fontColor;
+        font-size: 1.5em;
+    }
+    /* make animation */
+}

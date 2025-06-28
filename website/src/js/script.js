@@ -7,10 +7,10 @@ let isOpen = false;
 toggleMenuEl?.addEventListener('click', function(){
     toggleableMenuEl?.classList.toggle('active');
     if(isOpen){
-        menu.src = "src/img/arrow.png";
+        menu.src = "src/img/burger-bar.png";
     }
     else{
-        menu.src = "src/img/burger-bar.png";
+        menu.src = "src/img/arrow.png";
     }
     isOpen = !isOpen; // change condition
 })

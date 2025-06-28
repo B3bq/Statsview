@@ -72,6 +72,7 @@ body > header a {
 }
 body > header nav button {
   background-color: transparent;
+  border: none;
 }
 @media (min-width: 768px) {
   body > header nav button {
@@ -212,6 +213,19 @@ main > header {
   border-radius: 15px;
   margin: 5px 0px 5px 0px;
   padding-left: 10px;
+}
+
+.mainpage {
+  /* make animation */
+}
+.mainpage button {
+  width: 150px;
+  height: 70px;
+  border-radius: 15px;
+  border: none;
+  background-color: #2ECC71;
+  color: #1C1C1E;
+  font-size: 1.5em;
 }
 
 /*# sourceMappingURL=style.css.map */
