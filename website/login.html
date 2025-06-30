@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -36,20 +37,21 @@
             <h1>Log in</h1>
         </header>
         <section class="login">
-            <input type="text" name="login or email" placeholder="Login">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <div class="login__checkboxes">
-                <div class="login__checkboxes-remember">
-                    <input type="checkbox" name="" id="re_me">
-                    <p>Remember me</p>
+                <input type="text" id="login" placeholder="Login">
+                <input type="password" id="password" id="password" placeholder="Password">
+                <div class="login__checkboxes">
+                    <div class="login__checkboxes-remember">
+                        <input type="checkbox" name="" id="re_me">
+                        <p>Remember me</p>
+                    </div>
+                    <div class="login__checkboxes-showpassword">
+                        <input type="checkbox" name="" id="show_password">
+                        <p>Show password</p>
+                    </div>
                 </div>
-                <div class="login__checkboxes-showpassword">
-                    <input type="checkbox" name="" id="show_password">
-                    <p>Show password</p>
-                </div>
-            </div>
-            <a href="forgot.html" title="Forgot password">Forgot your password?</a>
-            <input type="button" value="Log in">
+                <p id="php_result"></p>
+                <a href="forgot.html" title="Forgot password">Forgot your password?</a>
+                <input type="button" onclick="CheckUserPHP()" value="Log in">
         </section>
         <section class="sign">
             <h3>Don't have an account</h3>
