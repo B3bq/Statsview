@@ -264,7 +264,7 @@ class Program(QWidget):
 
         # date for view statistics
         today = datetime.date.today()
-        end_date = [datetime.date(datetime.date.today().year, 6, 8), datetime.date(datetime.date.today().year, 7, 1), datetime.date(datetime.date.today().year, 7, 2), datetime.date(datetime.date.today().year, 7, 3), datetime.date(datetime.date.today().year, 7, 4), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
+        end_date = [datetime.date(datetime.date.today().year, 6, 8), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
         
 
         #menu
