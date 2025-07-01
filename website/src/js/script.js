@@ -29,3 +29,25 @@ show_pass.addEventListener('change', function(){
     pass.type = this.checked ? 'text' : 'password';
     re_pass.type = this.checked ? 'text' : 'password';
 });
+
+// Getting cookies values
+//function to read cookies
+function getCookie(name){
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+//listening
+window.addEventListener('DOMContentLoaded', ()=>{
+    const userID = getCookie("user"); //user id
+    const userName = getCookie("name"); //user name
+    console.log(document.cookie);
+
+    if(userID){
+        console.log(userID);
+        console.log(userName);
+        document.getElementById('logout').innerHTML = "Log out";
+        document.getElementById('userName').innerHTML = `${userName}`;
+    }
+})

@@ -36,7 +36,16 @@
             $result = $query->get_result();
             $UserID = $result->fetch_assoc()['id_users'];
 
-            setcookie("user", $UserID, time()+3600, '/', "", false, true); // setting cookie for an hour
+            // taking user name
+            $sqlUserName = "SELECT name FROM users WHERE name = ? OR mail = ?";
+            $query = $connect->prepare($sqlUserName);
+            $query->bind_param("ss", $login, $login);
+            $query->execute();
+            $result = $query->get_result();
+            $UserName = $result->fetch_assoc()['name'];
+
+            setcookie("user", $UserID, time()+3600, '/'); // setting cookie for an hour
+            setcookie("name", $UserName, time()+3600, '/');
 
             echo "OK"; // if true give OK result
         }
