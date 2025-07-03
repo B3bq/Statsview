@@ -1,3 +1,5 @@
+import {deleteCookie} from './functions.js';
+
 // toggle menu script
 const toggleMenuEl = document.getElementById('js-toggle-menu');
 const toggleableMenuEl = document.getElementById('js-toggleable-menu');
@@ -36,6 +38,13 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     if(userID){
         document.getElementById('logout').innerHTML = "Log out";
+        document.getElementById('logout').title = "Log out";
+        document.getElementById('logout').onclick = ()=>{
+            deleteCookie('user');
+            deleteCookie('name');
+            document.getElementById('logout').innerHTML = "Log in";
+            document.getElementById('logout').title = "Log in";
+        };
         document.getElementById('userName').innerHTML = `${userName}`;
     }
 })
