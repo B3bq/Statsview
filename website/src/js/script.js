@@ -42,13 +42,17 @@ window.addEventListener('DOMContentLoaded', ()=>{
     console.log(document.cookie);
 
     if(userID){
+        document.getElementById('option1').innerHTML = "My account";
+        document.getElementById('option1').title = "My account";
+        document.getElementById('option1').href = "";
+        document.getElementById('option2').innerHTML = "Action panel";
+        document.getElementById('option2').title = "Action panel";
+        document.getElementById('option2').href = "account.html";
         document.getElementById('logout').innerHTML = "Log out";
         document.getElementById('logout').title = "Log out";
         document.getElementById('logout').onclick = ()=>{
             deleteCookie('user');
             deleteCookie('name');
-            document.getElementById('logout').innerHTML = "Log in";
-            document.getElementById('logout').title = "Log in";
         };
         document.getElementById('userName').innerHTML = `${userName}`;
     }
