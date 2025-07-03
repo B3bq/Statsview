@@ -1,5 +1,3 @@
-import {deleteCookie} from './functions.js';
-
 // toggle menu script
 const toggleMenuEl = document.getElementById('js-toggle-menu');
 const toggleableMenuEl = document.getElementById('js-toggleable-menu');
@@ -28,6 +26,13 @@ function getCookie(name){
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+//deleting cookies
+function deleteCookie(name) {
+    const cookieName = encodeURIComponent(name);
+    document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+    console.log("make")
 }
 
 //listening
