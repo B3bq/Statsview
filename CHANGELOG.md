@@ -1,3 +1,9 @@
+## version 0.1.3 (2025-07-03)
+
+### Added
+- new website design
+- working log in and log out
+
 ## version 0.1.2 (2025-06-15)
 
 ### Added

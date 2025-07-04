@@ -32,7 +32,6 @@ function getCookie(name){
 function deleteCookie(name) {
     const cookieName = encodeURIComponent(name);
     document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-    console.log("make")
 }
 
 //listening
