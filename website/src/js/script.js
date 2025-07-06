@@ -34,6 +34,36 @@ function deleteCookie(name) {
     document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
 }
 
+//visible summary button
+function visibleSummary(){
+    // list of allowed dates in "MM-DD" format
+    const allowedDates = [
+        "07-06",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    // show or hidden button
+    const summaryBtn = document.getElementById('summary');
+    if(allowedDates.includes(todayString)){
+        summaryBtn.style.display = "inline-block";
+    }else{
+        summaryBtn.style.display = "none";
+    }
+}
+
 //listening
 window.addEventListener('DOMContentLoaded', ()=>{
     const userID = getCookie("user"); //user id
@@ -54,6 +84,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
             deleteCookie('name');
         };
         document.getElementById('userName').innerText = `${userName}`;
+
+        visibleSummary(); //visibility summary nutton
     }
 })
 
