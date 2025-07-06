@@ -58,5 +58,4 @@ function enableInput(inputId, confirm, cancel, change, repeat){
 function enableEditing(){
     document.getElementById('userName').contentEditable = true;
     document.getElementById('userName').focus();
-    document.getElementById('userName').innerHTML.replace(/<\/?u>/g, '');
 }
