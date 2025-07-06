@@ -24,38 +24,30 @@
             </button>
 
             <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="index.html#about" title="About the project" id="option2">About</a></li>
+                <li><a href="account.html" title="My account" id="option1">My account</a></li>
+                <li><a href="actionpanel.html" title="Action panel" id="option2">Action panel</a></li>
                 <li><a href="" title="">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+                <li><a href="login.html" title="Log out" id="logout">Log out</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <header>
-            <h1>Create your account</h1>
+            <img src="src/img/user.png" alt="person img">
+            <h2 id="userName"></h2>
         </header>
-        <section class="sign__form">
-
-            <input type="text" name="login"  placeholder="Login">
-
-            <input type="email" name="email"  placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-
-            <input type="password" name="password" id="password" placeholder="Password">
-
-            <input type="password" name="Reapet password" id="re_password" placeholder="Reapet password">
-            <div>
-                <input type="checkbox" name="" id="show_password">
-                Show password
-            </div>
-            <input type="submit" value="Create account">
+        <section class="menu">
+            <input type="button" value="➕Add match form exist">
+            <input type="button" value="➕Add new match" onclick="window.location='addnew.html'">
+            <input type="button" value="📊Summary">
         </section>
     </main>
     <footer>
-        <a href="https://github.com/B3bq" title="See my github profile">
+        <a href="https://github.com/B3bq" target="_blank" >
             <img src="src/img/github-brands.svg" alt="github">
         </a>
         <a href="mailto:" title="E-mail">mail</a>
+
         <p>© 2025 studio</p>
     </footer>
 </body>

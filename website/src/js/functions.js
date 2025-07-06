@@ -14,7 +14,7 @@ function CheckUserPHP(){
     .then(response=>response.text())
     .then(data=>{
         if(data === 'OK'){
-            window.location.href = 'account.html'; // forwarding
+            window.location.href = 'actionpanel.html'; // forwarding
         }
         else{
             document.getElementById('php_result').innerHTML = data; // error message
@@ -43,4 +43,20 @@ function RememberMe(){
             console.log("Error");
         }
     })
+}
+
+//change input edit
+function enableInput(inputId, confirm, cancel, change, repeat){
+    document.getElementById(inputId).disabled = false;
+    document.getElementById(confirm).hidden = false;
+    document.getElementById(cancel).hidden = false;
+    document.getElementById(change).hidden = true;
+    document.getElementById(repeat).hidden = false;
+}
+
+//chnage name
+function enableEditing(){
+    document.getElementById('userName').contentEditable = true;
+    document.getElementById('userName').focus();
+    document.getElementById('userName').innerHTML.replace(/<\/?u>/g, '');
 }

@@ -5,16 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statsview</title>
     <link rel="stylesheet" href="src/sass/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <script type="module" src="src/js/script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Enter a new match</h1>
-        <form action="script.php" method="post">
-            <input type="text" name="league" id="" placeholder="League name">
-            <input type="text" name="team_one" id="" placeholder="Team 1">
-            <input type="text" name="team_two" id="" placeholder="Team 2">
-            <input type="submit" value="Submit">
+    <header>
+        <!--logo-->
+        <a href="index.html" title="Back to home page">
+            <img src="" alt="logo">
+        </a>
+        <nav>
+            <button id="js-toggle-menu">
+                <img width="46" height="46" src="src/img/burger-bar.png" alt="Toggle menu" id="menu">
+            </button>
+
+            <ul id="js-toggleable-menu">
+                <li><a href="" title="" id="option1"></a></li>
+                <li><a href="#about" title="About the project" id="option2">About</a></li>
+                <li><a href="" title="">Dowland app</a></li>
+                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <header>
+            <h1>Add new match</h1>
+            <p></p>
+        </header>
+        <form action="" method="post" class="menu">
+            <input type="text" name="league" placeholder="League Name">
+            <input type="text" name="team_one" placeholder="First Team">
+            <input type="text" name="team_two" placeholder="Second Team">
+            <input type="submit" value="Add Match">
         </form>
-    </div>
+    </main>
+    <footer>
+        <a href="https://github.com/B3bq" target="_blank" >
+            <img src="src/img/github-brands.svg" alt="github">
+        </a>
+        <a href="mailto:" title="E-mail">mail</a>
+
+        <p>© 2025 studio</p>
+    </footer>
 </body>
 </html>

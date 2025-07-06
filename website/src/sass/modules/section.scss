@@ -99,5 +99,99 @@
         border: 1px solid $secondaryColor;
         border-radius: 15px;
         margin: 0px 0px 15px 0px;
+        padding-left: 10px;
+    }
+}
+
+.personal{
+    display: flex;
+    flex-direction: column;
+
+    header{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        div{
+            font-size: 1.5em;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            text-decoration: none;
+            background: transparent;
+        }
+        div[contenteditable="true"]::after{
+                content: '';
+                position: relative;
+                display: block;
+                width: 100px;
+                height: 5px;
+                background: $fifthColor;
+
+        }
+        
+        img:nth-child(2){
+            position: relative;
+            top: -25px;
+            left: 40px;
+        }
+        img:last-child{
+            position: relative;
+            top: -25px;
+            left: 50px;
+            scale: 90%;
+        }
+    }
+
+    &__mail, &__pass{
+        display: flex;
+        flex-direction: row;
+
+
+        input{
+            height: 50px;
+            margin: 10px 0px 10px 30px;
+            padding: 10px;
+            border-radius: 15px;
+        }
+        input:disabled{
+            filter: brightness(0.5);
+            color: $fifthColor;
+        }
+        button{
+            position: relative;
+            top: 10px;
+            left: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: transparent;
+            border: none;
+        }
+
+        .repeat{
+            position: relative;
+            top: 70px;
+            right: 222px;
+        }
+
+        .cancel{
+            position: relative;
+            top: 10px;
+            left: 30px;
+        }
+        .confirm{
+            position: relative;
+            top: 10px;
+            left: 50px;
+        }
+        &-cancel{
+            top: 40px !important;
+            left: -192px !important;
+        }
+        &-confirm{
+            top: 40px !important;
+            left: -172px !important;
+        }
     }
 }
