@@ -3,3 +3,6 @@ __pycache__
 /mobile
 /viewstat/save.json
 .env
+vendor
+composer.json
+composer.lock

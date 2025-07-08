@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -32,15 +33,15 @@
         </nav>
     </header>
     <main class="forgot">
-        <section class="forgot__block">
+        <section class="forgot__block" id="block">
             <h1>Enter your e-mail</h1>
-            <input type="email" placeholder="E-mail">
-            <input type="submit" value="Send mail" id="">
+            <input type="email" placeholder="E-mail" id="email">
+            <input type="submit" value="Send mail" onclick="passReset()">
         </section>
-        <section class="forgot__after">
+        <section class="forgot__after" id="after">
             <h3>Check your mail to resert your password</h3>
             <p>E-mail don't arrived</p>
-            <a href="">Click link to send mail again</a>
+            <a href="#" onclick="passReset()">Click link to send mail again</a>
         </section>
     </main>
     <footer>

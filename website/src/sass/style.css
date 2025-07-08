@@ -319,7 +319,7 @@ main > header {
   padding-left: 10px;
 }
 .forgot__after {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
 }

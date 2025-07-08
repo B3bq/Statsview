@@ -75,3 +75,29 @@ function enableEditing(){
     document.getElementById('userName').contentEditable = true;
     document.getElementById('userName').focus();
 }
+
+function passReset(){
+    const mail = document.getElementById('email').value;
+
+    const src = 'src/php/resetpass.php';
+
+    fetch(src, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `mail=${encodeURIComponent(mail)}`
+    })
+    .then(response=>response.text())
+    .then(data=>{
+        if(data === "sent"){
+            
+        }
+        else{
+            console.log(data);
+        }
+    })
+
+    document.getElementById('block').style.display = 'none';
+    document.getElementById('after').style.display = 'flex';
+}
