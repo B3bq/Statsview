@@ -46,12 +46,28 @@ function RememberMe(){
 }
 
 //change input edit
-function enableInput(inputId, confirm, cancel, change, repeat){
+function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(inputId).disabled = false;
     document.getElementById(confirm).hidden = false;
     document.getElementById(cancel).hidden = false;
     document.getElementById(change).hidden = true;
     document.getElementById(repeat).hidden = false;
+    document.getElementById(show).hidden = false;
+}
+
+let isOpen = true;
+//show password
+function showPassword(show, input2, repeat){
+    if(isOpen){
+        document.getElementById(show).src = "src/img/show.png";
+        document.getElementById(input2).type = "text";
+        document.getElementById(repeat).type = "text";
+    }else{
+        document.getElementById(show).src = "src/img/hide.png";
+        document.getElementById(input2).type = "password";
+        document.getElementById(repeat).type = "password";
+    }
+    isOpen = !isOpen;
 }
 
 //chnage name

@@ -186,12 +186,18 @@
             left: 50px;
         }
         &-cancel{
-            top: 40px !important;
-            left: -192px !important;
+            top: 80px !important;
+            left: -218px !important;
         }
         &-confirm{
-            top: 40px !important;
-            left: -172px !important;
+            top: 80px !important;
+            left: -198px !important;
         }
+    }
+    #show{
+        height: 24px;
+        position: relative;
+        top: 20px;
+        left: -160px;
     }
 }

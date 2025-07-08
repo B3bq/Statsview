@@ -48,8 +48,9 @@
             </section>
             <section class="personal__pass">
                 <input type="password" id="input2" disabled value="password">
-                <button onclick="enableInput('input2', 'confirm2', 'cancel2', 'change2', 'repeat')" id="change2"><img src="src/img/pencil.png" alt="pencil"></button>
-                <input type="password" id="repeat" class="repeat" hidden>
+                <button onclick="enableInput('input2', 'confirm2', 'cancel2', 'change2', 'repeat', 'show')" id="change2"><img src="src/img/pencil.png" alt="pencil"></button>
+                <input type="password" id="repeat" class="repeat" hidden value="password">
+                <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')">
                 <button type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <button type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
             </section>

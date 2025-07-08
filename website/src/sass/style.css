@@ -288,12 +288,18 @@ main > header {
   left: 50px;
 }
 .personal__mail-cancel, .personal__pass-cancel {
-  top: 40px !important;
-  left: -192px !important;
+  top: 80px !important;
+  left: -218px !important;
 }
 .personal__mail-confirm, .personal__pass-confirm {
-  top: 40px !important;
-  left: -172px !important;
+  top: 80px !important;
+  left: -198px !important;
+}
+.personal #show {
+  height: 24px;
+  position: relative;
+  top: 20px;
+  left: -160px;
 }
 
 .forgot {
