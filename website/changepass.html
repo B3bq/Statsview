@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -32,17 +33,22 @@
         </nav>
     </header>
     <main class="mainpage">
-        <header>
+        <header id="head">
             <h1>Reset your password</h1>
         </header>
-        <section class="sign__form">
-            <input type="password" name="" id="password" placeholder="Enter new password">
-            <input type="password" name="" id="re_password" placeholder="Reapet password">
-            <div>
-                <input type="checkbox" name="" id="show_password">
-                Show password
-            </div>
-            <input type="submit" value="Change password">
+        <section class="sign__form" id="main">
+                <input type="password" name="password" id="password" placeholder="Enter new password">
+                <input type="password" name="re_password" id="re_password" placeholder="Reapet password">
+                <div>
+                    <input type="checkbox" name="" id="show_password">
+                    Show password
+                </div>
+                <p id="message" hidden></p>
+                <input type="submit" value="Change password" onclick="changePass()">
+        </section>
+        <section id="after" class="goback">
+            <h1>Password is changed</h1>
+            <a href="login.html"><input type="button" value="Go back to login"></a>
         </section>
     </main>
     <footer>
