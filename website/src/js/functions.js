@@ -76,6 +76,14 @@ function enableEditing(){
     document.getElementById('userName').focus();
 }
 
+//set cookie
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*3600));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
 function passReset(){
     const mail = document.getElementById('email').value;
 
@@ -91,7 +99,7 @@ function passReset(){
     .then(response=>response.text())
     .then(data=>{
         if(data === "sent"){
-            
+            setCookie('mail', `${mail}`, 1)
         }
         else{
             console.log(data);
@@ -100,4 +108,34 @@ function passReset(){
 
     document.getElementById('block').style.display = 'none';
     document.getElementById('after').style.display = 'flex';
+}
+
+function changePass(){
+    const pass = document.getElementById('password').value;
+    const re_pass = document.getElementById('re_password').value;
+
+    if(pass === re_pass){
+        const src = 'src/php/changepass.php';
+
+        fetch(src, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `password=${encodeURIComponent(pass)}`
+        })
+        .then(response=>response.text())
+        .then(data=>{
+            if(data == 'ok'){
+                document.getElementById('after').style.display = 'flex';
+                document.getElementById('main').style.display = 'none';
+                document.getElementById('head').style.display = 'none';
+            }else{
+                console.log(data);
+            }
+        })
+    }else{
+        document.getElementById('message').hidden = false;
+        document.getElementById('message').innerText = "Passwords are not the same";
+    }
 }
