@@ -69,11 +69,45 @@ function resetValue(inputID){
         document.getElementById('change1').hidden = false;
     }else{
         input.value = input.defaultValue;
+        input.type = 'password';
+        input.disabled = true;
         document.getElementById('repeat').hidden = true;
         document.getElementById('show').hidden = true;
         document.getElementById('cancel2').hidden = true;
         document.getElementById('confirm2').hidden = true;
         document.getElementById('change2').hidden = false;
+    }
+}
+
+function passChange(){
+    const pass = document.getElementById('input2').value;
+    const re_pass = document.getElementById('repeat').value;
+
+    if(pass === re_pass){
+                fetch('src/php/changepass.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `password=${encodeURIComponent(pass)}`
+                })
+                .then(response=>response.text())
+                .then(data=>{
+                    if(data == 'ok'){
+                        alert("Password is changed");
+                        pass.value = pass.defaultValue;
+                        document.getElementById('repeat').hidden = true;
+                        document.getElementById('show').hidden = true;
+                        document.getElementById('cancel2').hidden = true;
+                        document.getElementById('confirm2').hidden = true;
+                        document.getElementById('change2').hidden = false;
+                    }else{
+                        console.log(data);
+                    }
+                })
+    }else{
+        document.getElementById('info').hidden = false;
+        document.getElementById('info').innerText = "Passwords are not the same";
     }
 }
 

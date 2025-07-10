@@ -80,7 +80,8 @@ $name = $result->fetch_assoc()['name'];
                 <input type="password" id="repeat" class="repeat" hidden value="password">
                 <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')">
                 <button onclick="resetValue('input2')" type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
-                <button type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
+                <button onclick="passChange()" type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
+                <p id="info" hidden></p>
             </section>
         </section>
     </main>
