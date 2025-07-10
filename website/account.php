@@ -1,3 +1,31 @@
+<?php
+$server = 'localhost';
+$login = 'root';
+$password = '';
+$base = 'statsview';
+
+$conn = mysqli_connect($server, $login, $password, $base);
+
+$userID = $_COOKIE['user']; //get user id from cookie
+
+//taking e-mail
+$sql = "SELECT mail FROM users WHERE id_users = ?";
+$query = $conn->prepare($sql);
+$query->bind_param("s", $userID);
+$query->execute();
+$result = $query->get_result();
+$mail = $result->fetch_assoc()['mail'];
+
+//taking name
+$sql = "SELECT name FROM users WHERE id_users = ?";
+$query = $conn->prepare($sql);
+$query->bind_param("s", $userID);
+$query->execute();
+$result = $query->get_result();
+$name = $result->fetch_assoc()['name'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,12 +65,12 @@
         <header>
             <img src="src/img/user.png" alt="profile">
             <img src="src/img/circle.png" alt="change profile photo">
-            <div id="userName" contenteditable="false" spellcheck="false">Name</div>
+            <div contenteditable="false" spellcheck="false"><?php echo $name?></div>
             <img src="src/img/circle.png" alt="change name" onclick="enableEditing()">
         </header>
             <section class="personal__mail">
-                <input type="text"  id="input1" disabled value="mail">
-                <button type="button" id="cancel1" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
+                <input type="text"  id="input1" disabled value="<?php echo $mail?>">
+                <button onclick="resetValue('input1')" type="button" id="cancel1" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <button type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
                 <button onclick="enableInput('input1','confirm1', 'cancel1', 'change1')" id="change1"><img src="src/img/pencil.png" alt="pencil"></button>
             </section>
@@ -51,7 +79,7 @@
                 <button onclick="enableInput('input2', 'confirm2', 'cancel2', 'change2', 'repeat', 'show')" id="change2"><img src="src/img/pencil.png" alt="pencil"></button>
                 <input type="password" id="repeat" class="repeat" hidden value="password">
                 <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')">
-                <button type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
+                <button onclick="resetValue('input2')" type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <button type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
             </section>
         </section>

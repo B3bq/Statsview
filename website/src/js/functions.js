@@ -53,6 +53,28 @@ function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(change).hidden = true;
     document.getElementById(repeat).hidden = false;
     document.getElementById(show).hidden = false;
+    if(inputId == 'input2'){    
+        document.getElementById(inputId).value = "";
+        document.getElementById(repeat).value = "";
+    }
+}
+
+//reset values
+function resetValue(inputID){
+    const input = document.getElementById(inputID);
+    if(inputID == 'input1'){
+        input.value = input.defaultValue;
+        document.getElementById('cancel1').hidden = true;
+        document.getElementById('confirm1').hidden = true;
+        document.getElementById('change1').hidden = false;
+    }else{
+        input.value = input.defaultValue;
+        document.getElementById('repeat').hidden = true;
+        document.getElementById('show').hidden = true;
+        document.getElementById('cancel2').hidden = true;
+        document.getElementById('confirm2').hidden = true;
+        document.getElementById('change2').hidden = false;
+    }
 }
 
 let isOpen = true;
