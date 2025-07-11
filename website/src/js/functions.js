@@ -138,22 +138,11 @@ function showPassword(show, input2, repeat){
 //change e-mail in account page
 function changeMail(){
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const mail = document.getElementById('input1');
+    const mail = document.getElementById('input1').value;
+    const from = 'account';
 
     if(regex.test(mail)){
-        fetch('verification.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `mail=${encodeURIComponent(mail)}`
-        })
-        .then(response=>response.text())
-        .then(data=>{
-            if(data === 'sent'){
-                window.location.href = 'verification.php';
-            }
-        })
+       window.location.href = 'verification.php?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent('account');
     }else{
         document.getElementById('confirm1').style.left = '-70px';
         document.getElementById('response').hidden = false;
