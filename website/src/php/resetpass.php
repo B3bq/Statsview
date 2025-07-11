@@ -1,24 +1,27 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 
-require 'c:/xampp/htdocs/statsview/website/vendor/autoload.php'; 
+require_once 'c:/xampp/htdocs/statsview/website/vendor/autoload.php';
 
 $to = $_POST['mail'];
 
 $mail = new PHPMailer(true);
+$dotenv = Dotenv::createImmutable('c:/xampp/htdocs/statsview/website');
+$dotenv->load();
 
 try{
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
 
-    $mail->Username = 'kacaseba9@gmail.com';
-    $mail->Password = 'application key';
+    $mail->Username = $_ENV['EMAIL_LOGIN'];
+    $mail->Password = $_ENV['EMAIL_PASSWORD'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
-    $mail->setFrom('kacaseba9@gmail.com', 'Statsview');
+    $mail->setFrom($_ENV['EMAIL_LOGIN'], 'Statsview');
     
     $mail->addAddress($to);
 

@@ -65,13 +65,14 @@ $name = $result->fetch_assoc()['name'];
         <header>
             <img src="src/img/user.png" alt="profile">
             <img src="src/img/circle.png" alt="change profile photo">
-            <div contenteditable="false" spellcheck="false"><?php echo $name?></div>
+            <div contenteditable="false" spellcheck="false" id='userName'><?php echo $name?></div>
             <img src="src/img/circle.png" alt="change name" onclick="enableEditing()">
         </header>
             <section class="personal__mail">
                 <input type="text"  id="input1" disabled value="<?php echo $mail?>">
                 <button onclick="resetValue('input1')" type="button" id="cancel1" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
-                <button type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
+                <p id="response" hidden></p>
+                <button onclick="changeMail()" type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
                 <button onclick="enableInput('input1','confirm1', 'cancel1', 'change1')" id="change1"><img src="src/img/pencil.png" alt="pencil"></button>
             </section>
             <section class="personal__pass">

@@ -272,6 +272,21 @@ main > header {
   background: transparent;
   border: none;
 }
+.personal__mail #info, .personal__pass #info {
+  display: block;
+  width: auto;
+  position: relative;
+  top: 120px;
+  right: 520px;
+  font-size: 1.25em;
+}
+.personal__mail #response, .personal__pass #response {
+  position: relative;
+  top: 40px;
+  left: -205px;
+  font-size: 1.25em;
+  text-align: center;
+}
 .personal__mail .repeat, .personal__pass .repeat {
   position: relative;
   top: 70px;
@@ -314,6 +329,45 @@ main > header {
   margin: 10px 0px 10px 0px;
   padding: 10px;
   border-radius: 15px;
+}
+
+.verification {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 200px 0px 200px 0px;
+  text-align: center;
+}
+.verification__code {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0px 50px 0px 50px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  text-decoration: none;
+}
+.verification__code .code {
+  background-color: aqua;
+  height: 50px;
+  width: 50px;
+  border: 1px solid #1C1C1E;
+  border-radius: 15px;
+  font-size: 1.5em;
+  text-align: center;
+  align-content: center;
+}
+.verification button {
+  margin: 25px 0px 0px 0px;
+  align-self: center;
+  width: 100px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #00BCD4;
+  color: #fff;
 }
 
 .forgot {

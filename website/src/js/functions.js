@@ -1,3 +1,4 @@
+///LOGIN
 function CheckUserPHP(){
     const login = document.getElementById('login').value;
     const pass = document.getElementById('password').value;
@@ -45,6 +46,8 @@ function RememberMe(){
     })
 }
 
+///ACCOUNT PAGE
+
 //change input edit
 function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(inputId).disabled = false;
@@ -64,9 +67,12 @@ function resetValue(inputID){
     const input = document.getElementById(inputID);
     if(inputID == 'input1'){
         input.value = input.defaultValue;
+        input.disabled = true;
         document.getElementById('cancel1').hidden = true;
         document.getElementById('confirm1').hidden = true;
         document.getElementById('change1').hidden = false;
+        document.getElementById('response').hidden = true;
+        document.getElementById('confirm1').style.left = '50px';
     }else{
         input.value = input.defaultValue;
         input.type = 'password';
@@ -76,12 +82,14 @@ function resetValue(inputID){
         document.getElementById('cancel2').hidden = true;
         document.getElementById('confirm2').hidden = true;
         document.getElementById('change2').hidden = false;
+        document.getElementById('info').hidden = true;
     }
 }
 
 function passChange(){
     const pass = document.getElementById('input2').value;
     const re_pass = document.getElementById('repeat').value;
+    document.getElementById('info').hidden = true;
 
     if(pass === re_pass){
                 fetch('src/php/changepass.php', {
@@ -100,6 +108,7 @@ function passChange(){
                         document.getElementById('show').hidden = true;
                         document.getElementById('cancel2').hidden = true;
                         document.getElementById('confirm2').hidden = true;
+                        document.getElementById('info').hidden = true;
                         document.getElementById('change2').hidden = false;
                     }else{
                         console.log(data);
@@ -107,7 +116,7 @@ function passChange(){
                 })
     }else{
         document.getElementById('info').hidden = false;
-        document.getElementById('info').innerText = "Passwords are not the same";
+        document.getElementById('info').innerHTML = "Passwords are not the same";
     }
 }
 
@@ -126,11 +135,41 @@ function showPassword(show, input2, repeat){
     isOpen = !isOpen;
 }
 
+//change e-mail in account page
+function changeMail(){
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mail = document.getElementById('input1');
+
+    if(regex.test(mail)){
+        fetch('verification.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mail=${encodeURIComponent(mail)}`
+        })
+        .then(response=>response.text())
+        .then(data=>{
+            if(data === 'sent'){
+                window.location.href = 'verification.php';
+            }
+        })
+    }else{
+        document.getElementById('confirm1').style.left = '-70px';
+        document.getElementById('response').hidden = false;
+        document.getElementById('response').innerHTML = "Invalid e-mail";
+    }
+}
+
+///ACTION PAGE
+
 //chnage name
 function enableEditing(){
     document.getElementById('userName').contentEditable = true;
     document.getElementById('userName').focus();
 }
+
+///CHANGING PASS E-MAIL
 
 //set cookie
 function setCookie(cname, cvalue, exdays) {
@@ -138,8 +177,9 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*3600));
     let expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
+}
 
+//page for send mail to reset pass
 function passReset(){
     const mail = document.getElementById('email').value;
 
@@ -166,6 +206,7 @@ function passReset(){
     document.getElementById('after').style.display = 'flex';
 }
 
+//changing password page after mail
 function changePass(){
     const pass = document.getElementById('password').value;
     const re_pass = document.getElementById('re_password').value;
