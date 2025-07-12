@@ -5,14 +5,18 @@ use Dotenv\Dotenv;
 
 require 'c:/xampp/htdocs/statsview/website/vendor/autoload.php';
 
-$to = $_GET['mail'] ?? '';
-$from = $_GET['from'] ?? '';
+$to = $_POST['mail'] ?? '';
+$from = $_POST['from'] ?? '';
 
 $mail = new PHPMailer(true);
 $dotenv = Dotenv::createImmutable('c:/xampp/htdocs/statsview/website');
 $dotenv->load();
 
+//verification code generate
+session_start();
 $code = rand(1000, 9999);
+$_SESSION['code'] = $code;
+
 
 try{
     $mail->isSMTP();
@@ -75,60 +79,8 @@ try{
     }
 
     $mail->send();
+    echo 'generate';
 }catch(Exception $e){
     echo "Error: {$mail->ErrorInfo}";
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statsview</title>
-    <link rel="stylesheet" href="src/sass/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <script type="module" src="src/js/script.js" defer></script>
-</head>
-<body>
-    <header>
-        <!--logo-->
-        <a href="index.html" title="Back to home page">
-            <img src="" alt="logo">
-        </a>
-        <nav>
-            <button id="js-toggle-menu">
-                <img width="46" height="46" src="src/img/burger-bar.png" alt="Toggle menu" id="menu">
-            </button>
-
-            <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="#about" title="About the project" id="option2">About</a></li>
-                <li><a href="" title="">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="verification">
-        <h1>Enter your verification code</h1>
-        <section class="verification__code" contenteditable="true" spellcheck="false">
-            <input type="text" maxlength="1" class="code">
-            <input type="text" maxlength="1" class="code">
-            <input type="text" maxlength="1" class="code">
-            <input type="text" maxlength="1" class="code">
-        </section>
-        <button>Verify</button>
-    </main>
-    <footer>
-        <a href="https://github.com/B3bq" target="_blank" >
-            <img src="src/img/github-brands.svg" alt="github">
-        </a>
-        <a href="mailto:" title="E-mail">mail</a>
-
-        <p>© 2025 studio</p>
-    </footer>
-</body>
-</html>

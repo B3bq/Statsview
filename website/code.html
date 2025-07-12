@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -39,7 +40,8 @@
             <input type="text" maxlength="1" class="code">
             <input type="text" maxlength="1" class="code">
         </section>
-        <button>Verify</button>
+        <button onclick="takeCode()">Verify</button>
+        <p id="response" hidden></p>
     </main>
     <footer>
         <a href="https://github.com/B3bq" target="_blank" >

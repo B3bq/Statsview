@@ -136,17 +136,105 @@ function showPassword(show, input2, repeat){
 }
 
 //change e-mail in account page
-function changeMail(){
+function changeMail(from){
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mail = document.getElementById('input1').value;
-    const from = 'account';
 
     if(regex.test(mail)){
-       window.location.href = 'verification.php?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent('account');
+       if(from == 'account'){
+        fetch('src/php/verification.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent('account')}`
+           })
+           .then(response=>response.text())
+           .then(data=>{
+            if(data == 'generate'){
+                window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from);
+            }else{
+                console.log(data);
+            }
+           })
+       }else{
+        const name = document.getElementById().value;
+        const pass = document.getElementById().value;
+        fetch('src/php/verification.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent('account')}`
+           })
+           .then(response=>response.text())
+           .then(data=>{
+            if(data == 'generate'){
+                window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
+            }else{
+                console.log(data);
+            }
+           })
+       }
     }else{
         document.getElementById('confirm1').style.left = '-70px';
         document.getElementById('response').hidden = false;
         document.getElementById('response').innerHTML = "Invalid e-mail";
+    }
+}
+
+///VERIFICATION CODE
+//IT FORWORD TO PHP FILE WHICH INSERT NEW USER OR UPDATE E-MAIL
+function takeCode(){
+    const code = document.querySelectorAll('.code');
+
+    let userCode = '';
+    code.forEach(element => {
+        userCode += element.value; //merge inputs values
+    });
+
+    //taking mail from url
+    let querystring = window.location.search;
+    let urlParam = new URLSearchParams(querystring);
+    let from = urlParam.get('from');
+
+    if(from == 'account'){
+        let mail = urlParam.get('mail');
+        fetch('src/php/user.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}`
+        })
+        .then(response=>response.text())
+        .then(data=>{
+            if(data == 'ok'){
+                window.location.href = 'account.php';
+            }else{
+                document.getElementById('response').hidden = false;
+                document.getElementById('response').innerHTML = data;
+            }
+        })
+    }else{
+        let name = urlParam.get('name');
+        let pass = urlParam.get('pass');
+        fetch('src/php/user.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}&name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}`
+        })
+        .then(response=>response.text())
+        .then(data=>{
+            if(data == 'ok'){
+                window.location.href = 'sign.html';
+            }else{
+                document.getElementById('response').hidden = false;
+                document.getElementById('response').innerHTML = data;
+            }
+        })
     }
 }
 

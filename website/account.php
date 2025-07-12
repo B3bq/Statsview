@@ -72,7 +72,7 @@ $name = $result->fetch_assoc()['name'];
                 <input type="text"  id="input1" disabled value="<?php echo $mail?>">
                 <button onclick="resetValue('input1')" type="button" id="cancel1" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <p id="response" hidden></p>
-                <button onclick="changeMail()" type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
+                <button onclick="changeMail('account')" type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
                 <button onclick="enableInput('input1','confirm1', 'cancel1', 'change1')" id="change1"><img src="src/img/pencil.png" alt="pencil"></button>
             </section>
             <section class="personal__pass">
