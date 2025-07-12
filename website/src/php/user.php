@@ -8,11 +8,12 @@ $conn = mysqli_connect($server, $login, $password, $base);
 
 session_start();
 
+//parametrs are given by js
 $mail = $_POST['mail'] ?? '';
 $from = $_POST['from'] ?? '';
 $userCode = $_POST['userCode'] ?? '';
 
-$expectedCode = $_SESSION['code'] ?? '';
+$expectedCode = $_SESSION['code'] ?? ''; //teke this from session, which is maked by verification
 
 if($userCode == $expectedCode){
     if($from == 'account'){

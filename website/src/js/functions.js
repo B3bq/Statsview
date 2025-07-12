@@ -48,6 +48,40 @@ function RememberMe(){
 
 ///ACCOUNT PAGE
 
+let defaultValue = '';
+//chnage name
+function enableEditing(){
+    const userName =  document.getElementById('userName');
+    defaultValue = userName.innerText.trim();
+    userName.contentEditable = true;
+    userName.focus();
+    document.getElementById('cancel').hidden = false;
+    document.getElementById('confirm').hidden = false;
+    document.getElementById('edit').hidden = true;
+}
+
+function changeName(){
+    const name = document.getElementById('userName');
+    let userName = name.innerText.trim();
+
+    fetch('src/php/changename.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `name=${encodeURIComponent(userName)}`
+    })
+    .then(response=>response.text())
+    .then(data=>{
+        if(data == 'changed'){
+            document.getElementById('cancel').hidden = true;
+            document.getElementById('confirm').hidden = true;
+            document.getElementById('edit').hidden = false;
+            document.getElementById('userName').contentEditable = false;
+        }
+    })
+}
+
 //change input edit
 function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(inputId).disabled = false;
@@ -73,7 +107,7 @@ function resetValue(inputID){
         document.getElementById('change1').hidden = false;
         document.getElementById('response').hidden = true;
         document.getElementById('confirm1').style.left = '50px';
-    }else{
+    }else if(inputID == 'input2'){
         input.value = input.defaultValue;
         input.type = 'password';
         input.disabled = true;
@@ -83,6 +117,12 @@ function resetValue(inputID){
         document.getElementById('confirm2').hidden = true;
         document.getElementById('change2').hidden = false;
         document.getElementById('info').hidden = true;
+    }else{
+        input.innerText = defaultValue;
+        input.contentEditable = false;
+        document.getElementById('cancel').hidden = true;
+        document.getElementById('confirm').hidden = true;
+        document.getElementById('edit').hidden = false;
     }
 }
 
@@ -236,14 +276,6 @@ function takeCode(){
             }
         })
     }
-}
-
-///ACTION PAGE
-
-//chnage name
-function enableEditing(){
-    document.getElementById('userName').contentEditable = true;
-    document.getElementById('userName').focus();
 }
 
 ///CHANGING PASS E-MAIL

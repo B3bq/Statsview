@@ -238,6 +238,20 @@ main > header {
   height: 5px;
   background: #73787a;
 }
+.personal header button {
+  border: none;
+  background: transparent;
+}
+.personal header .cancel {
+  position: relative;
+  top: 30px;
+  right: 70px;
+}
+.personal header .confirm {
+  position: relative;
+  top: 1px;
+  left: -30px;
+}
 .personal header img:nth-child(2) {
   position: relative;
   top: -25px;

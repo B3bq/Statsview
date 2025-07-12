@@ -130,6 +130,21 @@
                 background: $fifthColor;
 
         }
+
+        button{
+            border: none;
+            background: transparent;
+        }
+        .cancel{
+            position: relative;
+            top: 30px;
+            right: 70px;
+        }
+        .confirm{
+            position: relative;
+            top: 1px;
+            left: -30px;
+        }
         
         img:nth-child(2){
             position: relative;

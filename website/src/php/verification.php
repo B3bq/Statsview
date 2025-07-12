@@ -15,7 +15,7 @@ $dotenv->load();
 //verification code generate
 session_start();
 $code = rand(1000, 9999);
-$_SESSION['code'] = $code;
+$_SESSION['code'] = $code; //make session for forward code to another code
 
 
 try{
