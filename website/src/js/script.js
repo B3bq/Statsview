@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     if(userID){
         document.getElementById('option1').innerHTML = "My account";
         document.getElementById('option1').title = "My account";
-        document.getElementById('option1').href = "account.html";
+        document.getElementById('option1').href = "account.php";
         document.getElementById('option2').innerHTML = "Action panel";
         document.getElementById('option2').title = "Action panel";
         document.getElementById('option2').href = "actionpanel.html";
@@ -88,6 +88,35 @@ window.addEventListener('DOMContentLoaded', ()=>{
         visibleSummary(); //visibility summary nutton
     }
 })
+
+const inputs = document.querySelectorAll(".code");
+
+inputs.forEach((input, index)=>{
+    input.addEventListener("input", ()=>{
+        if(input.value.length === 1 && index < inputs.length -1){
+            inputs[index+1].focus();
+        }
+    });
+
+    input.addEventListener("keydown",(e)=>{
+        if(e.key === "Backspace" && input.value === "" && index > 0){
+            inputs[index-1].focus()
+        }
+    });
+
+    input.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+        pasted.split("").forEach((char, i) => {
+          if (inputs[i]) {
+            inputs[i].value = char;
+          }
+        });
+        if (inputs[pasted.length - 1]) {
+          inputs[pasted.length - 1].focus();
+        }
+      });
+});
 
 // script to show password
 const pass = document.getElementById('password');
