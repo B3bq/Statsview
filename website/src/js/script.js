@@ -68,7 +68,9 @@ function visibleSummary(){
 window.addEventListener('DOMContentLoaded', ()=>{
     const userID = getCookie("user"); //user id
     const userName = getCookie("name"); //user name
-    console.log(document.cookie);
+    const paths = ['/account.php', '/actionpanel.html'];
+    const currentPath = window.location.pathname;
+    const isPath = paths.some(path => currentPath.endsWith(path));
 
     if(userID){
         document.getElementById('option1').innerHTML = "My account";
@@ -86,6 +88,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
         document.getElementById('userName').innerText = `${userName}`;
 
         visibleSummary(); //visibility summary nutton
+    }else if(isPath && !userID){ //when path is in account or action panel and doesn't exist cookie
+        window.location.href = 'login.html';
     }
 })
 
