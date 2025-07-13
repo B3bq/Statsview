@@ -2,7 +2,7 @@
 $server = "localhost";
 $login = "root";
 $password = "";
-$base = "statsview";
+$base = "base";
 $connect = mysqli_connect($server, $login, $password, $base); //connecting to database
 
 // getting a user login data

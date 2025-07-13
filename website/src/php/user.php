@@ -2,7 +2,7 @@
 $server = 'localhost';
 $login = 'root';
 $password = '';
-$base = 'statsview';
+$base = 'base';
 
 $conn = mysqli_connect($server, $login, $password, $base);
 
@@ -30,9 +30,10 @@ if($userCode == $expectedCode){
         $pass = $_POST['pass'];
         $hash = password_hash($pass, PASSWORD_BCRYPT);
         $hash = preg_replace('/^\$2y\$/', '\$2b\$', $hash);
-        $sql = "INSERT INTO users(id_users, mail, name, password) VALUES (NULL, ?, ?, ?)";
+        $sql = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, ?, ?, ?)";
         $query = $conn->prepare($sql);
         $query->bind_param("sss", $mail, $name, $hash);
+        $query->execute();
         echo 'ok';
     }
 }else{

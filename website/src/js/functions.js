@@ -187,7 +187,7 @@ function changeMail(from){
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent('account')}`
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}`
            })
            .then(response=>response.text())
            .then(data=>{
@@ -198,28 +198,34 @@ function changeMail(from){
             }
            })
        }else{
-        const name = document.getElementById().value;
-        const pass = document.getElementById().value;
-        fetch('src/php/verification.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent('account')}`
-           })
-           .then(response=>response.text())
-           .then(data=>{
-            if(data == 'generate'){
-                window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
+        const name = document.getElementById('login').value;
+        const pass = document.getElementById('password').value;
+        const re_pass = document.getElementById('re_password').value;
+        if(pass === re_pass){
+            fetch('src/php/verification.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}`
+               })
+               .then(response=>response.text())
+               .then(data=>{
+                if(data == 'generate'){
+                    window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
+                }else{
+                    console.log(data);
+                }
+               })
             }else{
-                console.log(data);
+                document.getElementById('response').hidden = false;
+                document.getElementById('response').innerHTML = "Passwords are not the same";
             }
-           })
        }
     }else{
-        document.getElementById('confirm1').style.left = '-70px';
         document.getElementById('response').hidden = false;
         document.getElementById('response').innerHTML = "Invalid e-mail";
+        document.getElementById('confirm1').style.left = '-70px';
     }
 }
 
@@ -237,9 +243,9 @@ function takeCode(){
     let querystring = window.location.search;
     let urlParam = new URLSearchParams(querystring);
     let from = urlParam.get('from');
+    let mail = urlParam.get('mail');
 
     if(from == 'account'){
-        let mail = urlParam.get('mail');
         fetch('src/php/user.php', {
             method: 'POST',
             headers: {
@@ -269,7 +275,7 @@ function takeCode(){
         .then(response=>response.text())
         .then(data=>{
             if(data == 'ok'){
-                window.location.href = 'sign.html';
+                window.location.href = 'login.html';
             }else{
                 document.getElementById('response').hidden = false;
                 document.getElementById('response').innerHTML = data;
