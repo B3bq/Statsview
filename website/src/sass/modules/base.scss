@@ -42,10 +42,8 @@ footer{
         height: 40px;
     }
 
-    a svg{
-        display: block;
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
+    a:first-child{
+        width: 40px;
+        height: 40px;
     }
 }
