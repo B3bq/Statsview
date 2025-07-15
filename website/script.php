@@ -295,6 +295,7 @@ switch($sport){
         $sqlCheck = "SELECT * FROM {$tabelLeagueY} WHERE name = ? AND id_user = ?";
         $query = $connect->prepare($sqlCheck);
         $query->bind_param("ss", $league, $userID);
+        $query->execute();
         $result = $query->get_result();
 
         if($result->num_rows > 0){
@@ -324,6 +325,7 @@ switch($sport){
         $sqlCheck = "SELECT * FROM {$tabelLeagueS} WHERE name = ? AND id_user = ?";
         $query = $connect->prepare($sqlCheck);
         $query->bind_param("ss", $league, $userID);
+        $query->execute();
         $result = $query->get_result();
 
         if($result->num_rows > 0){
