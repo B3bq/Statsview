@@ -483,7 +483,7 @@ switch($sport){
 
         // insert references to leagues_teamas table
         $sqlInsert = "INSERT IGNORE INTO {$tabelBrokerY} VALUES (?, ?)";
-        $sqlFindLeague = "SELECT id FROM {$tabelLeagueY}WHERE name = ?"; // searching id from table league
+        $sqlFindLeague = "SELECT id FROM {$tabelLeagueY} WHERE name = ?"; // searching id from table league
         $sqlFindTeam = "SELECT id FROM {$tabelTeamsY} WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
@@ -518,7 +518,7 @@ switch($sport){
 
         // insert references to leagues_teamas table
         $sqlInsert = "INSERT IGNORE INTO {$tabelBrokerS} VALUES (?, ?)";
-        $sqlFindLeague = "SELECT id FROM {$tabelLeagueS}WHERE name = ?"; // searching id from table league
+        $sqlFindLeague = "SELECT id FROM {$tabelLeagueS} WHERE name = ?"; // searching id from table league
         $sqlFindTeam = "SELECT id FROM {$tabelTeamsS} WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
