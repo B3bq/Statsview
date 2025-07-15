@@ -402,6 +402,7 @@ main > header {
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin: 200px 0px 200px 0px;
 }
 .added span {
   text-decoration: underline #73787a;
