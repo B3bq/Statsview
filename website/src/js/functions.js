@@ -239,7 +239,7 @@ function takeCode(){
         userCode += element.value; //merge inputs values
     });
 
-    //taking mail from url
+    //taking mail 'from' from url
     let querystring = window.location.search;
     let urlParam = new URLSearchParams(querystring);
     let from = urlParam.get('from');
@@ -349,5 +349,21 @@ function changePass(){
     }else{
         document.getElementById('message').hidden = false;
         document.getElementById('message').innerText = "Passwords are not the same";
+    }
+}
+
+//ANOTHER FUNCTIONS
+
+//go back after add match
+function goBack(){
+    //taking 'from' from url
+    let querystring = window.location.search;
+    let urlParam = new URLSearchParams(querystring);
+    let from = urlParam.get('from');
+
+    if(from == 'new'){
+        window.location.href = 'addnew.html';
+    }else{
+        window.location.href = 'addex.php';
     }
 }

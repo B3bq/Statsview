@@ -36,7 +36,14 @@
             <h1>Add new match</h1>
             <p></p>
         </header>
-        <form action="" method="post" class="menu">
+        <form action="script.php?from=new" method="post" class="menu">
+            <select name="sport" id="sport">
+                <option value="" selected disabled hidden>Choose sport</option>
+                <option value="football">Footabll</option>
+                <option value="basketball">Basketball</option>
+                <option value="cs">Counter Strike</option>
+                <option value="lol">League of Legends</option>
+            </select>
             <input type="text" name="league" placeholder="League Name">
             <input type="text" name="team_one" placeholder="First Team">
             <input type="text" name="team_two" placeholder="Second Team">
