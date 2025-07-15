@@ -586,8 +586,8 @@ mysqli_close($connect);
             </ul>
         </nav>
     </header>
-    <main class="mainpage">
-        <h1>Added teams <?php echo $teamOne;?> and <?php echo $teamTwo;?> to the competition <?php echo $league;?></h1>
+    <main class="added">
+        <h1>Added teams <span><?php echo $teamOne;?></span> and <span><?php echo $teamTwo;?></span> to the competition <span><?php echo $league;?></span></h1>
         <button onclick="goBack()">Go Back</button>
     </main>
     <footer>

@@ -12,6 +12,9 @@
 body {
   margin: 0;
   background-color: #a7b5be;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 main {
@@ -382,6 +385,28 @@ main > header {
   border-radius: 15px;
   background-color: #00BCD4;
   color: #fff;
+}
+
+.added {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.added span {
+  text-decoration: underline #73787a;
+  font-style: italic;
+  color: #148042;
+}
+.added button {
+  width: 150px;
+  height: 70px;
+  border-radius: 15px;
+  border: none;
+  background-color: #2ECC71;
+  color: #1C1C1E;
+  font-size: 1.5em;
 }
 
 .forgot {

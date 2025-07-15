@@ -289,3 +289,27 @@
         color: #fff;
     }
 }
+
+.added{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    span{
+        text-decoration: underline $fifthColor;
+        font-style: italic;
+        color: $sixthColor;
+    }
+
+    button{
+        width: 150px;
+        height: 70px;
+        border-radius: 15px;
+        border: none;
+        background-color: $primaryColor;
+        color: $fontColor;
+        font-size: 1.5em;
+    }
+}
