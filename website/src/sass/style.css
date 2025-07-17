@@ -419,6 +419,48 @@ main > header {
   font-size: 1.5em;
 }
 
+.desktop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.desktop button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 15px;
+}
+.desktop button::after {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  content: url("../img/downloads.png")/"Download";
+}
+.desktop::after {
+  margin-top: 15px;
+  position: relative;
+  content: "";
+  display: block;
+  background: #73787a;
+  width: 90%;
+  height: 0.25em;
+  border: 1px solid;
+  border-radius: 15px;
+}
+
+.moblie {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.moblie__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .forgot {
   margin: 200px 0px 200px 0px;
 }

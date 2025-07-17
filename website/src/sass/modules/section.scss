@@ -327,3 +327,48 @@
         font-size: 1.5em;
     }
 }
+
+.desktop{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    button{
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 15px;
+
+        &::after{
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+            content: url('../img/downloads.png') / "Download";
+        }
+    }
+
+    &::after{
+        margin-top: 15px;
+        position: relative;
+        content: '';
+        display: block;
+        background: $fifthColor;
+        width: 90%;
+        height: 0.25em;
+        border: 1px solid;
+        border-radius: 15px;
+    }
+}
+.moblie{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    &__buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
