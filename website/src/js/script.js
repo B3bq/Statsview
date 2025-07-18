@@ -93,6 +93,30 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }
 })
 
+//SUMMARY
+//selecting sport
+document.getElementById('sport').addEventListener("change", function(){
+    //taking season from url
+    let querystring = window.location.search;
+    let urlParam = new URLSearchParams(querystring);
+    let season = urlParam.get('season');
+    const selected = this.value; //take selected value
+
+    fetch('src/php/summary.php', {
+        method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}`
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        console.log(data);
+        document.getElementById('data').innerHTML = data.summary + data.leagues + data.teams;
+    })
+})
+
+
 const inputs = document.querySelectorAll(".code");
 
 inputs.forEach((input, index)=>{

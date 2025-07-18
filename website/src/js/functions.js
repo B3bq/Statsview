@@ -367,3 +367,30 @@ function goBack(){
         window.location.href = 'addex.php';
     }
 }
+
+function goSummary(){
+    // list of allowed dates in "MM-DD" format
+    const allowedDates = [
+        "07-06",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    if(allowedDates.slice(0,5).includes(todayString)){
+        window.location.href = 'summary.html?season=season';
+    }else{
+        window.location.href = 'summary.html?season=year';
+    }
+}
