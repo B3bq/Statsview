@@ -580,8 +580,8 @@ mysqli_close($connect);
 
             <ul id="js-toggleable-menu">
                 <li><a href="" title="" id="option1"></a></li>
-                <li><a href="#about" title="About the project" id="option2">About</a></li>
-                <li><a href="" title="">Dowland app</a></li>
+                <li><a href="index.html#about" title="About the project" id="option2">About</a></li>
+                <li><a href="download.html" title="">Dowland app</a></li>
                 <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
             </ul>
         </nav>
