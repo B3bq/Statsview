@@ -328,47 +328,60 @@
     }
 }
 
-.desktop{
+.download{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-content: center;
 
-    button{
-        display: inline-flex;
+    h1{
+        margin: 30px 0px 30px 0px ;
+    }
+
+    &__desktop{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        padding: 8px 12px;
-        border-radius: 15px;
+        margin-bottom: 50px;
+
+        button{
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 15px;
+
+            &::after{
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 8px;
+                content: url('../img/downloads.png') / "Download";
+            }
+        }
 
         &::after{
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 8px;
-            content: url('../img/downloads.png') / "Download";
+            margin-top: 15px;
+            position: relative;
+            content: '';
+            display: block;
+            background: $fifthColor;
+            width: 90%;
+            height: 0.25em;
+            border: 1px solid;
+            border-radius: 15px;
+            margin-top: 50px;
         }
     }
-
-    &::after{
-        margin-top: 15px;
-        position: relative;
-        content: '';
-        display: block;
-        background: $fifthColor;
-        width: 90%;
-        height: 0.25em;
-        border: 1px solid;
-        border-radius: 15px;
-    }
-}
-.moblie{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    &__buttons{
+    &__moblie{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 }
