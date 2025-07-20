@@ -104,11 +104,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
     if(season == 'year'){
         document.getElementById('lol').hidden =false;
         document.getElementById('cs').hidden =false;
-    }else{
-        document.getElementById('lol').hidden =true;
-        document.getElementById('cs').hidden =true;
     }
-
+    
     document.getElementById('text').innerHTML = "Check your " + season + " summary";
 })
 

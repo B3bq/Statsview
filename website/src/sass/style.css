@@ -478,13 +478,14 @@ main > header {
   flex-direction: column;
   justify-content: center;
   margin: 50px 30px 50px 30px;
+  text-align: center;
 }
 .summary select {
-  height: 25px;
-  width: 50%;
+  height: 40px;
   align-self: center;
   text-align: center;
   border-radius: 15px;
+  font-size: 1.25em;
 }
 .summary .fav {
   display: flex;
