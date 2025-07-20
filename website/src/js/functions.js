@@ -371,7 +371,7 @@ function goBack(){
 function goSummary(){
     // list of allowed dates in "MM-DD" format
     const allowedDates = [
-        "07-06",
+        "07-20",
         "07-15",
         "07-16",
         "07-17",

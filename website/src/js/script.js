@@ -38,7 +38,7 @@ function deleteCookie(name) {
 function visibleSummary(){
     // list of allowed dates in "MM-DD" format
     const allowedDates = [
-        "07-06",
+        "07-20",
         "07-15",
         "07-16",
         "07-17",
@@ -112,7 +112,7 @@ document.getElementById('sport').addEventListener("change", function(){
     .then(response=>response.json())
     .then(data=>{
         console.log(data);
-        document.getElementById('data').innerHTML = data.summary + data.leagues + data.teams;
+        document.getElementById('data').innerHTML = data.summary + data.home + data.away + data.leagues + data.teams;
     })
 })
 
