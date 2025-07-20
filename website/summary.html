@@ -32,12 +32,13 @@
         </nav>
     </header>
     <main class="summary">
+            <h1 id="text"></h1>
             <select name="sport" id="sport">
                 <option value="" selected disabled hidden>Choose sport</option>
                 <option value="football">Footabll</option>
                 <option value="basketball">Basketball</option>
-                <option value="cs">Counter Strike</option>
-                <option value="lol">League of Legends</option>
+                <option id="lol" value="cs" hidden>Counter Strike</option>
+                <option id="cs" value="lol" hidden>League of Legends</option>
             </select>
             <div id="data"></div>
     </main>
