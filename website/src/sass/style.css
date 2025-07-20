@@ -25,6 +25,7 @@ main {
 h1, h2, h3, h4, h5, h6 {
   font-family: Roboto, sans-serif;
   margin: 3%;
+  text-wrap: nowrap;
 }
 
 section > p {
@@ -470,6 +471,131 @@ main > header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 50px 30px 50px 30px;
+}
+.summary select {
+  height: 25px;
+  width: 50%;
+  align-self: center;
+  text-align: center;
+  border-radius: 15px;
+}
+.summary .fav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.summary .fav img {
+  width: 50px;
+  height: 50px;
+}
+.summary .topLeagues {
+  table-layout: auto;
+  width: 100%;
+  text-align: center;
+  font-size: 1.25em;
+  margin: 20px 0px 20px 0px;
+  border-collapse: collapse;
+}
+.summary .topLeagues img {
+  width: 32px;
+  height: 32px;
+}
+.summary .topLeagues th {
+  background-color: #2ECC71;
+}
+.summary .topLeagues td {
+  padding-top: 5px;
+}
+.summary .topLeagues th:nth-child(2) {
+  border-left: 1px solid #a7b5be;
+  border-right: 1px solid #a7b5be;
+}
+.summary .topLeagues tr:nth-child(-n+6) td:nth-child(1) {
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.summary .topLeagues tr:nth-child(-n+6) td:nth-child(2) {
+  border-bottom: 1px solid;
+}
+.summary .topLeagues tr:nth-child(-n+6) td:nth-child(3) {
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.summary .topLeagues tr:nth-child(-n+6) td:nth-child(4) {
+  border-bottom: 1px solid;
+}
+.summary .topLeagues tr:nth-child(2) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal.png");
+}
+.summary .topLeagues tr:nth-child(3) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal2.png");
+}
+.summary .topLeagues tr:nth-child(4) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal3.png");
+}
+.summary .topTeams {
+  table-layout: auto;
+  width: 100%;
+  text-align: center;
+  font-size: 1.25em;
+  border-collapse: collapse;
+}
+.summary .topTeams img {
+  width: 32px;
+  height: 32px;
+}
+.summary .topTeams th {
+  background-color: #2ECC71;
+}
+.summary .topTeams td {
+  padding-top: 5px;
+}
+.summary .topTeams th:nth-child(2) {
+  border-left: 1px solid #a7b5be;
+  border-right: 1px solid #a7b5be;
+}
+.summary .topTeams tr:nth-child(-n+6) td:nth-child(1) {
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.summary .topTeams tr:nth-child(-n+6) td:nth-child(2) {
+  border-bottom: 1px solid;
+}
+.summary .topTeams tr:nth-child(-n+6) td:nth-child(3) {
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.summary .topTeams tr:nth-child(-n+6) td:nth-child(4) {
+  border-bottom: 1px solid;
+}
+.summary .topTeams tr:nth-child(2) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal.png");
+}
+.summary .topTeams tr:nth-child(3) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal2.png");
+}
+.summary .topTeams tr:nth-child(4) td:nth-child(1)::before {
+  display: inline-block;
+  vertical-align: middle;
+  content: url("../img/medal3.png");
 }
 
 .forgot {

@@ -108,7 +108,7 @@ if($season == 'season'){
             $topLeagus = mysqli_query($conn, $sql);
 
             //table
-            $leagueTable = "<table class='topLeague'>";
+            $leagueTable = "<table class='topLeagues'>";
             $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
 
             $n = 1;
@@ -231,7 +231,7 @@ if($season == 'season'){
             $mimeType = $finfo->buffer($topHome['img']); //taikng file type
             $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topHome['img']); //code this to base64
 
-            $homeFav = "<div class='homeFav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
+            $homeFav = "<div class='fav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
         
             //top away team
             $sql = "SELECT $tableTeams.name, away_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY away_count DESC LIMIT 1";
@@ -242,7 +242,7 @@ if($season == 'season'){
             $mimeType = $finfo->buffer($topAway['img']); //taikng file type
             $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topAway['img']); //code this to base64
 
-            $awayFav = "<div class='homeFav'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+            $awayFav = "<div class='fav'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
 
             //pack datas for json
             $data = [
