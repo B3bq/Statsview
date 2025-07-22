@@ -2,7 +2,7 @@
 $server = 'localhost';
 $login = 'root';
 $pass = '';
-$base = 'statsview';
+$base = 'base';
 $conn = mysqli_connect($server, $login, $pass, $base); //connect to the databa
 $conn->set_charset("utf8mb4"); //coding utf
 

@@ -93,6 +93,45 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }
 })
 
+const inputs = document.querySelectorAll(".code");
+
+inputs.forEach((input, index)=>{
+    input.addEventListener("input", ()=>{
+        if(input.value.length === 1 && index < inputs.length -1){
+            inputs[index+1].focus();
+        }
+    });
+
+    input.addEventListener("keydown",(e)=>{
+        if(e.key === "Backspace" && input.value === "" && index > 0){
+            inputs[index-1].focus()
+        }
+    });
+
+    input.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+        pasted.split("").forEach((char, i) => {
+          if (inputs[i]) {
+            inputs[i].value = char;
+          }
+        });
+        if (inputs[pasted.length - 1]) {
+          inputs[pasted.length - 1].focus();
+        }
+      });
+});
+
+// script to show password
+const pass = document.getElementById('password');
+const re_pass = document.getElementById('re_password');
+const show_pass = document.getElementById('show_password');
+
+show_pass.addEventListener('change', function(){
+    pass.type = this.checked ? 'text' : 'password';
+    re_pass.type = this.checked ? 'text' : 'password';
+});
+
 //SUMMARY
 //summary text
 window.addEventListener('DOMContentLoaded', ()=>{
@@ -136,43 +175,3 @@ document.getElementById('sport').addEventListener("change", function(){
         }
     })
 })
-
-
-const inputs = document.querySelectorAll(".code");
-
-inputs.forEach((input, index)=>{
-    input.addEventListener("input", ()=>{
-        if(input.value.length === 1 && index < inputs.length -1){
-            inputs[index+1].focus();
-        }
-    });
-
-    input.addEventListener("keydown",(e)=>{
-        if(e.key === "Backspace" && input.value === "" && index > 0){
-            inputs[index-1].focus()
-        }
-    });
-
-    input.addEventListener("paste", (e) => {
-        e.preventDefault();
-        const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
-        pasted.split("").forEach((char, i) => {
-          if (inputs[i]) {
-            inputs[i].value = char;
-          }
-        });
-        if (inputs[pasted.length - 1]) {
-          inputs[pasted.length - 1].focus();
-        }
-      });
-});
-
-// script to show password
-const pass = document.getElementById('password');
-const re_pass = document.getElementById('re_password');
-const show_pass = document.getElementById('show_password');
-
-show_pass.addEventListener('change', function(){
-    pass.type = this.checked ? 'text' : 'password';
-    re_pass.type = this.checked ? 'text' : 'password';
-});
