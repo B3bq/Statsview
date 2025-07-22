@@ -654,9 +654,6 @@ main > header {
   margin: 0;
 }
 
-.mainpage {
-  /* make animation */
-}
 .mainpage button {
   width: 150px;
   height: 70px;
@@ -665,6 +662,7 @@ main > header {
   background-color: #2ECC71;
   color: #1C1C1E;
   font-size: 1.5em;
+  /* make animation */
 }
 
 .about, .how {
