@@ -111,6 +111,35 @@
     }
 }
 
+.description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1em 30px 1em 30px;
+    text-wrap-mode: wrap;
+
+    &__good::after{
+        display: inline-flex;
+        vertical-align: center;
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        content: "✅";
+    }
+    &__bad::after{
+        display: inline-flex;
+        vertical-align: center;
+        width: 16px;
+        height: 16px;
+        content: "❌";
+    }
+}
+.example{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .personal{
     display: flex;
     flex-direction: column;

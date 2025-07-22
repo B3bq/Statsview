@@ -9,8 +9,8 @@ $connect = mysqli_connect($server, $login, $password, $base); //connecting to da
 //getting a data from user
 $sport = $_POST['sport'];
 $league = $_POST['league'];
-$teamOne = $_POST['team_one'];
-$teamTwo = $_POST['team_two'];
+$teamOne = strtolower($_POST['team_one']);
+$teamTwo = strtolower($_POST['team_two']);
 
 $userID = $_COOKIE['user']; //getting user id
 
