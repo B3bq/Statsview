@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   font-size: 87.5%;
   font-family: Roboto, sans-serif;
@@ -220,6 +221,35 @@ main > header {
   text-align: center;
   font-size: 1.25em;
   border-radius: 15px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1em 30px 1em 30px;
+  text-wrap-mode: wrap;
+}
+.description__good::after {
+  display: inline-flex;
+  vertical-align: center;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  content: "✅";
+}
+.description__bad::after {
+  display: inline-flex;
+  vertical-align: center;
+  width: 16px;
+  height: 16px;
+  content: "❌";
+}
+
+.example {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .personal {
