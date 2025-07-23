@@ -122,6 +122,50 @@ inputs.forEach((input, index)=>{
       });
 });
 
+//ADDING FROM EXIST
+document.getElementById('sportAdd').addEventListener("change", function(){
+    const selected = this.value;
+
+    //dates season
+    const allowedDates = [
+        "07-20",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    let season = '';
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    if(allowedDates.includes(todayString)){
+        season = 'season';
+    }else{
+        season = 'year';
+    }
+
+    fetch('src/php/leagueex.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}`
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        document.getElementById('league').innerHTML = data.leagues;
+    })
+})
+
 // script to show password
 const pass = document.getElementById('password');
 const re_pass = document.getElementById('re_password');
@@ -131,6 +175,7 @@ show_pass.addEventListener('change', function(){
     pass.type = this.checked ? 'text' : 'password';
     re_pass.type = this.checked ? 'text' : 'password';
 });
+
 
 //SUMMARY
 //summary text
