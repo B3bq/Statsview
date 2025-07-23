@@ -162,7 +162,7 @@ document.getElementById('sportAdd').addEventListener("change", function(){
     })
     .then(response=>response.json())
     .then(data=>{
-        document.getElementById('league').innerHTML = data.leagues;
+        document.getElementById('leagueNames').innerHTML = data.leagues;
     })
 })
 
