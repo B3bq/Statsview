@@ -22,11 +22,9 @@ if($season == 'season'){
     $leaguesNames = mysqli_query($connection, $sql);
 
     if($leaguesNames->num_rows > 0){
-        $selectLeague = "<select id='league'>";
         while($row = mysqli_fetch_assoc($leaguesNames)){
             $selectLeague .= "<option value='".$row['name']."'>".$row['name']."</option>";
         }
-        $selectLeague .= "</select>";
     }
 
     $data = [

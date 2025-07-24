@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -34,13 +35,21 @@
     <main class="summary">
             <h1>Choose your game</h1>
             <select name="sport" id="sportAdd">
-                <option value="" selected disabled hidden>Choose sport</option>
+                <option selected disabled hidden>Choose sport</option>
                 <option value="football">Footabll</option>
                 <option value="basketball">Basketball</option>
                 <option value="cs">Counter Strike</option>
                 <option value="lol">League of Legends</option>
             </select>
-            <div id="leagueNames"></div>
+            <select id="league" hidden>
+                <option selected disabled hidden>Choose league</option>
+            </select>
+            <select id="first" hidden>
+                <option selected disabled hidden>Choose team</option>
+            </select>
+            <select id="second" hidden>
+                <option selected disabled hidden>Choose team</option>
+            </select>
     </main>
     <footer>
         <a href="https://github.com/B3bq" target="_blank" >

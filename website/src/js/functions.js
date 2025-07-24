@@ -394,3 +394,47 @@ function goSummary(){
         window.location.href = 'summary.html?season=year';
     }
 }
+
+function change(){
+    const sport = document.getElementById('sportAdd').value;
+    const selected = document.getElementById('league').value;
+
+    //dates season
+    const allowedDates = [
+        "07-20",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    let season = '';
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    if(allowedDates.includes(todayString)){
+        season = 'season';
+    }else{
+        season = 'year';
+    }
+
+    fetch('src/php/team.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(sport)}&league=${encodeURIComponent(selected)}`
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        document.getElementById('leagueNames').innerHTML = data.firstTeam + data.secondTeam;
+    })
+}
