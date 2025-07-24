@@ -1,10 +1,5 @@
 <?php
-$server = 'localhost';
-$login = 'root';
-$password = '';
-$base = 'statsview';
-
-$connection = mysqli_connect($server, $login, $password, $base);
+require 'connect.php'; //connection to database
 
 $sport = $_POST['sport'];
 $season = $_POST['season'];

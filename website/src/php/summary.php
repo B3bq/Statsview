@@ -1,10 +1,6 @@
 <?php
-$server = 'localhost';
-$login = 'root';
-$pass = '';
-$base = 'base';
-$conn = mysqli_connect($server, $login, $pass, $base); //connect to the databa
-$conn->set_charset("utf8mb4"); //coding utf
+require 'connect.php'; //connect to the database
+$connection->set_charset("utf8mb4"); //coding utf
 
 //getting varibles
 $userID = $_COOKIE['user'];
@@ -16,7 +12,7 @@ if($season == 'season'){
     $tableTeams = $sport."_teams_".$season;
     //overall matches
     $sql = "SELECT SUM(count) FROM $tableLeague WHERE id_user = ?";
-    $query = $conn->prepare($sql);
+    $query = $connection->prepare($sql);
     $query->bind_param("s", $userID);
     $query->execute();
     $result = $query->get_result();
@@ -26,7 +22,7 @@ if($season == 'season'){
 
     //top 5 leagues
     $sql = "SELECT $tableLeague.name, count, images.img FROM $tableLeague JOIN images ON $tableLeague.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
-    $topLeagus = mysqli_query($conn, $sql);
+    $topLeagus = mysqli_query($connection, $sql);
 
     //table 
     $leagueTable = "<table class='topLeagues'>";
@@ -45,7 +41,7 @@ if($season == 'season'){
 
     //top 5 teams
     $sql = "SELECT $tableTeams.name, (home_count + away_count) AS total_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY total_count DESC LIMIT 5";
-    $topTeams = mysqli_query($conn, $sql);
+    $topTeams = mysqli_query($connection, $sql);
 
     //tabel
     $teamTable = "<table class='topTeams'>";
@@ -64,7 +60,7 @@ if($season == 'season'){
 
     //top home team
     $sql = "SELECT $tableTeams.name, home_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY home_count DESC LIMIT 1";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($connection, $sql);
     $topHome = mysqli_fetch_assoc($result);
 
     $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -75,7 +71,7 @@ if($season == 'season'){
 
     //top away team
     $sql = "SELECT $tableTeams.name, away_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY away_count DESC LIMIT 1";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($connection, $sql);
     $topAway = mysqli_fetch_assoc($result);
 
     $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -119,7 +115,7 @@ if($season == 'season'){
         case "lol":
             //overall matches
             $sql = "SELECT SUM(count) FROM lol_leagues WHERE id_user = ?";
-            $query = $conn->prepare($sql);
+            $query = $connection->prepare($sql);
             $query->bind_param("s", $userID);
             $query->execute();
             $result = $query->get_result();
@@ -129,7 +125,7 @@ if($season == 'season'){
         
             //top 5 leagues
             $sql = "SELECT lol_leagues.name, count, images.img FROM lol_leagues JOIN images ON lol_leagues.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
-            $topLeagus = mysqli_query($conn, $sql);
+            $topLeagus = mysqli_query($connection, $sql);
 
             //table 
             $leagueTable = "<table class='topLeagues'>";
@@ -148,7 +144,7 @@ if($season == 'season'){
         
             //top 5 teams
             $sql = "SELECT lol_teams.name, (home_count + away_count) AS total_count, images.img FROM lol_teams JOIN images ON lol_teams.img = images.id WHERE id_user = $userID ORDER BY total_count DESC LIMIT 5";
-            $topTeams = mysqli_query($conn, $sql);
+            $topTeams = mysqli_query($connection, $sql);
 
             //tabel
             $teamTable = "<table class='topTeams'>";
@@ -198,7 +194,7 @@ if($season == 'season'){
         case "cs":
             //overall matches
             $sql = "SELECT SUM(count) FROM cs_leagues WHERE id_user = ?";
-            $query = $conn->prepare($sql);
+            $query = $connection->prepare($sql);
             $query->bind_param("s", $userID);
             $query->execute();
             $result = $query->get_result();
@@ -208,7 +204,7 @@ if($season == 'season'){
         
             //top 5 leagues
             $sql = "SELECT cs_leagues.name, count, images.img FROM cs_leagues JOIN images ON cs_leagues.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
-            $topLeagus = mysqli_query($conn, $sql);
+            $topLeagus = mysqli_query($connection, $sql);
 
             //table
             $leagueTable = "<table class='topLeagues'>";
@@ -227,7 +223,7 @@ if($season == 'season'){
         
             //top 5 teams
             $sql = "SELECT cs_teams.name, (home_count + away_count) AS total_count, images.img FROM cs_teams JOIN images ON cs_teams.img = images.id WHERE id_user = $userID ORDER BY total_count DESC LIMIT 5";
-            $topTeams = mysqli_query($conn, $sql);
+            $topTeams = mysqli_query($connection, $sql);
 
             //tabel
             $teamTable = "<table class='topTeams'>";
@@ -279,7 +275,7 @@ if($season == 'season'){
             $tableTeams = $sport."_teams_".$season;
             //overall matches
             $sql = "SELECT SUM(count) FROM $tableLeague WHERE id_user = ?";
-            $query = $conn->prepare($sql);
+            $query = $connection->prepare($sql);
             $query->bind_param("s", $userID);
             $query->execute();
             $result = $query->get_result();
@@ -289,7 +285,7 @@ if($season == 'season'){
         
             //top 5 leagues
             $sql = "SELECT $tableLeague.name, count, images.img FROM $tableLeague JOIN images ON $tableLeague.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
-            $topLeagus = mysqli_query($conn, $sql);
+            $topLeagus = mysqli_query($connection, $sql);
         
             //table 
             $leagueTable = "<table class='topLeagues'>";
@@ -308,7 +304,7 @@ if($season == 'season'){
 
             //top 5 teams
             $sql = "SELECT $tableTeams.name, (home_count + away_count) AS total_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY total_count DESC LIMIT 5";
-            $topTeams = mysqli_query($conn, $sql);
+            $topTeams = mysqli_query($connection, $sql);
 
             //tabel
             $teamTable = "<table class='topTeams'>";
@@ -327,7 +323,7 @@ if($season == 'season'){
 
             //top home team
             $sql = "SELECT $tableTeams.name, home_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY home_count DESC LIMIT 1";
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($connection, $sql);
             $topHome = mysqli_fetch_assoc($result);
 
             $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -338,7 +334,7 @@ if($season == 'season'){
         
             //top away team
             $sql = "SELECT $tableTeams.name, away_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY away_count DESC LIMIT 1";
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($connection, $sql);
             $topAway = mysqli_fetch_assoc($result);
         
             $finfo = new finfo(FILEINFO_MIME_TYPE);

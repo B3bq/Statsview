@@ -1,22 +1,18 @@
 <?php
-$server = "localhost";
-$login = "root";
-$password = "";
-$base = "base";
-$connect = mysqli_connect($server, $login, $password, $base); //connecting to database
+require 'connect.php'; //connecting to database
 
 // getting a user login data
 $login = $_POST['login'];
 $password = $_POST['password'];
 $sqlCheck = "SELECT mail, name FROM users WHERE mail = ? OR name = ?";
-$query = $connect->prepare($sqlCheck); // prepare to execute
+$query = $connection->prepare($sqlCheck); // prepare to execute
 $query->bind_param("ss", $login, $login); // insert a data
 $query->execute(); // executing
 $result = $query->get_result(); // getting a result to varible
 
 if($result->num_rows>0){ // if number of rows is bigger than 0 that league exist
     $sqlPassCheck = "SELECT password FROM users WHERE name = ? or mail = ?";
-    $query = $connect->prepare($sqlPassCheck);
+    $query = $connection->prepare($sqlPassCheck);
     $query->bind_param("ss", $login, $login);
     $query->execute();
     $result = $query->get_result();
@@ -25,7 +21,7 @@ if($result->num_rows>0){ // if number of rows is bigger than 0 that league exist
     if(password_verify($password, $databasePass)){ // checking password with hashed password in database
         // taking user id
         $sqlUserID = "SELECT id_users FROM users WHERE name = ? OR mail = ?";
-        $query = $connect->prepare($sqlUserID);
+        $query = $connection->prepare($sqlUserID);
         $query->bind_param("ss", $login, $login);
         $query->execute();
         $result = $query->get_result();
@@ -33,7 +29,7 @@ if($result->num_rows>0){ // if number of rows is bigger than 0 that league exist
         
         // taking user name
         $sqlUserName = "SELECT name FROM users WHERE name = ? OR mail = ?";
-        $query = $connect->prepare($sqlUserName);
+        $query = $connection->prepare($sqlUserName);
         $query->bind_param("ss", $login, $login);
         $query->execute();
         $result = $query->get_result();

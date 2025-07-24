@@ -1,17 +1,12 @@
 <?php
-$server = 'localhost';
-$login = 'root';
-$password = '';
-$base = 'base';
-
-$conn = mysqli_connect($server, $login, $password, $base);
+require 'connect.php'; //connection to database
 
 $userID = $_COOKIE['user'];
 $name = $_POST['name'];
 
 //update name in database
 $sql = "UPDATE users SET name = ? WHERE id_users = ?";
-$query = $conn->prepare($sql);
+$query = $connection->prepare($sql);
 $query->bind_param("ss", $name, $userID);
 $query->execute();
 

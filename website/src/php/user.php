@@ -1,10 +1,5 @@
 <?php
-$server = 'localhost';
-$login = 'root';
-$password = '';
-$base = 'base';
-
-$conn = mysqli_connect($server, $login, $password, $base);
+require 'connect.php'; //connection to database
 
 session_start();
 
@@ -20,7 +15,7 @@ if($userCode == $expectedCode){
         //chnging e-mail in account
         $userID = $_COOKIE['user'];
         $sql = "UPDATE users SET mail = ? WHERE id_users = ?";
-        $query = $conn->prepare($sql);
+        $query = $connection->prepare($sql);
         $query->bind_param("ss", $mail, $userID);
         $query->execute();
         echo 'ok';
@@ -31,7 +26,7 @@ if($userCode == $expectedCode){
         $hash = password_hash($pass, PASSWORD_BCRYPT);
         $hash = preg_replace('/^\$2y\$/', '\$2b\$', $hash);
         $sql = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, ?, ?, ?)";
-        $query = $conn->prepare($sql);
+        $query = $connection->prepare($sql);
         $query->bind_param("sss", $mail, $name, $hash);
         $query->execute();
         echo 'ok';
