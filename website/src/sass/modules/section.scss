@@ -340,6 +340,10 @@
     text-align: center;
     margin: 200px 0px 200px 0px;
 
+    h1{
+        text-wrap: wrap;
+    }
+
     span{
         text-decoration: underline $fifthColor;
         font-style: italic;
@@ -424,6 +428,7 @@
     
 
     select{
+        width: 65%;
         height: 40px;
         align-self: center;
         text-align: center;

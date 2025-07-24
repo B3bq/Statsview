@@ -436,6 +436,9 @@ main > header {
   text-align: center;
   margin: 200px 0px 200px 0px;
 }
+.added h1 {
+  text-wrap: wrap;
+}
 .added span {
   text-decoration: underline #73787a;
   font-style: italic;
@@ -511,6 +514,7 @@ main > header {
   text-align: center;
 }
 .summary select {
+  width: 65%;
   height: 40px;
   align-self: center;
   text-align: center;
