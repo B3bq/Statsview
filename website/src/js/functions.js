@@ -364,7 +364,7 @@ function goBack(){
     if(from == 'new'){
         window.location.href = 'addnew.html';
     }else{
-        window.location.href = 'addex.php';
+        window.location.href = 'addex.html';
     }
 }
 

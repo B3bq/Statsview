@@ -122,6 +122,101 @@ inputs.forEach((input, index)=>{
       });
 });
 
+//ADDING FROM EXIST
+//select leagues
+document.getElementById('sportAdd').addEventListener("change", function(){
+    const selected = this.value;
+
+    //dates season
+    const allowedDates = [
+        "07-20",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    let season = '';
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    if(allowedDates.includes(todayString)){
+        season = 'season';
+    }else{
+        season = 'year';
+    }
+
+    fetch('src/php/leagueex.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}`
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        document.getElementById('league').hidden = false;
+        document.getElementById('league').innerHTML = data.leagues;
+    })
+})
+
+//select teams
+document.getElementById('league').addEventListener("change", function(){
+    const sport = document.getElementById('sportAdd').value;
+    const selected = this.value;
+
+    //dates season
+    const allowedDates = [
+        "07-20",
+        "07-15",
+        "07-16",
+        "07-17",
+        "07-18",
+        "01-01",
+        "01-02",
+        "01-03",
+        "01-04",
+    ];
+
+    let season = '';
+
+    // get today date
+    const today = new Date();
+    const mm = String(today.getMonth()+1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayString = `${mm}-${dd}`;
+
+    if(allowedDates.includes(todayString)){
+        season = 'season';
+    }else{
+        season = 'year';
+    }
+
+    fetch('src/php/team.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(sport)}&league=${encodeURIComponent(selected)}`
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        document.getElementById('add_btn').hidden = false;
+        document.getElementById('first').hidden = false;
+        document.getElementById('second').hidden = false;
+        document.getElementById('first').innerHTML = data.firstTeam;
+        document.getElementById('second').innerHTML = data.secondTeam;
+    })
+})
+
 // script to show password
 const pass = document.getElementById('password');
 const re_pass = document.getElementById('re_password');

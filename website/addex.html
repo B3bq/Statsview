@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
@@ -33,14 +34,19 @@
     </header>
     <main class="summary">
             <h1>Choose your game</h1>
-            <select name="sport" id="sport">
-                <option value="" selected disabled hidden>Choose sport</option>
-                <option value="football">Footabll</option>
-                <option value="basketball">Basketball</option>
-                <option id="lol" value="cs">Counter Strike</option>
-                <option id="cs" value="lol">League of Legends</option>
-            </select>
-            <div id="data"></div>
+            <form action="script.php?from=ex" method="post" class="menu">
+                <select name="sport" id="sportAdd">
+                    <option selected disabled hidden>Choose sport</option>
+                    <option value="football">Footabll</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="cs">Counter Strike</option>
+                    <option value="lol">League of Legends</option>
+                </select>
+                <select name="league" id="league" hidden></select>
+                <select name="team_one" id="first" hidden></select>
+                <select name="team_two" id="second" hidden></select>
+                <input type="submit" id="add_btn" hidden value="Add Match">
+            </form>
     </main>
     <footer>
         <a href="https://github.com/B3bq" target="_blank" >
