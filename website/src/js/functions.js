@@ -369,28 +369,16 @@ function goBack(){
 }
 
 function goSummary(){
-    // list of allowed dates in "MM-DD" format
-    const allowedDates = [
-        "07-20",
-        "07-15",
-        "07-16",
-        "07-17",
-        "07-18",
-        "01-01",
-        "01-02",
-        "01-03",
-        "01-04",
-    ];
-
     // get today date
     const today = new Date();
     const mm = String(today.getMonth()+1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const todayString = `${mm}-${dd}`;
+    const todayString = `${mm}`;
 
-    if(allowedDates.slice(0,5).includes(todayString)){
+    if(todayString == '07'){
+        //july season summary
         window.location.href = 'summary.html?season=season';
     }else{
+        //january year summary
         window.location.href = 'summary.html?season=year';
     }
 }
