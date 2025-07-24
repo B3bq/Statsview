@@ -13,6 +13,8 @@ $tableLeague = $sport."_leagues";
 $tableTeam = $sport."_teams";
 $tableBroker = $sport."_broker";
 
+$selectLeague = "<option selected disabled hidden>Choose league</option>";
+
 if($season == 'season'){
     $tableLeague .= "_season";
     $tableTeam .= "_season";
@@ -59,11 +61,9 @@ if($season == 'season'){
             $leaguesNames = mysqli_query($connection, $sql);
 
             if($leaguesNames->num_rows > 0){
-                $selectLeague = "<select id='league'>";
                 while($row = mysqli_fetch_assoc($leaguesNames)){
                 $selectLeague .= "<option value='".$row['name']."'>".$row['name']."</option>";
                 }
-                $selectLeague .= "</select>";
             }
 
             $data = [
@@ -97,11 +97,9 @@ if($season == 'season'){
             $leaguesNames = mysqli_query($connection, $sql);
 
             if($leaguesNames->num_rows > 0){
-                $selectLeague = "<select id='league'>";
                 while($row = mysqli_fetch_assoc($leaguesNames)){
                 $selectLeague .= "<option value='".$row['name']."'>".$row['name']."</option>";
                 }
-                $selectLeague .= "</select>";
             }
 
             $data = [
@@ -139,11 +137,9 @@ if($season == 'season'){
             $leaguesNames = mysqli_query($connection, $sql);
 
             if($leaguesNames->num_rows > 0){
-                $selectLeague = "<select id='league'>";
                 while($row = mysqli_fetch_assoc($leaguesNames)){
                 $selectLeague .= "<option value='".$row['name']."'>".$row['name']."</option>";
                 }
-                $selectLeague .= "</select>";
             }
 
             $data = [

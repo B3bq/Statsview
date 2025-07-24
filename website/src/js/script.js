@@ -172,7 +172,7 @@ document.getElementById('sportAdd').addEventListener("change", function(){
 document.getElementById('league').addEventListener("change", function(){
     const sport = document.getElementById('sportAdd').value;
     const selected = this.value;
-    console.log(selected);
+
     //dates season
     const allowedDates = [
         "07-20",
@@ -209,6 +209,7 @@ document.getElementById('league').addEventListener("change", function(){
     })
     .then(response=>response.json())
     .then(data=>{
+        document.getElementById('add_btn').hidden = false;
         document.getElementById('first').hidden = false;
         document.getElementById('second').hidden = false;
         document.getElementById('first').innerHTML = data.firstTeam;

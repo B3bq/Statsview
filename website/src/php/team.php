@@ -14,8 +14,8 @@ $tableLeague = $sport."_leagues";
 $tableTeam = $sport."_teams";
 $tableBroker = $sport."_broker";
 
-$selectFirst = '';
-$selectSecond = '';
+$selectFirst = '<option selected disabled hidden>Choose team</option>';
+$selectSecond = '<option selected disabled hidden>Choose team</option>';
 
 if($season == 'season'){
     $tableLeague .= "_season";
