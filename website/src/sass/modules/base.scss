@@ -25,9 +25,18 @@ h1, h2, h3, h4, h5, h6 {
     font-family: $mainFont;
     margin: 3%;
     text-wrap: nowrap;
+
+    @media (max-width: 400px) {
+        text-wrap: wrap;
+        text-align: center;
+    }
 }
 section > p{
     margin-left: 1em;
+}
+
+select{
+    background-color: $darkerWhite;
 }
 
 footer{
@@ -41,6 +50,7 @@ footer{
     img{
         width: 40px;
         height: 40px;
+        margin-left: 10px;
     }
 
     a:first-child{

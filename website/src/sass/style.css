@@ -28,9 +28,19 @@ h1, h2, h3, h4, h5, h6 {
   margin: 3%;
   text-wrap: nowrap;
 }
+@media (max-width: 400px) {
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: wrap;
+    text-align: center;
+  }
+}
 
 section > p {
   margin-left: 1em;
+}
+
+select {
+  background-color: #f0f3f4;
 }
 
 footer {
@@ -44,6 +54,7 @@ footer {
 footer img {
   width: 40px;
   height: 40px;
+  margin-left: 10px;
 }
 footer a:first-child {
   width: 40px;
@@ -61,13 +72,13 @@ body > header {
 body > header a {
   text-decoration: none;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   body > header a {
     transform: translateY(0);
     transition: all 0.3s ease-in-out;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   body > header a:hover {
     text-decoration: underline;
     transform: translateY(0.25em);
@@ -78,7 +89,7 @@ body > header nav button {
   background-color: transparent;
   border: none;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   body > header nav button {
     display: none;
   }
@@ -89,7 +100,7 @@ body > header nav ul {
   margin: 0;
   list-style: none;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   body > header nav ul {
     display: flex;
     flex-direction: row;
@@ -114,7 +125,7 @@ body > header nav ul.active a {
 body > header nav ul.active a:before {
   content: ">";
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   body > header nav li {
     padding: 10px;
   }
@@ -125,6 +136,11 @@ main > header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media (min-width: 768px) {
+  main > header {
+    margin-top: 100px;
+  }
 }
 
 .sign, .sign__form {
@@ -143,6 +159,11 @@ main > header {
   margin: 5px 0px 5px 0px;
   padding-left: 10px;
 }
+@media (min-width: 992px) {
+  .sign input, .sign__form input {
+    width: 45%;
+  }
+}
 .sign p, .sign__form p {
   margin: 0;
   font-size: 1.5rem;
@@ -160,6 +181,11 @@ main > header {
   height: 0.25em;
   background: #73787a;
 }
+@media (min-width: 768px) {
+  .sign::before {
+    width: 60%;
+  }
+}
 
 .login {
   display: flex;
@@ -173,6 +199,11 @@ main > header {
   border: 1px solid #a7b5be;
   border-radius: 15px;
   margin: 5px 0px 5px 0px;
+}
+@media (min-width: 768px) {
+  .login input {
+    width: 60%;
+  }
 }
 .login input[type=text], .login input[type=password] {
   padding-left: 10px;
@@ -215,6 +246,19 @@ main > header {
   margin: 0px 0px 15px 0px;
   padding-left: 10px;
 }
+@media (min-width: 768px) {
+  .menu input {
+    width: 35%;
+  }
+}
+.menu #add_btn {
+  width: 65%;
+}
+@media (min-width: 768px) {
+  .menu #add_btn {
+    width: 65%;
+  }
+}
 .menu select {
   margin: 0px 0px 15px 0px;
   height: 40px;
@@ -229,6 +273,7 @@ main > header {
   justify-content: center;
   margin: 1em 30px 1em 30px;
   text-wrap-mode: wrap;
+  text-align: center;
 }
 .description__good::after {
   display: inline-flex;
@@ -404,6 +449,11 @@ main > header {
   box-shadow: none;
   text-decoration: none;
 }
+@media (min-width: 768px) {
+  .verification__code {
+    justify-content: center;
+  }
+}
 .verification__code .code {
   height: 60px;
   width: 60px;
@@ -412,6 +462,11 @@ main > header {
   font-size: 1.5em;
   text-align: center;
   align-content: center;
+}
+@media (min-width: 768px) {
+  .verification__code .code {
+    margin: 0px 25px 0px 25px;
+  }
 }
 .verification button {
   margin: 25px 0px 0px 0px;
@@ -506,10 +561,28 @@ main > header {
   justify-content: space-between;
 }
 
+.addex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 30px 50px 30px;
+  text-align: center;
+}
+.addex select {
+  width: 65%;
+  height: 40px;
+  align-self: center;
+  text-align: center;
+  border-radius: 15px;
+  font-size: 1.25em;
+}
+
 .summary {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: 50px 30px 50px 30px;
   text-align: center;
 }
@@ -520,6 +593,11 @@ main > header {
   text-align: center;
   border-radius: 15px;
   font-size: 1.25em;
+}
+@media (min-width: 992px) {
+  .summary select {
+    width: 45%;
+  }
 }
 .summary .fav {
   display: flex;
@@ -634,7 +712,10 @@ main > header {
 }
 
 .forgot {
-  margin: 200px 0px 200px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 .forgot__block {
   display: flex;
@@ -648,6 +729,11 @@ main > header {
   border-radius: 15px;
   margin: 5px 0px 5px 0px;
   padding-left: 10px;
+}
+@media (min-width: 768px) {
+  .forgot__block input {
+    width: 60%;
+  }
 }
 .forgot__after {
   display: none;
