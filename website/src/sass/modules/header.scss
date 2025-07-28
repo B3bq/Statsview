@@ -86,5 +86,8 @@ main > header{
     @media (min-width: $tabletBreakPiont) {
         margin-top: 100px;
     }
+    @media (min-width: $laptopBreakPoint) {
+        margin-top: 0px;
+    }
 }
 

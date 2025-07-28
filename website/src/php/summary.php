@@ -78,7 +78,7 @@ if($season == 'season'){
     $mimeType = $finfo->buffer($topAway['img']); //taikng file type
     $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topAway['img']); //code this to base64
 
-    $awayFav = "<div class='fav'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+    $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
 
     //pack datas for json
     $data = [
@@ -341,7 +341,7 @@ if($season == 'season'){
             $mimeType = $finfo->buffer($topAway['img']); //taikng file type
             $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topAway['img']); //code this to base64
 
-            $awayFav = "<div class='fav'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+            $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
 
             //pack datas for json
             $data = [

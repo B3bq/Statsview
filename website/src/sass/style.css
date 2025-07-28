@@ -142,6 +142,11 @@ main > header {
     margin-top: 100px;
   }
 }
+@media (min-width: 1025px) {
+  main > header {
+    margin-top: 0px;
+  }
+}
 
 .sign, .sign__form {
   display: flex;
@@ -162,6 +167,11 @@ main > header {
 @media (min-width: 1025px) {
   .sign input, .sign__form input {
     width: 45%;
+  }
+}
+@media (min-width: 1025px) {
+  .sign input, .sign__form input {
+    width: 25%;
   }
 }
 .sign p, .sign__form p {
@@ -205,6 +215,11 @@ main > header {
     width: 60%;
   }
 }
+@media (min-width: 1025px) {
+  .login input {
+    width: 25%;
+  }
+}
 .login input[type=text], .login input[type=password] {
   padding-left: 10px;
 }
@@ -228,6 +243,18 @@ main > header {
 }
 .login__checkboxes-remember input, .login__checkboxes-remember p, .login__checkboxes-showpassword input, .login__checkboxes-showpassword p {
   margin: 0px 5px 0px 0px;
+}
+@media (min-width: 1025px) {
+  .login__checkboxes-remember {
+    justify-content: flex-end;
+    margin-right: 90px;
+  }
+}
+@media (min-width: 1025px) {
+  .login__checkboxes-showpassword {
+    justify-content: flex-start;
+    margin-left: 90px;
+  }
 }
 .login a {
   margin: 5px;
@@ -618,15 +645,41 @@ main > header {
     width: 45%;
   }
 }
+@media (min-width: 1025px) {
+  .summary select {
+    width: 15%;
+    height: 50px;
+  }
+}
+@media (min-width: 1025px) {
+  .summary #data > h1 {
+    position: relative;
+    top: -100px;
+  }
+}
 .summary .fav {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+@media (min-width: 1025px) {
+  .summary .fav {
+    position: absolute;
+    top: 150px;
+    left: 46%;
+  }
+}
 .summary .fav img {
   width: 50px;
   height: 50px;
+}
+@media (min-width: 1025px) {
+  .summary .away {
+    position: absolute;
+    top: 600px;
+    left: 42%;
+  }
 }
 .summary .topLeagues {
   table-layout: auto;
@@ -635,6 +688,14 @@ main > header {
   font-size: 1.25em;
   margin: 20px 0px 20px 0px;
   border-collapse: collapse;
+}
+@media (min-width: 1025px) {
+  .summary .topLeagues {
+    position: absolute;
+    top: 300px;
+    left: 70px;
+    width: 30%;
+  }
 }
 .summary .topLeagues img {
   width: 32px;
@@ -685,6 +746,14 @@ main > header {
   text-align: center;
   font-size: 1.25em;
   border-collapse: collapse;
+}
+@media (min-width: 1025px) {
+  .summary .topTeams {
+    position: absolute;
+    top: 320px;
+    right: 70px;
+    width: 30%;
+  }
 }
 .summary .topTeams img {
   width: 32px;
@@ -752,6 +821,11 @@ main > header {
 @media (min-width: 768px) {
   .forgot__block input {
     width: 60%;
+  }
+}
+@media (min-width: 1025px) {
+  .forgot__block input {
+    width: 25%;
   }
 }
 .forgot__after {

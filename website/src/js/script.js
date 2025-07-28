@@ -38,7 +38,7 @@ function deleteCookie(name) {
 function visibleSummary(){
     // list of allowed dates in "MM-DD" format
     const allowedDates = [
-        "07-27",
+        "07-28",
         "07-15",
         "07-16",
         "07-17",

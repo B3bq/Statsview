@@ -20,6 +20,9 @@
         @media (min-width: $laptopBreakPoint) {
             width: 45%;
         }
+        @media (min-width: $laptopBreakPoint) {
+            width: 25%;
+        }
     }
     
 
@@ -65,6 +68,9 @@
         @media (min-width: $tabletBreakPiont) {
             width: 60%;
         }
+        @media (min-width: $laptopBreakPoint) {
+            width: 25%;   
+        }
     }
     input[type="text"], input[type="password"]{
         padding-left: 10px;
@@ -92,6 +98,18 @@
             
             input, p{
                 margin: 0px 5px 0px 0px;
+            }
+        }
+        &-remember{
+            @media (min-width: $laptopBreakPoint) {
+                justify-content: flex-end;
+                margin-right: 90px;
+            }
+        }
+        &-showpassword{
+            @media (min-width: $laptopBreakPoint) {
+                justify-content: flex-start;
+                margin-left: 90px;
             }
         }
     }
@@ -512,8 +530,18 @@
         @media (min-width: $laptopBreakPoint) {
             width: 45%;
         }
+        @media (min-width: $laptopBreakPoint) {
+               width: 15%;
+               height: 50px;
+        }
     }
 
+    #data >h1{
+        @media (min-width: $laptopBreakPoint) {
+            position: relative;
+            top: -100px;   
+        }
+    }
 
     .fav{
         display: flex;
@@ -521,13 +549,25 @@
         justify-content: center;
         align-items: center;
 
+        @media (min-width: $laptopBreakPoint) {
+            position: absolute;
+            top: 150px;
+            left: 46%;
+        }
+
         img{
             width: 50px;
             height: 50px;
         }
     }
 
-    
+    .away{
+        @media (min-width: $laptopBreakPoint) {    
+            position: absolute;
+            top: 600px;
+            left: 42%;   
+        }
+    }
 
     .topLeagues{
         table-layout: auto;
@@ -536,6 +576,13 @@
         font-size: 1.25em;
         margin: 20px 0px 20px 0px;
         border-collapse: collapse;
+
+        @media (min-width: $laptopBreakPoint) {
+            position: absolute;
+            top: 300px;
+            left: 70px;
+            width: 30%;   
+        }
 
         img{
             width: 32px;
@@ -592,6 +639,13 @@
         text-align: center;
         font-size: 1.25em;
         border-collapse: collapse;
+
+        @media (min-width: $laptopBreakPoint) {
+            position: absolute;
+            top: 320px;
+            right: 70px;
+            width: 30%;   
+        }
 
         img{
             width: 32px;

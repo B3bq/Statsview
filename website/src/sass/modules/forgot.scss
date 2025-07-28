@@ -23,6 +23,9 @@
             @media (min-width: $tabletBreakPiont){
                 width: 60%;
             }
+            @media (min-width: $laptopBreakPoint) {
+                width: 25%;
+            }
         }
     }
     &__after{

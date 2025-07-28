@@ -105,8 +105,6 @@ function enableInput(inputId, confirm, cancel, change, repeat, show){
             document.getElementById(repeat).style.left = "-76px";
             document.getElementById(cancel).style.setProperty("left", "-80px", "important");
             document.getElementById(confirm).style.setProperty("left", "-60px", "important");
-        }else if(window.matchMedia("(min-width: 1025px)")){
-            
         }
     }
 }
@@ -122,12 +120,6 @@ function resetValue(inputID){
         document.getElementById('change1').hidden = false;
         document.getElementById('response').hidden = true;
         document.getElementById('confirm1').style.left = '50px';
-
-        if(window.matchMedia("(min-width: 768px)")){
-
-        }else if(window.matchMedia("(min-width: 1025px)")){
-
-        }
     }else if(inputID == 'input2'){
         input.value = input.defaultValue;
         input.type = 'password';
@@ -141,8 +133,6 @@ function resetValue(inputID){
         
         if(window.matchMedia("(min-width: 768px)")){
             document.getElementById('input2').style.left = "10px";
-        }else if(window.matchMedia("(min-width: 1025px)")){
-            
         }
     }else{
         input.innerText = defaultValue;
