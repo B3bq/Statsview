@@ -1,10 +1,5 @@
 <?php
-$server = "localhost";
-$login = "root";
-$password = "";
-$base = "base";
-
-$connect = mysqli_connect($server, $login, $password, $base); //connecting to database
+require 'src/php/connect.php'; //connection
 
 //getting a data from user
 $sport = $_POST['sport'];

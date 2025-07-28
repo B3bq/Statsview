@@ -82,6 +82,10 @@ function changeName(){
     })
 }
 
+function applyStyles(){
+    const isTablet = window.matchMedia()
+}
+
 //change input edit
 function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(inputId).disabled = false;
@@ -90,9 +94,20 @@ function enableInput(inputId, confirm, cancel, change, repeat, show){
     document.getElementById(change).hidden = true;
     document.getElementById(repeat).hidden = false;
     document.getElementById(show).hidden = false;
+
     if(inputId == 'input2'){    
         document.getElementById(inputId).value = "";
         document.getElementById(repeat).value = "";
+        
+        if(window.matchMedia("(min-width: 768px)")){
+            document.getElementById(inputId).style.left = "147px";
+            document.getElementById(show).style.left = "-20px";
+            document.getElementById(repeat).style.left = "-76px";
+            document.getElementById(cancel).style.setProperty("left", "-80px", "important");
+            document.getElementById(confirm).style.setProperty("left", "-60px", "important");
+        }else if(window.matchMedia("(min-width: 1025px)")){
+            
+        }
     }
 }
 
@@ -107,6 +122,12 @@ function resetValue(inputID){
         document.getElementById('change1').hidden = false;
         document.getElementById('response').hidden = true;
         document.getElementById('confirm1').style.left = '50px';
+
+        if(window.matchMedia("(min-width: 768px)")){
+
+        }else if(window.matchMedia("(min-width: 1025px)")){
+
+        }
     }else if(inputID == 'input2'){
         input.value = input.defaultValue;
         input.type = 'password';
@@ -117,6 +138,12 @@ function resetValue(inputID){
         document.getElementById('confirm2').hidden = true;
         document.getElementById('change2').hidden = false;
         document.getElementById('info').hidden = true;
+        
+        if(window.matchMedia("(min-width: 768px)")){
+            document.getElementById('input2').style.left = "10px";
+        }else if(window.matchMedia("(min-width: 1025px)")){
+            
+        }
     }else{
         input.innerText = defaultValue;
         input.contentEditable = false;

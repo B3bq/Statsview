@@ -72,13 +72,13 @@ body > header {
 body > header a {
   text-decoration: none;
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   body > header a {
     transform: translateY(0);
     transition: all 0.3s ease-in-out;
   }
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   body > header a:hover {
     text-decoration: underline;
     transform: translateY(0.25em);
@@ -89,7 +89,7 @@ body > header nav button {
   background-color: transparent;
   border: none;
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   body > header nav button {
     display: none;
   }
@@ -100,7 +100,7 @@ body > header nav ul {
   margin: 0;
   list-style: none;
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   body > header nav ul {
     display: flex;
     flex-direction: row;
@@ -125,7 +125,7 @@ body > header nav ul.active a {
 body > header nav ul.active a:before {
   content: ">";
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   body > header nav li {
     padding: 10px;
   }
@@ -159,7 +159,7 @@ main > header {
   margin: 5px 0px 5px 0px;
   padding-left: 10px;
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   .sign input, .sign__form input {
     width: 45%;
   }
@@ -301,6 +301,14 @@ main > header {
   display: flex;
   flex-direction: column;
 }
+@media (min-width: 768px) {
+  .personal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .personal header {
   display: flex;
   flex-direction: column;
@@ -408,6 +416,17 @@ main > header {
 .personal__mail-confirm, .personal__pass-confirm {
   top: 80px !important;
   left: -198px !important;
+}
+@media (min-width: 768px) {
+  .personal__pass #input2 {
+    position: relative;
+    left: 10px;
+  }
+}
+@media (min-width: 768px) {
+  .personal__pass #change2 {
+    left: 60px;
+  }
 }
 .personal #show {
   height: 24px;
@@ -594,7 +613,7 @@ main > header {
   border-radius: 15px;
   font-size: 1.25em;
 }
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   .summary select {
     width: 45%;
   }

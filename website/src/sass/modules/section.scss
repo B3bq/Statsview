@@ -168,6 +168,13 @@
     display: flex;
     flex-direction: column;
 
+    @media (min-width: $tabletBreakPiont) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     header{
         display: flex;
         flex-direction: column;
@@ -286,6 +293,21 @@
             left: -198px !important;
         }
     }
+
+    &__pass{
+        #input2{
+            @media (min-width: $tabletBreakPiont) {
+                position: relative;
+                left: 10px;
+            }
+        }
+        #change2{
+            @media (min-width: $tabletBreakPiont) {
+                left: 60px;
+            }
+        }
+    }
+
     #show{
         height: 24px;
         position: relative;
