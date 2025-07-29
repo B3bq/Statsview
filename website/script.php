@@ -1,5 +1,5 @@
 <?php
-require 'src/php/connect.php'; //connection
+require 'c:/xampp/htdocs/statsview/website/src/php/connect.php'; //connection
 
 //getting a data from user
 $sport = $_POST['sport'];
@@ -14,7 +14,7 @@ switch($sport){
     case "lol":
         //checking if exist a league
         $sqlCheck = "SELECT * FROM lol_leagues WHERE name = ? AND id_user = ?"; // declerated a query
-        $query = $connect->prepare($sqlCheck); // prepare to execute
+        $query = $connection->prepare($sqlCheck); // prepare to execute
         $query->bind_param("ss", $league, $userID); // insert a data
         $query->execute(); // executing
         $result = $query->get_result(); // getting a result to varible
@@ -23,12 +23,12 @@ switch($sport){
         if($result->num_rows > 0){ // if number of rows is bigger than 0 that league exist
             // if a league is exist then count +1
             $sqlUpdate = "UPDATE lol_leagues SET count = count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $league, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $league);
             $query->execute();
             $result = $query->get_result();
@@ -41,14 +41,14 @@ switch($sport){
 
             // if a league isn't exist then add the league
             $sqlInsert = "INSERT INTO lol_leagues (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM ONE
 
         //checking if exist a team
         $sqlCheck = "SELECT * FROM lol_teams WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck); //preparation of the query
+        $query = $connection->prepare($sqlCheck); //preparation of the query
         $query->bind_param("ss", $teamOne, $userID); //insert varible to the query
         $query->execute(); //execute the query
         $result = $query->get_result(); //geting result of query
@@ -56,12 +56,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then home_count +1
             $sqlUpdate = "UPDATE lol_teams SET home_count = home_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamOne, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -74,14 +74,14 @@ switch($sport){
 
             // if a team isn't exist then add the team and home_count +1
             $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM TWO
 
         //checking if exist a team
         $sqlCheck = "SELECT * FROM lol_teams WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $teamTwo, $userID);
         $query->execute();
         $result = $query->get_result();
@@ -89,12 +89,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then away_count +1
             $sqlUpdate = "UPDATE lol_teams SET away_count = away_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamTwo, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -107,7 +107,7 @@ switch($sport){
 
             // if a team isn't exist then add the team and away_count +1
             $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connect, $sqlInsert); //execute query
+            mysqli_query($connection, $sqlInsert); //execute query
         }
 
         // insert references to leagues_teamas table
@@ -116,7 +116,7 @@ switch($sport){
         $sqlFindTeam = "SELECT id FROM lol_teams WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
-        $query = $connect->prepare($sqlFindLeague);
+        $query = $connection->prepare($sqlFindLeague);
         $query->bind_param("s", $league);
         $query->execute();
         $result = $query->get_result();
@@ -127,7 +127,7 @@ switch($sport){
         $id_teams = [];
 
         // taking id for teams from teams table
-        $query = $connect->prepare($sqlFindTeam);
+        $query = $connection->prepare($sqlFindTeam);
         foreach ($teams as $team){
             $query->bind_param("s", $team);
             $query->execute();
@@ -136,7 +136,7 @@ switch($sport){
         }
 
         // insert teams to leagues_teams tabel
-        $query = $connect->prepare($sqlInsert);
+        $query = $connection->prepare($sqlInsert);
         // foreach needs a tables assoc
         foreach ($id_teams as $id_team){
             $query->bind_param("ii", $id_league, $id_team);
@@ -146,7 +146,7 @@ switch($sport){
     case "cs":
         //checking if exist a league
         $sqlCheck = "SELECT * FROM cs_leagues WHERE name = ? AND id_user = ?"; // declerated a query
-        $query = $connect->prepare($sqlCheck); // prepare to execute
+        $query = $connection->prepare($sqlCheck); // prepare to execute
         $query->bind_param("ss", $league, $userID); // insert a data
         $query->execute(); // executing
         $result = $query->get_result(); // getting a result to varible
@@ -155,12 +155,12 @@ switch($sport){
         if($result->num_rows > 0){ // if number of rows is bigger than 0 that league exist
             // if a league is exist then count +1
             $sqlUpdate = "UPDATE cs_leagues SET count = count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $league, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $league);
             $query->execute();
             $result = $query->get_result();
@@ -173,14 +173,14 @@ switch($sport){
 
             // if a league isn't exist then add the league
             $sqlInsert = "INSERT INTO cs_leagues (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM ONE
 
         //checking if exist a team
         $sqlCheck = "SELECT * FROM cs_teams WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck); //preparation of the query
+        $query = $connection->prepare($sqlCheck); //preparation of the query
         $query->bind_param("ss", $teamOne, $userID); //insert varible to the query
         $query->execute(); //execute the query
         $result = $query->get_result(); //geting result of query
@@ -188,12 +188,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then home_count +1
             $sqlUpdate = "UPDATE cs_teams SET home_count = home_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamOne, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -206,14 +206,14 @@ switch($sport){
 
             // if a team isn't exist then add the team and home_count +1
             $sqlInsert = "INSERT INTO cs_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM TWO
 
         //checking if exist a team
         $sqlCheck = "SELECT * FROM cs_teams WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $teamTwo, $userID);
         $query->execute();
         $result = $query->get_result();
@@ -221,12 +221,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then away_count +1
             $sqlUpdate = "UPDATE cs_teams SET away_count = away_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamTwo, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -239,7 +239,7 @@ switch($sport){
 
             // if a team isn't exist then add the team and away_count +1
             $sqlInsert = "INSERT INTO cs_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connect, $sqlInsert); //execute query
+            mysqli_query($connection, $sqlInsert); //execute query
         }
 
         // insert references to leagues_teamas table
@@ -248,7 +248,7 @@ switch($sport){
         $sqlFindTeam = "SELECT id FROM cs_teams WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
-        $query = $connect->prepare($sqlFindLeague);
+        $query = $connection->prepare($sqlFindLeague);
         $query->bind_param("s", $league);
         $query->execute();
         $result = $query->get_result();
@@ -259,7 +259,7 @@ switch($sport){
         $id_teams = [];
 
         // taking id for teams from teams table
-        $query = $connect->prepare($sqlFindTeam);
+        $query = $connection->prepare($sqlFindTeam);
         foreach ($teams as $team){
             $query->bind_param("s", $team);
             $query->execute();
@@ -268,7 +268,7 @@ switch($sport){
         }
 
         // insert teams to leagues_teams tabel
-        $query = $connect->prepare($sqlInsert);
+        $query = $connection->prepare($sqlInsert);
         // foreach needs a tables assoc
         foreach ($id_teams as $id_team){
             $query->bind_param("ii", $id_league, $id_team);
@@ -288,19 +288,19 @@ switch($sport){
 
         //checking if exist a league in year
         $sqlCheck = "SELECT * FROM {$tabelLeagueY} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $league, $userID);
         $query->execute();
         $result = $query->get_result();
 
         if($result->num_rows > 0){
             $sqlUpdate = "UPDATE {$tabelLeagueY} SET count = count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $league, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $league);
             $query->execute();
             $result = $query->get_result();
@@ -313,24 +313,24 @@ switch($sport){
 
             // if a league isn't exist then add the league
             $sqlInsert = "INSERT INTO {$tabelLeagueY} (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         //checking if exist a league in season
         $sqlCheck = "SELECT * FROM {$tabelLeagueS} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $league, $userID);
         $query->execute();
         $result = $query->get_result();
 
         if($result->num_rows > 0){
             $sqlUpdate = "UPDATE {$tabelLeagueS} SET count = count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $league, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $league);
             $query->execute();
             $result = $query->get_result();
@@ -343,14 +343,14 @@ switch($sport){
 
             // if a league isn't exist then add the league
             $sqlInsert = "INSERT INTO {$tabelLeagueS} (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM ONE
 
         //checking if exist a team in year
         $sqlCheck = "SELECT * FROM {$tabelTeamsY} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck); //preparation of the query
+        $query = $connection->prepare($sqlCheck); //preparation of the query
         $query->bind_param("ss", $teamOne, $userID); //insert varible to the query
         $query->execute(); //execute the query
         $result = $query->get_result(); //geting result of query
@@ -358,12 +358,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then home_count +1
             $sqlUpdate = "UPDATE {$tabelTeamsY} SET home_count = home_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamOne, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -376,12 +376,12 @@ switch($sport){
 
             // if a team isn't exist then add the team and home_count +1
             $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         //checking if exist a team in season
         $sqlCheck = "SELECT * FROM {$tabelTeamsS} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck); //preparation of the query
+        $query = $connection->prepare($sqlCheck); //preparation of the query
         $query->bind_param("ss", $teamOne, $userID); //insert varible to the query
         $query->execute(); //execute the query
         $result = $query->get_result(); //geting result of query
@@ -389,12 +389,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then home_count +1
             $sqlUpdate = "UPDATE {$tabelTeamsS} SET home_count = home_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamOne, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -407,14 +407,14 @@ switch($sport){
 
             // if a team isn't exist then add the team and home_count +1
             $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connect, $sqlInsert);
+            mysqli_query($connection, $sqlInsert);
         }
 
         // TEAM TWO
 
         //checking if exist a team in year
         $sqlCheck = "SELECT * FROM {$tabelTeamsY} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $teamTwo, $userID);
         $query->execute();
         $result = $query->get_result();
@@ -422,12 +422,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then away_count +1
             $sqlUpdate = "UPDATE {$tabelTeamsY} SET away_count = away_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamTwo, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -440,12 +440,12 @@ switch($sport){
 
             // if a team isn't exist then add the team and away_count +1
             $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connect, $sqlInsert); //execute query
+            mysqli_query($connection, $sqlInsert); //execute query
         }
 
         //checking if exist a team in season
         $sqlCheck = "SELECT * FROM {$tabelTeamsS} WHERE name = ? AND id_user = ?";
-        $query = $connect->prepare($sqlCheck);
+        $query = $connection->prepare($sqlCheck);
         $query->bind_param("ss", $teamTwo, $userID);
         $query->execute();
         $result = $query->get_result();
@@ -453,12 +453,12 @@ switch($sport){
         if($result->num_rows > 0){
             // if a team is exist then away_count +1
             $sqlUpdate = "UPDATE {$tabelTeamsS} SET away_count = away_count + 1 WHERE name = ? AND id_user = ?";
-            $query = $connect->prepare($sqlUpdate);
+            $query = $connection->prepare($sqlUpdate);
             $query->bind_param("ss", $teamTwo, $userID);
             $query->execute();
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
-            $query = $connect->prepare($sqlImgSearch);
+            $query = $connection->prepare($sqlImgSearch);
             $query->bind_param("s", $teamOne);
             $query->execute();
             $result = $query->get_result();
@@ -471,7 +471,7 @@ switch($sport){
 
             // if a team isn't exist then add the team and away_count +1
             $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connect, $sqlInsert); //execute query
+            mysqli_query($connection, $sqlInsert); //execute query
         }
 
         //BROKER YEAR
@@ -482,7 +482,7 @@ switch($sport){
         $sqlFindTeam = "SELECT id FROM {$tabelTeamsY} WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
-        $query = $connect->prepare($sqlFindLeague);
+        $query = $connection->prepare($sqlFindLeague);
         $query->bind_param("s", $league);
         $query->execute();
         $result = $query->get_result();
@@ -493,7 +493,7 @@ switch($sport){
         $id_teams = [];
 
         // taking id for teams from teams table
-        $query = $connect->prepare($sqlFindTeam);
+        $query = $connection->prepare($sqlFindTeam);
         foreach ($teams as $team){
             $query->bind_param("s", $team);
             $query->execute();
@@ -502,7 +502,7 @@ switch($sport){
         }
 
         // insert teams to leagues_teams tabel
-        $query = $connect->prepare($sqlInsert);
+        $query = $connection->prepare($sqlInsert);
         // foreach needs a tables assoc
         foreach ($id_teams as $id_team){
             $query->bind_param("ii", $id_league, $id_team);
@@ -517,7 +517,7 @@ switch($sport){
         $sqlFindTeam = "SELECT id FROM {$tabelTeamsS} WHERE name = ?"; // searching id from table teams
 
         // taking id from league table
-        $query = $connect->prepare($sqlFindLeague);
+        $query = $connection->prepare($sqlFindLeague);
         $query->bind_param("s", $league);
         $query->execute();
         $result = $query->get_result();
@@ -528,7 +528,7 @@ switch($sport){
         $id_teams = [];
 
         // taking id for teams from teams table
-        $query = $connect->prepare($sqlFindTeam);
+        $query = $connection->prepare($sqlFindTeam);
         foreach ($teams as $team){
             $query->bind_param("s", $team);
             $query->execute();
@@ -537,7 +537,7 @@ switch($sport){
         }
 
         // insert teams to leagues_teams tabel
-        $query = $connect->prepare($sqlInsert);
+        $query = $connection->prepare($sqlInsert);
         // foreach needs a tables assoc
         foreach ($id_teams as $id_team){
             $query->bind_param("ii", $id_league, $id_team);
@@ -545,7 +545,7 @@ switch($sport){
         }
         break;
 }
-mysqli_close($connect);
+mysqli_close($connection);
 ?>
 <!DOCTYPE html>
 <html lang="en">
