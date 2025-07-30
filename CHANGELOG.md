@@ -1,3 +1,12 @@
+## version 0.1.4 (2025-07-29)
+
+### Added
+- action panel. All actions (adding new matches, adding from database, view summary)
+- account panel. Changing e-mail, password, name
+- changing password, when user forgot
+- all sign in. Sending verification code and adding user to database
+- view for tablets and desktops
+
 ## version 0.1.3 (2025-07-03)
 
 ### Added

@@ -38,7 +38,7 @@ try{
                     </header>
                     <section style=" display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px 0px 20px 0px;">
                         <p style=" display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 100px; background-color: #e8e8e8; border-radius: 25px; font-size: 25px">
-                            <a href="192.168.1.12/statsview/website/change.html">CHANGE PASSWORD</a>
+                            <a href="192.168.1.12/statsview/website/changepass.html">CHANGE PASSWORD</a>
                         </p>
                     </section>
                     <footer style="display: flex; flex-direction: column; align-items: center;">
