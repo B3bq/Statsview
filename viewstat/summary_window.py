@@ -1,6 +1,7 @@
 from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
 from PySide6.QtWidgets import *
 from summary import *
+import os
 
 class Summary(QWidget):
     def __init__(self, menu):
@@ -45,6 +46,9 @@ class Summary(QWidget):
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        self.setWindowIcon(QIcon(icon_path))
 
         self.setup()
 

@@ -1,5 +1,6 @@
 from PySide6.QtGui import QPixmap, QCloseEvent, QIcon
 from PySide6.QtWidgets import *
+import os
 from insert import add_datas_to_base # import function
 
 
@@ -13,6 +14,9 @@ class Add_New(QWidget):
         self.add_next = QPushButton("Add more", self)
         self.add_next.move(745, 300)
         self.add_next.hide()
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        self.setWindowIcon(QIcon(icon_path))
 
         self.setup()
 

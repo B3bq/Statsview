@@ -566,7 +566,7 @@ mysqli_close($connection);
     <header>
         <!--logo-->
         <a href="index.html" title="Back to home page">
-            <img src="" alt="logo">
+            <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
         <nav>
             <button id="js-toggle-menu">

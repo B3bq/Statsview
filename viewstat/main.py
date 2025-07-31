@@ -129,6 +129,9 @@ class Program(QWidget):
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        self.setWindowIcon(QIcon(icon_path))
         self.show()
 
     def login_screen(self):
@@ -264,7 +267,7 @@ class Program(QWidget):
 
         # date for view statistics
         today = datetime.date.today()
-        end_date = [datetime.date(datetime.date.today().year, 6, 8), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
+        end_date = [datetime.date(datetime.date.today().year, 7, 31), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
         
 
         #menu

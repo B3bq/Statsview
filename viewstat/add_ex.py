@@ -1,5 +1,6 @@
 from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
 from PySide6.QtWidgets import *
+import os
 from show_ex import show_leagues, show_teams
 from insert import add_datas_to_base
 
@@ -14,6 +15,9 @@ class Add_Exist(QWidget):
         self.add_more_btn = QPushButton("Add more", self)
         self.add_more_btn.move(745, 300)
         self.add_more_btn.hide()
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        self.setWindowIcon(QIcon(icon_path))
 
         self.setup()
 
