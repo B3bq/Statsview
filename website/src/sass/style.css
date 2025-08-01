@@ -97,7 +97,7 @@ body > header nav button {
 body > header nav ul {
   display: none;
   padding: 0;
-  margin: 0;
+  margin: 10px 0px 0px 0px;
   list-style: none;
 }
 @media (min-width: 1025px) {
@@ -146,6 +146,37 @@ main > header {
   main > header {
     margin-top: 0px;
   }
+}
+
+.cookie-banner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #148042;
+}
+.cookie-banner__buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.cookie-banner__buttons button {
+  margin: 10px;
+  height: 50px !important;
+}
+.cookie-banner__buttons #reject {
+  background-color: #f0f3f4;
+}
+.cookie-banner__buttons #accept {
+  background-color: #2ECC71;
+}
+.cookie-banner p {
+  margin: 19px 10px 19px 10px;
+  font-size: 1.35em;
+  color: #f0f3f4;
 }
 
 .sign, .sign__form {

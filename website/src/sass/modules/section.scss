@@ -1,5 +1,40 @@
 @use 'varibles.scss' as *;
 
+.cookie-banner{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: $sixthColor;
+
+    &__buttons{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        button{
+            margin: 10px;
+            height: 50px !important;
+        }
+
+        #reject{
+            background-color: $darkerWhite;
+        }
+        #accept{
+            background-color: $primaryColor;
+        }
+    }
+
+    p{
+        margin: 19px 10px 19px 10px;
+        font-size: 1.35em;
+        color: $darkerWhite;
+    }
+}
+
 .sign, .sign__form{
     display: flex;
     flex-direction: column;

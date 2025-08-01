@@ -82,9 +82,6 @@ function changeName(){
     })
 }
 
-function applyStyles(){
-    const isTablet = window.matchMedia()
-}
 
 //change input edit
 function enableInput(inputId, confirm, cancel, change, repeat, show){

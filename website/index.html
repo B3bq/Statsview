@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="src/js/cookie.js" defer></script>
 </head>
 <body>
     <header>
@@ -32,6 +33,13 @@
         </nav>
     </header>
     <main class="mainpage">
+        <div id="cookie-banner" class="cookie-banner">
+            <p>This website uses cookies to improve your browsing experience and serve personalized content. By continuing to use our site, you agree to our use of cookies.</p>
+            <div class="cookie-banner__buttons">
+                <button id="reject" onclick="reject()">Reject all</button>
+                <button id="accept" onclick="agree()">Accept all</button>
+            </div>
+        </div>
         <header>
             <h1>Start counting your matches</h1>
 
