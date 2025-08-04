@@ -1,6 +1,6 @@
-from PySide6.QtGui import QPixmap, QCloseEvent, QIcon, QPalette, QColor
+from PySide6.QtGui import QCloseEvent, QIcon, QPalette, QColor
 from PySide6.QtWidgets import *
-from PySide6.QtCore import QRegularExpression
+from PySide6.QtCore import QTranslator, QCoreApplication
 import re, datetime, json, os, random
 import add_new, add_ex, summary_window
 from insert import * # functions to insert user datas to database and check log in
@@ -11,32 +11,33 @@ from mail import * # import mail script
 class Program(QWidget):
     def __init__(self):
         super().__init__()
+        self.translator = QTranslator()
 
         # setup buttons
-        self.addEX_btn = QPushButton("Add Exists Teams", self)
+        self.addEX_btn = QPushButton(self)
         self.addEX_btn.setFixedSize(200, 50)
         self.addEX_btn.move(400, 50)
-        self.addNew_btn = QPushButton("Add New Teams", self)
+        self.addNew_btn = QPushButton(self)
         self.addNew_btn.setFixedSize(200, 50)
         self.addNew_btn.move(400, 100)
-        self.viewStats_btn_s = QPushButton("Season summary", self)
+        self.viewStats_btn_s = QPushButton(self)
         self.viewStats_btn_s.setFixedSize(200, 50)
         self.viewStats_btn_s.move(400, 150)
-        self.viewStats_btn_y = QPushButton("Year summary", self)
+        self.viewStats_btn_y = QPushButton(self)
         self.viewStats_btn_y.setFixedSize(200, 50)
         self.viewStats_btn_y.move(400, 150)
-        self.log_out_btn = QPushButton("Log out", self)
+        self.log_out_btn = QPushButton(self)
         self.log_out_btn.setFixedSize(200, 50)
         self.log_out_btn.move(400, 200)
-        self.close_btn = QPushButton("Close", self)
+        self.close_btn = QPushButton(self)
         self.close_btn.setFixedSize(200, 50)
         self.close_btn.move(400, 250)
 
         # log in buttons
-        self.btn_login = QPushButton("Log in", self)
+        self.btn_login = QPushButton(self)
         self.btn_login.setFixedSize(200, 50)
         self.btn_login.move(400, 200)
-        self.btn_signin = QPushButton("Sign up", self)
+        self.btn_signin = QPushButton(self)
         self.btn_signin.setFixedSize(200, 50)
         self.btn_signin.move(400, 250)
 
@@ -52,66 +53,62 @@ class Program(QWidget):
         # password input
         self.password = QLineEdit(self)
         self.password.setEchoMode(QLineEdit.Password)
-        self.password.setPlaceholderText("Password")
         self.password.setFixedSize(200, 50)
         self.password.move(400, 100)
         # checkbox remember me
-        self.remember_me = QCheckBox("Remember me", self)
+        self.remember_me = QCheckBox(self)
         self.remember_me.move(400, 170)
 
         # back button
-        self.back_btn = QPushButton("Back", self)
+        self.back_btn = QPushButton(self)
         self.back_btn.setFixedSize(100, 50)
         self.back_btn.move(295, 200)
         # password for create window
         self.password_create = QLineEdit(self)
         self.password_create.setEchoMode(QLineEdit.Password)
-        self.password_create.setPlaceholderText("Password")
         self.password_create.setFixedSize(200, 50)
         self.password_create.move(505, 50)
         # reapet a password
         self.re_password = QLineEdit(self)
         self.re_password.setEchoMode(QLineEdit.Password)
-        self.re_password.setPlaceholderText("Reapet password")
         self.re_password.setFixedSize(200, 50)
         self.re_password.move(505, 100)
         # verification code
         self.ver_code = QLineEdit(self)
-        self.ver_code.setPlaceholderText("Enter verification code")
         self.ver_code.setFixedSize(200, 50)
         self.ver_code.move(400, 150)
         # label for verification
-        self.label_ver = QLabel("Incorrect code", self)
+        self.label_ver = QLabel(self)
         self.label_ver.move(458, 205)
         # verification button
-        self.btn_verification = QPushButton("Verify", self)
+        self.btn_verification = QPushButton(self)
         self.btn_verification.setCheckable(True)
         self.btn_verification.move(460, 220)
         #checkbox to show pass
-        self.show_pass = QCheckBox("Show password", self)
+        self.show_pass = QCheckBox(self)
         self.show_pass.move(400, 150)
         # create new account btn
-        self.create_btn = QPushButton("Create account", self)
+        self.create_btn = QPushButton(self)
         self.create_btn.setFixedSize(100, 50)
         self.create_btn.move(600, 200)
 
         # things after add user
         self.label = QLabel("", self)
         self.label.move(460, 200)
-        self.back = QPushButton("Back to log in", self)
+        self.back = QPushButton(self)
         self.back.setFixedSize(200, 50)
         self.back.move(400, 250)
 
         # things to check user
-        self.ck_label = QLabel("User don't exist", self)
+        self.ck_label = QLabel(self)
         self.ck_label.move(400, 175)
-        self.ck_label2 = QLabel("Incorrect password", self)
+        self.ck_label2 = QLabel(self)
         self.ck_label2.move(400, 175)
-        self.label1 = QLabel("User exist", self)
+        self.label1 = QLabel(self)
         self.label1.move(440, 215)
-        self.label2 = QLabel("Passwords are incorrect", self)
+        self.label2 = QLabel(self)
         self.label2.move(440, 215)
-        self.labelMail = QLabel("Incorrect e-mail address", self)
+        self.labelMail = QLabel(self)
         self.labelMail.move(440, 215)
 
 
@@ -132,7 +129,48 @@ class Program(QWidget):
         base_path = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(base_path, "logo.svg")
         self.setWindowIcon(QIcon(icon_path))
+        self.retranslate_ui() # language
         self.show()
+
+    def retranslate_ui(self):
+        # action screen
+        self.addEX_btn.setText(self.tr("Add Exists Teams"))
+        self.addNew_btn.setText(self.tr("Add New Teams"))
+        self.viewStats_btn_s.setText(self.tr("Season Summary"))
+        self.viewStats_btn_y.setText(self.tr("Year Summary"))
+        self.log_out_btn.setText(self.tr("Log out"))
+        self.close_btn.setText(self.tr("Close"))
+
+        self.back_btn.setText(self.tr("Back"))
+        self.back.setText(self.tr("Back to log in"))
+
+        # log in screen
+        self.btn_login.setText(self.tr("Log in"))
+        self.btn_signin.setText(self.tr("Sign up"))
+
+        # pass
+        self.password.setPlaceholderText(self.tr("Password"))
+        self.remember_me.setText(self.tr("Remember me"))
+        self.password_create.setPlaceholderText(self.tr("Password"))
+        self.re_password.setPlaceholderText(self.tr("Reapet password"))
+        self.show_pass.setText(self.tr("Show password"))
+
+        # code
+        self.ver_code.setPlaceholderText(self.tr("Enter verification code"))
+        self.label_ver.setText(self.tr("Inncorect code"))
+        self.btn_verification.setText(self.tr("Verify"))
+        self.create_btn.setText(self.tr("Create account"))
+
+        self.ck_label.setText(self.tr("User don't exist"))
+        self.ck_label2.setText(self.tr("Incorrect password"))
+        self.label1.setText(self.tr("User exist"))
+        self.label2.setText(self.tr("Passwords are incorrect"))
+        self.labelMail.setText(self.tr("Incorrect e-mail address"))
+
+    def switch_language(self):
+        self.translator.load()
+        QCoreApplication.installTranslator(self.translator)
+        self.retranslate_ui()
 
     def login_screen(self):
 
@@ -267,7 +305,7 @@ class Program(QWidget):
 
         # date for view statistics
         today = datetime.date.today()
-        end_date = [datetime.date(datetime.date.today().year, 7, 31), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
+        end_date = [datetime.date(datetime.date.today().year, 8, 2), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
         
 
         #menu
