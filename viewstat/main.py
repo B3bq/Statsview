@@ -1,17 +1,24 @@
 from PySide6.QtGui import QCloseEvent, QIcon, QPalette, QColor
 from PySide6.QtWidgets import *
-from PySide6.QtCore import QTranslator, QCoreApplication
 import re, datetime, json, os, random
 import add_new, add_ex, summary_window
 from insert import * # functions to insert user datas to database and check log in
 from mail import * # import mail script
-
+from translator import Translator
 
 
 class Program(QWidget):
     def __init__(self):
         super().__init__()
-        self.translator = QTranslator()
+
+        # language for app
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+        if user_data["lang"] != "":
+            self.translator = Translator(user_data["lang"])
+        else:
+            self.translator = Translator("en")
 
         # setup buttons
         self.addEX_btn = QPushButton(self)
@@ -123,6 +130,13 @@ class Program(QWidget):
         else:
             self.login_screen() # false then show login screen
 
+        # change language
+        self.lang_btn = QComboBox(self)
+        self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setFixedSize(80 ,50)
+        self.lang_btn.move(900, 10)
+        self.lang_btn.currentTextChanged.connect(self.switch_language)
+
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
@@ -134,42 +148,64 @@ class Program(QWidget):
 
     def retranslate_ui(self):
         # action screen
-        self.addEX_btn.setText(self.tr("Add Exists Teams"))
-        self.addNew_btn.setText(self.tr("Add New Teams"))
-        self.viewStats_btn_s.setText(self.tr("Season Summary"))
-        self.viewStats_btn_y.setText(self.tr("Year Summary"))
-        self.log_out_btn.setText(self.tr("Log out"))
-        self.close_btn.setText(self.tr("Close"))
+        self.addEX_btn.setText(self.translator.tr("addEx"))
+        self.addNew_btn.setText(self.translator.tr("addNew"))
+        self.viewStats_btn_s.setText(self.translator.tr("viewStats_s"))
+        self.viewStats_btn_y.setText(self.translator.tr("viewStats_y"))
+        self.log_out_btn.setText(self.translator.tr("log_out"))
+        self.close_btn.setText(self.translator.tr("close"))
 
-        self.back_btn.setText(self.tr("Back"))
-        self.back.setText(self.tr("Back to log in"))
+        self.back_btn.setText(self.translator.tr("back_btn"))
+        self.back.setText(self.translator.tr("back"))
 
         # log in screen
-        self.btn_login.setText(self.tr("Log in"))
-        self.btn_signin.setText(self.tr("Sign up"))
+        self.btn_login.setText(self.translator.tr("btn_login"))
+        self.btn_signin.setText(self.translator.tr("btn_signin"))
 
         # pass
-        self.password.setPlaceholderText(self.tr("Password"))
-        self.remember_me.setText(self.tr("Remember me"))
-        self.password_create.setPlaceholderText(self.tr("Password"))
-        self.re_password.setPlaceholderText(self.tr("Reapet password"))
-        self.show_pass.setText(self.tr("Show password"))
+        self.password.setPlaceholderText(self.translator.tr("password"))
+        self.remember_me.setText(self.translator.tr("remember_me"))
+        self.password_create.setPlaceholderText(self.translator.tr("password"))
+        self.re_password.setPlaceholderText(self.translator.tr("re_pass"))
+        self.show_pass.setText(self.translator.tr("show_pass"))
 
         # code
-        self.ver_code.setPlaceholderText(self.tr("Enter verification code"))
-        self.label_ver.setText(self.tr("Inncorect code"))
-        self.btn_verification.setText(self.tr("Verify"))
-        self.create_btn.setText(self.tr("Create account"))
+        self.ver_code.setPlaceholderText(self.translator.tr("ver_code"))
+        self.label_ver.setText(self.translator.tr("label_ver"))
+        self.btn_verification.setText(self.translator.tr("btn_ver"))
+        self.create_btn.setText(self.translator.tr("create_btn"))
 
-        self.ck_label.setText(self.tr("User don't exist"))
-        self.ck_label2.setText(self.tr("Incorrect password"))
-        self.label1.setText(self.tr("User exist"))
-        self.label2.setText(self.tr("Passwords are incorrect"))
-        self.labelMail.setText(self.tr("Incorrect e-mail address"))
+        self.ck_label.setText(self.translator.tr("ck_label"))
+        self.ck_label2.setText(self.translator.tr("ck_label2"))
+        self.label1.setText(self.translator.tr("label1"))
+        self.label2.setText(self.translator.tr("label2"))
+        self.labelMail.setText(self.translator.tr("labelMail"))
+        self.lang_btn.setPlaceholderText(self.translator.tr("lang"))
 
     def switch_language(self):
-        self.translator.load()
-        QCoreApplication.installTranslator(self.translator)
+        new_lang = self.lang_btn.currentText()
+        if new_lang == "English":
+            self.translator.set_language("en")
+            
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "en"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
+        else:
+            self.translator.set_language("pl")
+
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "pl"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
         self.retranslate_ui()
 
     def login_screen(self):
@@ -337,7 +373,7 @@ class Program(QWidget):
         #close button
         self.close_btn.show()
         self.close_btn.clicked.connect(QApplication.instance().quit)
-
+        
     #show pass function
     def toggle_password_visibility(self, state):
         if state == 2: # chackbox is checked

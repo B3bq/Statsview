@@ -1,16 +1,25 @@
-from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import *
 from summary import *
-import os
+import os, json
+from translator import Translator
 
 class Summary(QWidget):
     def __init__(self, menu):
         super().__init__()
 
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+        if user_data["lang"] != "":
+            self.translator = Translator(user_data["lang"])
+        else:
+            self.translator = Translator("en")
+
         self.menu = menu
 
         # choose a sport
-        self.SportLabel = QLabel("Choose a sport:", self)
+        self.SportLabel = QLabel(self)
         self.SportLabel.move(420, 130)
 
         self.sport_box = QComboBox(self)
@@ -20,26 +29,26 @@ class Summary(QWidget):
         self.sport_box.move(415, 150)
 
         # submit choice
-        self.submit_btn = QPushButton('Submit', self)
+        self.submit_btn = QPushButton(self)
         self.submit_btn.move(500, 300)
         self.submit_btn.clicked.connect(self.summary)
 
         # summary properies
-        self.top_league_text = QLabel("TOP 5 LEAGUES", self)
+        self.top_league_text = QLabel(self)
         self.top_league_text.move(175, 75)
-        self.count_league_text = QLabel("Count", self)
+        self.count_league_text = QLabel(self)
         self.count_league_text.move(325, 85)
-        self.top_teams_text = QLabel("TOP 5 TEAMS", self)
+        self.top_teams_text = QLabel(self)
         self.top_teams_text.move(700, 75)
-        self.count_teams_text = QLabel("Count", self)
+        self.count_teams_text = QLabel(self)
         self.count_teams_text.move(850, 85)
-        self.top_home_text = QLabel("HOME FAVOURITE", self)
+        self.top_home_text = QLabel(self)
         self.top_home_text.move(440, 25)
-        self.top_away_text = QLabel("YOUR TRAVELED WITH THEM MOST OFTEN", self)
+        self.top_away_text = QLabel(self)
         self.top_away_text.move(375, 150)
 
         # back to menu button
-        self.back_btn = QPushButton("Back", self)
+        self.back_btn = QPushButton(self)
         self.back_btn.clicked.connect(self.back_menu)
 
 
@@ -49,8 +58,53 @@ class Summary(QWidget):
         base_path = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(base_path, "logo.svg")
         self.setWindowIcon(QIcon(icon_path))
+        self.retranslate_ui()
+
+        # change language
+        self.lang_btn = QComboBox(self)
+        self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setFixedSize(80 ,50)
+        self.lang_btn.move(900, 10)
+        self.lang_btn.currentTextChanged.connect(self.switch_language)
 
         self.setup()
+
+    def retranslate_ui(self):
+        self.SportLabel.setText(self.tr("sport_label"))
+        self.submit_btn.setText(self.tr("submit"))
+        self.back_btn.setText(self.tr("back_btn"))
+        self.top_league_text.setText(self.tr("top_leagues"))
+        self.count_league_text.setText(self.tr("count"))
+        self.top_teams_text.setText(self.tr("top_teams"))
+        self.count_teams_text.setText(self.tr("count"))
+        self.top_home_text.setText(self.tr("top_home"))
+        self.top_away_text.setText(self.tr("top_away"))
+
+    def switch_language(self):
+        new_lang = self.lang_btn.currentText()
+        if new_lang == "English":
+            self.translator.set_language("en")
+            
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "en"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
+        else:
+            self.translator.set_language("pl")
+
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "pl"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
+        self.retranslate_ui()
 
     def back_menu(self):
         self.menu.show()

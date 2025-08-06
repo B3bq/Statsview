@@ -1,25 +1,122 @@
-from PySide6.QtGui import QPixmap, QIcon, QCloseEvent
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import *
-import os
+import os, json
 from show_ex import show_leagues, show_teams
 from insert import add_datas_to_base
-
+from translator import Translator
 
 class Add_Exist(QWidget):
     def __init__(self, menu):
         super().__init__()
 
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+        if user_data["lang"] != "":
+            self.translator = Translator(user_data["lang"])
+        else:
+            self.translator = Translator("en")
+
         self.menu = menu
 
         # add more button
-        self.add_more_btn = QPushButton("Add more", self)
+        self.add_more_btn = QPushButton(self)
         self.add_more_btn.move(745, 300)
         self.add_more_btn.hide()
+        
+        # choose a sport
+        self.SportLabel = QLabel(self)
+        self.SportLabel.move(155, 130)
+
+        self.sport_box = QComboBox(self)
+        self.sport_box.setPlaceholderText("Sport")
+        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
+        self.sport_box.setFixedSize(150, 50)
+        self.sport_box.move(150, 150)
+
+        # choose league list
+        self.LeagueLabel = QLabel(self)
+        self.LeagueLabel.move(330, 130)
+
+
+        self.league_box = QComboBox(self)
+        self.league_box.setFixedSize(150, 50)
+        self.league_box.move(325, 150)
+
+        # choose team_one list
+        self.TeamOneLabel = QLabel(self)
+        self.TeamOneLabel.move(505, 130)
+
+        self.team_one_box = QComboBox(self)
+        self.team_one_box.setFixedSize(150, 50)
+        self.team_one_box.move(500, 150)
+
+        # choose team_two list
+        self.TeamTwoLabel = QLabel(self)
+        self.TeamTwoLabel.move(680, 130)
+
+        self.team_two_box = QComboBox(self)
+        self.team_two_box.setFixedSize(150, 50)
+        self.team_two_box.move(675, 150)
+
+        # submit button
+        self.submit_btn = QPushButton(self)
+        self.submit_btn.move(745, 300)
+
+        # back button
+        self.back_btn =QPushButton(self)
+        self.back_btn.move(150, 300)
+
+        # change language
+        self.lang_btn = QComboBox(self)
+        self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setFixedSize(80 ,50)
+        self.lang_btn.move(900, 10)
+        self.lang_btn.currentTextChanged.connect(self.switch_language)
+        
         base_path = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(base_path, "logo.svg")
         self.setWindowIcon(QIcon(icon_path))
-
+        self.retranslate_ui()
         self.setup()
+
+    def retranslate_ui(self):
+        self.add_more_btn.setText(self.tr("add_more"))
+        self.SportLabel.setText(self.tr("sport_label"))
+        self.LeagueLabel.setText(self.tr("league_label"))
+        self.league_box.setPlaceholderText(self.tr("league"))
+        self.TeamOneLabel.setText(self.tr("team_one_label"))
+        self.team_one_box.setPlaceholderText(self.tr("team_one"))
+        self.TeamTwoLabel.setText(self.tr("team_two_label"))
+        self.team_two_box.setPlaceholderText(self.tr("team_two"))
+        self.submit_btn.setText(self.tr("submit"))
+        self.back_btn.setText(self.tr("back_btn"))
+
+    def switch_language(self):
+        new_lang = self.lang_btn.currentText()
+        if new_lang == "English":
+            self.translator.set_language("en")
+            
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "en"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
+        else:
+            self.translator.set_language("pl")
+
+            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+            with open(file_path, 'r') as file:
+                user_data = json.load(file)
+            
+            user_data["lang"] = "pl"
+
+            with open(file_path, "wt") as file:
+                json.dump(user_data, file)
+        self.retranslate_ui()
 
     def back(self): 
         self.menu.show()
@@ -92,55 +189,15 @@ class Add_Exist(QWidget):
 
     def setup(self):
 
-        # choose a sport
-        self.SportLabel = QLabel("Choose a sport:", self)
-        self.SportLabel.move(155, 130)
-
-        self.sport_box = QComboBox(self)
-        self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
-        self.sport_box.setFixedSize(150, 50)
-        self.sport_box.move(150, 150)
         self.sport_box.currentTextChanged.connect(self.take_sport)
 
-        # choose league list
-        self.LeagueLabel = QLabel("Choose a league:", self)
-        self.LeagueLabel.move(330, 130)
-
-
-        self.league_box = QComboBox(self)
-        self.league_box.setPlaceholderText("Leagues")
-        self.league_box.setFixedSize(150, 50)
-        self.league_box.move(325, 150)
-        self.league_box.currentTextChanged.connect(self.take_league_name)
         
-        # choose team_one list
-        self.TeamOneLabel = QLabel("Choose First Team:", self)
-        self.TeamOneLabel.move(505, 130)
-
-        self.team_one_box = QComboBox(self)
-        self.team_one_box.setPlaceholderText("First team")
-        self.team_one_box.setFixedSize(150, 50)
-        self.team_one_box.move(500, 150)
-
-        # choose team_two list
-        self.TeamTwoLabel = QLabel("Choose Seond Team:", self)
-        self.TeamTwoLabel.move(680, 130)
-
-        self.team_two_box = QComboBox(self)
-        self.team_two_box.setPlaceholderText("Second team")
-        self.team_two_box.setFixedSize(150, 50)
-        self.team_two_box.move(675, 150)
-
-        # submit button
-        self.submit_btn = QPushButton("Submit", self)
-        self.submit_btn.move(745, 300)
+        self.league_box.currentTextChanged.connect(self.take_league_name)
+         
         self.submit_btn.clicked.connect(self.submit)
 
-        # back button
-        back_btn =QPushButton("Back", self)
-        back_btn.move(150, 300)
-        back_btn.clicked.connect(self.back)
+        
+        self.back_btn.clicked.connect(self.back)
 
         self.show()
 
