@@ -13,8 +13,8 @@ This will be show a summary stats of watched matches, how many games of team was
 
 ![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-07-31%20173135.png)
 ![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-07-31%20173206.png)
-![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-07-31%20224821.png)
-![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-07-31%20224841.png)
+![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-08-02%20224821.png)
+![App Screenshot](https://raw.githubusercontent.com/B3bq/Statsview/main/assets/Zrzut%20ekranu%202025-08-02%20224841.png)
 
 
 ## Run Locally
