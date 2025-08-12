@@ -1,5 +1,9 @@
-import mysql.connector
+from connect import connect
 import bcrypt # to password encryption
+
+# connection to database
+connection = connect
+mycursor = connection.cursor()
 
 class User:
     user_id = ''
@@ -7,15 +11,6 @@ class User:
 
 
 def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
-    connect = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connect.cursor(buffered=True)
-
     # where push datas
     match sport_name:
         case "League of legends":
@@ -411,19 +406,9 @@ def add_datas_to_base(sport_name, *, league_name, teamOne_name, teamTwo_name):
 
     print(f"Added teams {teams[0]} and {teams[1]} to the competition {league_name}")
 
-    connect.commit()
-    connect.close()
+    connection.commit()
 
 def check_name(name):
-    connect = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connect.cursor()
-
     # changing varibles to list
     Name = [name]
 
@@ -438,14 +423,6 @@ def check_name(name):
         return True
 
 def insert_user(name, mail, password):
-    connect = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connect.cursor()
 
     # changing varibles to list
     Name = [name]
@@ -463,20 +440,11 @@ def insert_user(name, mail, password):
         sql_insert = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, %s, %s, %s)"
         mycursor.execute(sql_insert, (mail, name, hashed))
 
-    connect.commit()
-    connect.close()
+    connection.commit()
+
     return True
 
 def check_user(login, password):
-    connect = mysql.connector.connect(
-        host = 'localhost',
-        user = 'root',
-        password = '',
-        database = 'statsview'
-    )
-
-    mycursor = connect.cursor()
-
     sql_check = "SELECT mail, name FROM users WHERE mail = %s or name = %s"
     mycursor.execute(sql_check, (login, login))
     myresult = mycursor.fetchall()
@@ -494,7 +462,6 @@ def check_user(login, password):
             user_id = result[0]
             print(user_id)
 
-            connect.close()
             return user_id
         else:
             text = "Incorrect password"

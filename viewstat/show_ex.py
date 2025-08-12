@@ -1,16 +1,11 @@
-import mysql.connector
+from connect import connect
+
+# connection to database
+connection = connect
+mycursor = connection.cursor()
 
 # function to show league names
 def show_leagues(sport):
-    connection = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connection.cursor()
-
     match sport:
         case "League of legends":
             sport = "lol_leagues"
@@ -33,21 +28,11 @@ def show_leagues(sport):
     league_names = [name[0] for name in league_names] # loop which make a list
 
     connection.commit()
-    connection.close()
 
     return league_names
 
 # function to show team names
 def show_teams(league_name, sport):
-    connection = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connection.cursor()
-
     # match correct tables
     match sport:
         case "League of legends":

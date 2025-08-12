@@ -1,18 +1,12 @@
-import mysql.connector
+from connect import connect
 from insert import User
+
+# connection to database
+connection = connect
+mycursor = connection.cursor()
 
 # selecting names and counts for league
 def top_leagues(sport):
-    # connection to database
-    connction = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connction.cursor()
-
     match sport:
         case "League of legends":
             sport = "lol_leagues"
@@ -30,21 +24,10 @@ def top_leagues(sport):
 
     mycursor.execute(sql_query)
     top_league_names = mycursor.fetchall()
-    connction.close()
     return top_league_names
 
 # selecting names and total count for teams
 def top_teams(sport):
-    # connection to database
-    connction = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connction.cursor()
-
     match sport:
         case "League of legends":
             sport = "lol_teams"
@@ -62,21 +45,10 @@ def top_teams(sport):
 
     mycursor.execute(sql_query)
     top_teams_table = mycursor.fetchall()
-    connction.close()
     return top_teams_table
 
 # selecting names and home count
 def home_team(sport):
-    # connection to database
-    connction = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connction.cursor()
-
     match sport:
         case "League of legends":
             sport = "lol_teams"
@@ -94,21 +66,10 @@ def home_team(sport):
 
     mycursor.execute(sql_home_team)
     top_home_team = mycursor.fetchall()
-    connction.close()
     return top_home_team
 
 # selecting names and away count
 def away_team(sport):
-    # connection to database
-    connction = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "statsview"
-    )
-
-    mycursor = connction.cursor()
-
     match sport:
         case "League of legends":
             sport = "lol_teams"
@@ -126,5 +87,4 @@ def away_team(sport):
 
     mycursor.execute(sql_away_team)
     top_away_team = mycursor.fetchall()
-    connction.close()
     return top_away_team
