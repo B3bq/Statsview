@@ -52,6 +52,18 @@ You need to install these libraries
 #### BCRYPT
 https://pypi.org/project/bcrypt
 
+#### Composer
+https://getcomposer.org/download/
+
+#### PHPMailer
+```bash
+  composer require phpmailer/phpmailer
+```
+#### dotenv
+```bash
+  composer vlucas/phpdotenv
+```
+
 Install dependencies
 
 ```bash
