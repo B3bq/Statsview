@@ -33,6 +33,7 @@ $name = $result->fetch_assoc()['name'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statsview</title>
     <link rel="stylesheet" href="src/sass/style.css">
+    <link rel="shortcut icon" href="src/img/logo.svg" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +44,6 @@ $name = $result->fetch_assoc()['name'];
 </head>
 <body>
     <header>
-        <!--logo-->
         <a href="index.html" title="Back to home page">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
@@ -65,6 +65,16 @@ $name = $result->fetch_assoc()['name'];
         <header>
             <img src="src/img/user.png" alt="profile">
             <img src="src/img/circle.png" alt="change profile photo">
+            <div id="photos" class="photos">
+                <img src="src/img/user.png" alt="profil1">
+                <img src="src/img/tennis-player.png" alt="profil2">
+                <img src="src/img/basket.png" alt="profil3">
+                <img src="src/img/soccer-player2.png" alt="profil4">
+                <img src="src/img/panda.png" alt="profil5">
+                <img src="src/img/soccer-player.png" alt="profil6">
+                <img src="src/img/handball.png" alt="profil7">
+                <img src="src/img/athlete.png" alt="profil8">
+            </div>
             <div contenteditable="false" spellcheck="false" id='userName'><?php echo $name?></div>
             <button onclick="resetValue('userName')" type="button" id="cancel" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
             <button onclick="changeName()" type="button" id="confirm" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>

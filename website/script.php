@@ -554,6 +554,7 @@ mysqli_close($connection);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statsview</title>
     <link rel="stylesheet" href="src/sass/style.css">
+    <link rel="shortcut icon" href="src/img/logo.svg" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -564,7 +565,6 @@ mysqli_close($connection);
 </head>
 <body>
     <header>
-        <!--logo-->
         <a href="index.html" title="Back to home page">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
