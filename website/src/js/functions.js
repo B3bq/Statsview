@@ -82,6 +82,30 @@ function changeName(){
     })
 }
 
+// update profile photo
+function update(){
+    const selectedPhoto = document.getElementById('profil');
+    const url = selectedPhoto.src;
+    const src = url.split("website/")[1];
+    console.log(src);
+
+    fetch('src/php/changephoto.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `src=${encodeURIComponent(src)}`
+    })
+    .then(response=>response.text())
+    .then(data=>{
+        if(data){
+            window.location.href = 'account.php';
+        }else{
+            console.log('error');
+        }
+    })
+}
+
 
 //change input edit
 function enableInput(inputId, confirm, cancel, change, repeat, show){

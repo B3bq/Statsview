@@ -1,16 +1,11 @@
 <?php
-$server = 'localhost';
-$login = 'root';
-$password = '';
-$base = 'base';
-
-$conn = mysqli_connect($server, $login, $password, $base);
+require 'c:/xampp/htdocs/statsview/website/src/php/connect.php';
 
 $userID = $_COOKIE['user']; //get user id from cookie
 
 //taking e-mail
 $sql = "SELECT mail FROM users WHERE id_users = ?";
-$query = $conn->prepare($sql);
+$query = $connection->prepare($sql);
 $query->bind_param("s", $userID);
 $query->execute();
 $result = $query->get_result();
@@ -18,12 +13,19 @@ $mail = $result->fetch_assoc()['mail'];
 
 //taking name
 $sql = "SELECT name FROM users WHERE id_users = ?";
-$query = $conn->prepare($sql);
+$query = $connection->prepare($sql);
 $query->bind_param("s", $userID);
 $query->execute();
 $result = $query->get_result();
 $name = $result->fetch_assoc()['name'];
 
+//taking profile photo
+$sql = "SELECT photo FROM users WHERE id_users = ?";
+$query = $connection->prepare($sql);
+$query->bind_param("s", $userID);
+$query->execute();
+$result = $query->get_result();
+$photo = $result->fetch_assoc()['photo'];
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +42,7 @@ $name = $result->fetch_assoc()['name'];
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script type="module" src="src/js/photo.js" defer></script>
     <script src="src/js/functions.js"></script>
 </head>
 <body>
@@ -63,17 +66,21 @@ $name = $result->fetch_assoc()['name'];
     <main>
         <section class="personal">
         <header>
-            <img src="src/img/user.png" alt="profile">
-            <img src="src/img/circle.png" alt="change profile photo">
-            <div id="photos" class="photos">
-                <img src="src/img/user.png" alt="profil1">
-                <img src="src/img/tennis-player.png" alt="profil2">
-                <img src="src/img/basket.png" alt="profil3">
-                <img src="src/img/soccer-player2.png" alt="profil4">
-                <img src="src/img/panda.png" alt="profil5">
-                <img src="src/img/soccer-player.png" alt="profil6">
-                <img src="src/img/handball.png" alt="profil7">
-                <img src="src/img/athlete.png" alt="profil8">
+            <img src="<?php echo $photo?>" alt="profile" id='profil'>
+            <button id='showPhotos'><img src="src/img/circle.png" alt="change profile photo"></button>
+            <div id="photos" class="personal__photos">
+                <img src="src/img/user.png" name='profil' alt="profil1">
+                <img src="src/img/tennis-player.png" name='profil' alt="profil2">
+                <img src="src/img/basket.png" name='profil' alt="profil3">
+                <img src="src/img/soccer-player2.png" name='profil' alt="profil4">
+                <img src="src/img/panda.png" name='profil' alt="profil5">
+                <img src="src/img/soccer-player.png" name='profil' alt="profil6">
+                <img src="src/img/handball.png" name='profil' alt="profil7">
+                <img src="src/img/athlete.png" name='profil' alt="profil8">
+                <div>
+                    <img src="src/img/cancel.png" alt="cancel" id="cancelProfile">
+                    <img src="src/img/check.png" alt="agree" onclick='update()'>
+                </div>
             </div>
             <div contenteditable="false" spellcheck="false" id='userName'><?php echo $name?></div>
             <button onclick="resetValue('userName')" type="button" id="cancel" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>

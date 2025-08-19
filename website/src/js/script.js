@@ -86,6 +86,21 @@ window.addEventListener('DOMContentLoaded', ()=>{
             deleteCookie('name');
         };
         document.getElementById('userName').innerText = `${userName}`;
+        
+        fetch('src/php/takephoto.php',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(response=>response.text())
+        .then(data=>{
+            if(data != ''){
+                document.getElementById('photo').src = data;
+            }else{
+                console.log('error');
+            }
+        })
 
         visibleSummary(); //visibility summary nutton
     }else if(isPath && !userID){ //when path is in account or action panel and doesn't exist cookie
