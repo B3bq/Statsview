@@ -1,3 +1,8 @@
+## version 0.1.5 (2025-08-19)
+
+### Added
+- user profil photo can be changed
+
 ## version 0.1.4 (2025-07-29)
 
 ### Added
