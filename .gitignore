@@ -7,3 +7,4 @@ __pycache__
 vendor
 composer.json
 composer.lock
+/website/src/img/admin.png
