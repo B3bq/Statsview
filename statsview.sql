@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `mail` VARCHAR(320) NULL,
   `name` VARCHAR(45) NULL,
   `password` VARCHAR(100) NULL,
+  `photo` VARCHAR(50) NULL
   PRIMARY KEY (`id_users`))
 ENGINE = InnoDB;
 
@@ -471,6 +472,291 @@ CREATE TABLE IF NOT EXISTS `cs_broker` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `handball_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_leagues_year` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_hyl_user_idx` (`id_user` ASC) ,
+  INDEX `FK_hyl_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_hyl_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hyl_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `handball_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_leagues_season` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_hsl_user_idx` (`id_user` ASC) ,
+  INDEX `FK_hsl_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_hsl_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hsl_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `handball_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_teams_year` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_hyt_user_idx` (`id_user` ASC) ,
+  INDEX `FK_hyt_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_hyt_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hyt_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `handball_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_teams_season` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_hst_user_idx` (`id_user` ASC) ,
+  INDEX `FK_hst_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_hst_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hst_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `handball_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_broker_year` (
+  `id_league` INT NULL,
+  `id_team` INT NULL,
+  PRIMARY KEY (`id_league`, `id_team`),
+  INDEX `FK_hyear_team_idx` (`id_team` ASC) ,
+  CONSTRAINT `FK_hyear_league`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `handball_leagues_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hyear_team`
+    FOREIGN KEY (`id_team`)
+    REFERENCES `handball_teams_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `handball_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `handball_broker_season` (
+  `id_league` INT NULL,
+  `id_team` INT NULL,
+  PRIMARY KEY (`id_league`, `id_team`),
+  INDEX `FK_hseason_team_idx` (`id_team` ASC) ,
+  CONSTRAINT `FK_hseason_league`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `handball_leagues_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_hseason_team`
+    FOREIGN KEY (`id_team`)
+    REFERENCES `handball_teams_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `volleyball_leagues_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_leagues_year` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_vyl_user_idx` (`id_user` ASC) ,
+  INDEX `FK_vyl_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_vyl_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vyl_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `volleyball_leagues_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_leagues_season` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_vsl_user_idx` (`id_user` ASC) ,
+  INDEX `FK_vsl_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_vsl_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vsl_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `volleyball_teams_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_teams_year` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_vyt_user_idx` (`id_user` ASC) ,
+  INDEX `FK_vyt_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_vyt_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vyt_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `volleyball_teams_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_teams_season` (
+  `id` INT NULL AUTO_INCREMENT,
+  `id_user` INT NULL,
+  `name` VARCHAR(45) NULL,
+  `home_count` INT NULL,
+  `away_count` INT NULL,
+  `img` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_vst_user_idx` (`id_user` ASC) ,
+  INDEX `FK_vst_img_idx` (`img` ASC) ,
+  CONSTRAINT `FK_vst_user`
+    FOREIGN KEY (`id_user`)
+    REFERENCES `users` (`id_users`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vst_img`
+    FOREIGN KEY (`img`)
+    REFERENCES `images` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `volleyball_broker_year`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_broker_year` (
+  `id_league` INT NULL,
+  `id_team` INT NULL,
+  PRIMARY KEY (`id_league`, `id_team`),
+  INDEX `FK_vyear_team_idx` (`id_team` ASC) ,
+  CONSTRAINT `FK_vyear_league`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `volleyball_leagues_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vyear_team`
+    FOREIGN KEY (`id_team`)
+    REFERENCES `volleyball_teams_year` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `volleyball_broker_season`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `volleyball_broker_season` (
+  `id_league` INT NULL,
+  `id_team` INT NULL,
+  PRIMARY KEY (`id_league`, `id_team`),
+  INDEX `FK_vseason_team_idx` (`id_team` ASC) ,
+  CONSTRAINT `FK_vseason_league`
+    FOREIGN KEY (`id_league`)
+    REFERENCES `volleyball_leagues_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_vseason_team`
+    FOREIGN KEY (`id_team`)
+    REFERENCES `volleyball_teams_season` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

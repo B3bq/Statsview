@@ -25,7 +25,7 @@ if($userCode == $expectedCode){
         $pass = $_POST['pass'];
         $hash = password_hash($pass, PASSWORD_BCRYPT);
         $hash = preg_replace('/^\$2y\$/', '\$2b\$', $hash);
-        $sql = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, ?, ?, ?)";
+        $sql = "INSERT INTO users (id_users, mail, name, password, photo) VALUES (NULL, ?, ?, ?, 'src/img/user.png')";
         $query = $connection->prepare($sql);
         $query->bind_param("sss", $mail, $name, $hash);
         $query->execute();
