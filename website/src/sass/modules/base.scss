@@ -58,3 +58,7 @@ footer{
         height: 40px;
     }
 }
+
+input[type='submit'], input[type='button'], button{
+    cursor: pointer;
+}

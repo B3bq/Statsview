@@ -78,8 +78,8 @@ $photo = $result->fetch_assoc()['photo'];
                 <img src="src/img/handball.png" name='profil' alt="profil7">
                 <img src="src/img/athlete.png" name='profil' alt="profil8">
                 <div>
-                    <img src="src/img/cancel.png" alt="cancel" id="cancelProfile">
-                    <img src="src/img/check.png" alt="agree" onclick='update()'>
+                    <img src="src/img/cancel.png" alt="cancel" id="cancelProfile" style='cursor: pointer;'>
+                    <img src="src/img/check.png" alt="agree" onclick='update()' style='cursor: pointer;'>
                 </div>
             </div>
             <div contenteditable="false" spellcheck="false" id='userName'><?php echo $name?></div>
@@ -98,7 +98,7 @@ $photo = $result->fetch_assoc()['photo'];
                 <input type="password" id="input2" disabled value="password">
                 <button onclick="enableInput('input2', 'confirm2', 'cancel2', 'change2', 'repeat', 'show')" id="change2"><img src="src/img/pencil.png" alt="pencil"></button>
                 <input type="password" id="repeat" class="repeat" hidden value="password">
-                <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')">
+                <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')" style='cursor: pointer;'>
                 <button onclick="resetValue('input2')" type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <button onclick="passChange()" type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
                 <p id="info" hidden></p>
