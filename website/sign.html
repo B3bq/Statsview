@@ -12,12 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="https://unpkg.com/i18next@23.4.6/dist/umd/i18next.min.js"></script>
+    <script src="src/js/i18n.js"></script>
     <script type="module" src="src/js/input_pass.js" defer></script>
     <script src="src/js/functions.js"></script>
 </head>
 <body>
     <header>
-        <a href="index.html" title="Back to home page">
+        <a href="index.html" data-i18n-attr="title:menu_titles.logo">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
         <nav>
@@ -26,32 +28,33 @@
             </button>
 
             <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="index.html#about" title="About the project" id="option2">About</a></li>
-                <li><a href="download.html" title="">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+                <li id="first" hidden><a id="option1"></a></li>
+                <li><a href="index.html#about" data-i18n-attr="title:menu_titles.about" id="option2" data-i18n="menu.option2">About</a></li>
+                <li><a href="download.html" data-i18n-attr="title:menu_titles.download" data-i18n="download">Download app</a></li>
+                <li><a href="login.html" data-i18n-attr="title:menu_titles.login" id="logout" data-i18n="menu.logout">Log in</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <header>
-            <h1>Create your account</h1>
+            <h1 data-i18n="sign.h1">Create your account</h1>
         </header>
         <section class="sign__form">
 
             <input type="text" name="login"  placeholder="Login" id="login">
 
-            <input type="email" name="email" id="input1" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <input type="email" name="email" id="input1" placeholder="E-mail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}">
 
-            <input type="password" name="password" id="password" placeholder="Password">
+            <input type="password" name="password" id="password" data-i18n-attr="placeholder:sign.pass">
 
-            <input type="password" name="Reapet password" id="re_password" placeholder="Reapet password">
+            <input type="password" name="Repeat password" id="re_password" data-i18n-attr="placeholder:sign.re_pass">
             <div>
                 <input type="checkbox" name="" id="show_password">
-                Show password
+                <p data-i18n="sign.show">Show password</p>
             </div>
-            <input type="submit" onclick="changeMail('sign')" value="Create account">
-            <p id="response" hidden></p>
+            <input type="submit" onclick="changeMail('sign')" data-i18n-attr="value:sign.btn">
+            <p id="response" data-i18n="changepass.form.message" hidden></p>
+            <p id="response_mail" data-i18n="response.mail" hidden></p>
         </section>
     </main>
     <footer>

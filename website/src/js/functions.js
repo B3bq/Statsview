@@ -1,3 +1,5 @@
+let lang = navigator.language; // browser language
+
 ///LOGIN
 function CheckUserPHP(){
     const login = document.getElementById('login').value;
@@ -10,7 +12,7 @@ function CheckUserPHP(){
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `login=${encodeURIComponent(login)}&password=${encodeURIComponent(pass)}`
+        body: `login=${encodeURIComponent(login)}&password=${encodeURIComponent(pass)}&lang=${encodeURIComponent(lang)}`
     })
     .then(response=>response.text())
     .then(data=>{
@@ -194,7 +196,6 @@ function passChange(){
                 })
     }else{
         document.getElementById('info').hidden = false;
-        document.getElementById('info').innerHTML = "Passwords are not the same";
     }
 }
 
@@ -218,28 +219,8 @@ function changeMail(from){
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mail = document.getElementById('input1').value;
 
-    if(regex.test(mail)){
-       if(from == 'account'){
-        fetch('src/php/verification.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}`
-           })
-           .then(response=>response.text())
-           .then(data=>{
-            if(data == 'generate'){
-                window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from);
-            }else{
-                console.log(data);
-            }
-           })
-       }else{
-        const name = document.getElementById('login').value;
-        const pass = document.getElementById('password').value;
-        const re_pass = document.getElementById('re_password').value;
-        if(pass === re_pass){
+    if(from == 'account'){
+        if(regex.test(mail)){
             fetch('src/php/verification.php', {
                 method: 'POST',
                 headers: {
@@ -250,20 +231,45 @@ function changeMail(from){
                .then(response=>response.text())
                .then(data=>{
                 if(data == 'generate'){
-                    window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
+                    window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from);
                 }else{
                     console.log(data);
                 }
                })
-            }else{
-                document.getElementById('response').hidden = false;
-                document.getElementById('response').innerHTML = "Passwords are not the same";
-            }
-       }
+        }else{
+            document.getElementById('response').hidden = false;
+            document.getElementById('confirm1').style.left = '-70px';
+        }
     }else{
-        document.getElementById('response').hidden = false;
-        document.getElementById('response').innerHTML = "Invalid e-mail";
-        document.getElementById('confirm1').style.left = '-70px';
+        if(regex.test(mail)){
+            const name = document.getElementById('login').value;
+            const pass = document.getElementById('password').value;
+            const re_pass = document.getElementById('re_password').value;
+
+            if(pass === re_pass){
+                fetch('src/php/verification.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}`
+                   })
+                   .then(response=>response.text())
+                   .then(data=>{
+                    if(data == 'generate'){
+                        window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
+                    }else{
+                        console.log(data);
+                    }
+                   })
+            }else{
+                    document.getElementById('response').hidden = false;
+                    document.getElementById('response_mail').hidden = true;
+            }
+        }else{
+            document.getElementById('response_mail').hidden = false;
+            document.getElementById('response').hidden = true;
+        }
     }
 }
 
@@ -289,7 +295,7 @@ function takeCode(){
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}`
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}&lang=${encodeURIComponent(lang)}`
         })
         .then(response=>response.text())
         .then(data=>{
@@ -308,7 +314,7 @@ function takeCode(){
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}&name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}`
+            body: `mail=${encodeURIComponent(mail)}&from=${encodeURIComponent(from)}&userCode=${encodeURIComponent(userCode)}&name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}&lang=${encodeURIComponent(lang)}`
         })
         .then(response=>response.text())
         .then(data=>{
@@ -386,7 +392,6 @@ function changePass(){
         })
     }else{
         document.getElementById('message').hidden = false;
-        document.getElementById('message').innerText = "Passwords are not the same";
     }
 }
 

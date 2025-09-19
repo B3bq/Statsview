@@ -42,6 +42,8 @@ $photo = $result->fetch_assoc()['photo'];
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="https://unpkg.com/i18next@23.4.6/dist/umd/i18next.min.js"></script>
+    <script src="src/js/i18n.js"></script>
     <script type="module" src="src/js/photo.js" defer></script>
     <script src="src/js/functions.js"></script>
 </head>
@@ -90,7 +92,7 @@ $photo = $result->fetch_assoc()['photo'];
             <section class="personal__mail">
                 <input type="text"  id="input1" disabled value="<?php echo $mail?>">
                 <button onclick="resetValue('input1')" type="button" id="cancel1" class="cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
-                <p id="response" hidden></p>
+                <p id="response" data-i18n="response.mail" hidden></p>
                 <button onclick="changeMail('account')" type="button" id="confirm1" class="confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
                 <button onclick="enableInput('input1','confirm1', 'cancel1', 'change1')" id="change1"><img src="src/img/pencil.png" alt="pencil"></button>
             </section>
@@ -101,7 +103,7 @@ $photo = $result->fetch_assoc()['photo'];
                 <img src="src/img/hide.png" alt="hide eye" id="show" hidden onclick="showPassword('show', 'input2', 'repeat')" style='cursor: pointer;'>
                 <button onclick="resetValue('input2')" type="button" id="cancel2" class="personal__pass-cancel" hidden><img src="src/img/cancel.png" alt="cancel"></button>
                 <button onclick="passChange()" type="button" id="confirm2" class="personal__pass-confirm" hidden><img src="src/img/check.png" alt="confirm"></button>
-                <p id="info" hidden></p>
+                <p id="info" data-i18n="changepass.form.message" hidden></p>
             </section>
         </section>
     </main>

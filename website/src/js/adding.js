@@ -1,3 +1,5 @@
+let lang = navigator.language; //browser language
+
 //ADDING FROM EXIST
 //select leagues
 document.getElementById('sportAdd').addEventListener("change", function(){
@@ -21,7 +23,7 @@ document.getElementById('sportAdd').addEventListener("change", function(){
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}`
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}&lang=${encodeURIComponent(lang)}`
     })
     .then(response=>response.json())
     .then(data=>{
@@ -53,14 +55,15 @@ document.getElementById('league').addEventListener("change", function(){
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(sport)}&league=${encodeURIComponent(selected)}`
+        body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(sport)}&league=${encodeURIComponent(selected)}&lang=${encodeURIComponent(lang)}`
     })
     .then(response=>response.json())
     .then(data=>{
         document.getElementById('add_btn').hidden = false;
-        document.getElementById('first').hidden = false;
+        document.getElementById('fteam').hidden = false;
         document.getElementById('second').hidden = false;
-        document.getElementById('first').innerHTML = data.firstTeam;
+        document.getElementById('fteam').innerHTML = data.firstTeam;
+        console.log(data.firstTeam);
         document.getElementById('second').innerHTML = data.secondTeam;
     })
 })

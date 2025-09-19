@@ -3,12 +3,17 @@ require 'connect.php'; //connection to database
 
 $sport = $_POST['sport'];
 $season = $_POST['season'];
+$lang = $_POST['lang'];
 
 $tableLeague = $sport."_leagues";
 $tableTeam = $sport."_teams";
 $tableBroker = $sport."_broker";
 
-$selectLeague = "<option selected disabled hidden>Choose league</option>";
+if($lang == 'pl'){
+    $selectLeague = "<option selected disabled hidden>Wybierz ligę</option>";
+}else{
+    $selectLeague = "<option selected disabled hidden>Choose league</option>";
+}
 
 switch($sport){
     case 'lol':

@@ -1,0 +1,130 @@
+{
+    "menu": {
+        "option2": "O projekcie",
+        "logout": "Zaloguj"
+    },
+    "menu_account": {
+        "option1": "Konto",
+        "option2": "Panel akcji",
+        "logout": "Wyloguj"
+    },
+    "menu_titles": {
+        "logo": "Strona główna",
+        "about": "O projekcie",
+        "download": "Pobierz",
+        "login": "Zaloguj"
+    },
+    "download": "Pobierz apke",
+    "mainpage": {
+        "cookie": {
+            "text": "Strona ta używa plików cookies do polepszenia doświadczenia z użytkowania i dostosowanej zawartości. Żeby kontynuować na naszej stronie, pozwól nam korzystać z plików cookies.",
+            "reject": "Odrzuć wszystkie",
+            "accept": "Akceptuj wszystkie"
+        },
+        "header": {
+            "text": "Zacznij zliczać twoje mecze",
+            "btn": "Zarejestruj"
+        },
+        "about": {
+            "h1": "O projekcie",
+            "text": "Jeżeli kiedykolwiek zastanawiałeś się ile meczy obejrzałeś lub którą ligę, zespół oglądałeś najczęściej, teraz jest to możliwe dzięki Statsview. Statsview jest to projekt, który zlicza obejrzane przez ciebie mecze podczas sezonu i roku. Z końcem roku lub sezonu będziesz mógł zobaczyć twoje podsumowanie.",
+            "diag": "Zrzut ekranu aplikacji"
+        },
+        "how": {
+            "h1": "Jak to działa?",
+            "text": "Najpierw zarajestruj się, póżniej wybierz sport który chcesz dodać. Dostępne sporty do zliczania to: piłka nożna, koszykówka, siatkówka, piłka ręczna, Counter Strike i League of Legends. Następnie wybierasz rozgrywki z naszej bazy, później zespoły lub dodajesz swoje. Rób to regularnie a efekt bedzie oszołamiający.",
+            "diag": "Zrzut ekranu dodawania"
+        }
+    },
+    "sign": {
+        "h1": "Załóż konto",
+        "pass": "Hasło",
+        "re_pass": "Powtórz hasło",
+        "show": "Pokarz hasło",
+        "btn": "Załóż konto"
+    },
+    "login": {
+        "login": {
+            "login": "Zaloguj",
+            "pass": "Hasło",
+            "re_me": "Zapamiętaj mnie",
+            "show":"Pokarz hasło",
+            "forgot": "Zapomniałeś hasło?"
+        },
+        "sign": {
+            "h3": "Nie masz konta",
+            "text": "Załóż je za darmo",
+            "register": "Zarejestruj"
+        }
+    },
+    "forgot": {
+        "block": {
+            "h1": "Wprowadź swój e-mail",
+            "btn": "Wyślij mail"
+        },
+        "after": {
+            "h3": "Sprawdź swój mail, żeby zresetować hasło",
+            "text": "E-mail nie dotarł",
+            "link": "Wyślij ponownie"
+        }
+    },
+    "code": {
+        "h1": "Wprowadź kod weryfikacyjny",
+        "btn": "Weryfikuj"
+    },
+    "download_site": {
+        "desktop": "Pobierz aplikacje na komputer",
+        "btn": "Pobierz",
+        "mobile": "Pobierz aplikacje na telefon"
+    },
+    "added": {
+        "h1": "Dodano drużyny  i  do rozgrywek ",
+        "btn": "Wróć"
+    },
+    "select": {
+        "default": "Wybierz sport",
+        "foot": "Piłka nożna",
+        "basket": "Koszykówka",
+        "volley": "Siatkówka",
+        "hand": "Piłka ręczna"
+    },
+    "summary": {
+      "year": "Sprawdź swoje roczne podsumowanie",
+      "season": "Sprawdź swoje podsumowanie sezonu"
+    },
+    "changepass": {
+        "reset": "Zresetuj swoje hasło",
+        "form": {
+            "pass": "Wprowadź hasło",
+            "re_pass": "Powtórz hasło",
+            "show": "Pokarz hasło",
+            "message": "Hasła nie są takie same",
+            "btn": "Zmień hasło"
+        },
+        "back": {
+            "h1": "Hasło zostało zmienione",
+            "btn": "Wróć do ekranu logowania"
+        }
+    },
+    "add_new": {
+        "h1": "Dodaj nowy mecz",
+        "league": "Nazwa Ligi",
+        "first": "Pierwszy Zespół",
+        "second": "Drugi Zespół",
+        "btn": "Dodaj mecz",
+        "desc": "Pisanie nazw lig poprawnie daje lepszy efekt w przyszłości. Nazwy lig są w jezyku angielskim. Na przykład:",
+        "desc2": "Kiedy krótsza nazwa jest bardziej popularna niż pełna nazwa. Na przykład:"
+    },
+    "add_ex": {
+        "h1": "Wybierz swój mecz",
+        "btn": "Dodaj mecz"
+    },
+    "action": {
+        "exist": "➕Dodaj mecz z istniejących",
+        "new": "➕Dodaj nowy mecz",
+        "summary": "📊Podsumowanie"
+    },
+    "response": {
+        "mail": "Niepoprawny adres e-mail"
+    }
+}

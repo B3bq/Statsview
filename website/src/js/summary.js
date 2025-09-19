@@ -1,18 +1,5 @@
 //SUMMARY
-//summary text
-window.addEventListener('DOMContentLoaded', ()=>{
-    //taking season from url
-    let querystring = window.location.search;
-    let urlParam = new URLSearchParams(querystring);
-    let season = urlParam.get('season');
-
-    if(season == 'year'){
-        document.getElementById('lol').hidden =false;
-        document.getElementById('cs').hidden =false;
-    }
-    
-    document.getElementById('text').innerHTML = "Check your " + season + " summary";
-})
+let lang = navigator.language; //browser language
 
 //selecting sport
 document.getElementById('sport').addEventListener("change", function(){
@@ -30,7 +17,7 @@ document.getElementById('sport').addEventListener("change", function(){
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}`
+            body: `season=${encodeURIComponent(season)}&sport=${encodeURIComponent(selected)}&lang=${encodeURIComponent(lang)}`
     })
     .then(response=>response.json())
     .then(data=>{

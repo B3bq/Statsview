@@ -10,6 +10,8 @@ $query->bind_param("ss", $login, $login); // insert a data
 $query->execute(); // executing
 $result = $query->get_result(); // getting a result to varible
 
+$lang = $_POST['lang'] ?? '';
+
 if($result->num_rows>0){ // if number of rows is bigger than 0 that league exist
     $sqlPassCheck = "SELECT password FROM users WHERE name = ? or mail = ?";
     $query = $connection->prepare($sqlPassCheck);
@@ -44,10 +46,18 @@ if($result->num_rows>0){ // if number of rows is bigger than 0 that league exist
         echo "OK"; // if true give OK result
     }
     else{
-        echo "Incorrect password";
+        if($lang == 'pl'){
+            echo "Niepoprawne hasło";
+        }else{
+            echo "Incorrect password";
+        }
     }
 }
 else{
-    echo "User not found";
+    if($lang == 'pl'){
+        echo "Nie znaleziono użytkownika";
+    }else{
+        echo "User not found";
+    }
 }
 ?>

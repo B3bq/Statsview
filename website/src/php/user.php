@@ -7,6 +7,7 @@ session_start();
 $mail = $_POST['mail'] ?? '';
 $from = $_POST['from'] ?? '';
 $userCode = $_POST['userCode'] ?? '';
+$lang = $_POST['lang'] ?? '';
 
 $expectedCode = $_SESSION['code'] ?? ''; //teke this from session, which is maked by verification
 
@@ -32,6 +33,10 @@ if($userCode == $expectedCode){
         echo 'ok';
     }
 }else{
-    echo 'Invalid code';
+    if($lang == 'pl'){
+        echo 'Nieprawidłowy kod';
+    }else{
+        echo 'Invalid code';
+    }
 }
 ?>

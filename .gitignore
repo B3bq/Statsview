@@ -9,3 +9,5 @@ composer.json
 composer.lock
 /website/src/img/admin.png
 website/src/php/connect.php
+package-lock.json
+website/node_modules

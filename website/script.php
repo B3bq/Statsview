@@ -561,11 +561,13 @@ mysqli_close($connection);
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="https://unpkg.com/i18next@23.4.6/dist/umd/i18next.min.js"></script>
+    <script src="src/js/i18n.js"></script>
     <script src="src/js/functions.js"></script>
 </head>
 <body>
-    <header>
-        <a href="index.html" title="Back to home page">
+<header>
+        <a href="index.html" data-i18n-attr="title:menu_titles.logo">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
         <nav>
@@ -574,16 +576,16 @@ mysqli_close($connection);
             </button>
 
             <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="index.html#about" title="About the project" id="option2">About</a></li>
-                <li><a href="download.html" title="">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+                <li id="first" hidden><a id="option1"></a></li>
+                <li><a href="index.html#about" data-i18n-attr="title:menu_titles.about" id="option2" data-i18n="menu.option2">About</a></li>
+                <li><a href="download.html" data-i18n-attr="title:menu_titles.download" data-i18n="download">Download app</a></li>
+                <li><a href="login.html" data-i18n-attr="title:menu_titles.login" id="logout" data-i18n="menu.logout">Log in</a></li>
             </ul>
         </nav>
     </header>
     <main class="added">
-        <h1>Added teams <span><?php echo $teamOne;?></span> and <span><?php echo $teamTwo;?></span> to the competition <span><?php echo $league;?></span></h1>
-        <button onclick="goBack()">Go Back</button>
+        <h1 data-i18n="added.h1">Added teams <span><?php echo $teamOne;?></span> and <span><?php echo $teamTwo;?></span> to the competition <span><?php echo $league;?></span></h1>
+        <button onclick="goBack()" data-i18n="added.btn">Go Back</button>
     </main>
     <footer>
         <a href="https://github.com/B3bq" target="_blank" >

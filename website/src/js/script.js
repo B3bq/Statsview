@@ -38,7 +38,7 @@ function deleteCookie(name) {
 function visibleSummary(){
     // list of allowed dates in "MM-DD" format
     const allowedDates = [
-        "08-12", //testing date
+        "09-19", //testing date
         "07-15",
         "07-16",
         "07-17",
@@ -73,14 +73,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
     const isPath = paths.some(path => currentPath.endsWith(path));
 
     if(userID){
-        document.getElementById('option1').innerHTML = "My account";
-        document.getElementById('option1').title = "My account";
-        document.getElementById('option1').href = "account.php";
-        document.getElementById('option2').innerHTML = "Action panel";
-        document.getElementById('option2').title = "Action panel";
-        document.getElementById('option2').href = "actionpanel.html";
-        document.getElementById('logout').innerHTML = "Log out";
-        document.getElementById('logout').title = "Log out";
+        document.getElementById('first').hidden = false;
+        
         document.getElementById('logout').onclick = ()=>{
             deleteCookie('user');
             deleteCookie('name');

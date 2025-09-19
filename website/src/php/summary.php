@@ -6,6 +6,7 @@ $connection->set_charset("utf8mb4"); //coding utf
 $userID = $_COOKIE['user'];
 $season = $_POST['season'];
 $sport = $_POST['sport'];
+$lang = $_POST['lang'];
 
 if($season == 'season'){
     $tableLeague = $sport."_leagues_".$season;
@@ -17,16 +18,25 @@ if($season == 'season'){
     $query->execute();
     $result = $query->get_result();
     $ovrCount = $result->fetch_assoc()['SUM(count)'];
-
-    $gamesText = "<h1>You watched $ovrCount games!</h1>"; //info to website
-
+    
+    //info to website
+    if($lang == 'pl'){
+        $gamesText = "<h1>Obejrzałeś $ovrCount meczy!</h1>"; 
+    }else{
+        $gamesText = "<h1>You watched $ovrCount games!</h1>";
+    }
+    
     //top 5 leagues
     $sql = "SELECT $tableLeague.name, count, images.img FROM $tableLeague JOIN images ON $tableLeague.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
     $topLeagus = mysqli_query($connection, $sql);
 
     //table 
     $leagueTable = "<table class='topLeagues'>";
-    $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+    if($lang == 'pl'){
+        $leagueTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+    }else{
+        $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+    }
 
     $n = 1;
 
@@ -45,7 +55,11 @@ if($season == 'season'){
 
     //tabel
     $teamTable = "<table class='topTeams'>";
-    $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+    if($lang == 'pl'){
+        $teamTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+    }else{
+        $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+    }
 
     $n = 1;
 
@@ -67,7 +81,11 @@ if($season == 'season'){
     $mimeType = $finfo->buffer($topHome['img']); //taikng file type
     $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topHome['img']); //code this to base64
 
-    $homeFav = "<div class='fav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
+    if($lang == 'pl'){
+        $homeFav = "<div class='fav'><h2>Ulubieniec domowy</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." meczy)</h3></div>";
+    }else{
+        $homeFav = "<div class='fav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
+    }
 
     //top away team
     $sql = "SELECT $tableTeams.name, away_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY away_count DESC LIMIT 1";
@@ -78,7 +96,11 @@ if($season == 'season'){
     $mimeType = $finfo->buffer($topAway['img']); //taikng file type
     $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topAway['img']); //code this to base64
 
-    $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+    if($lang == 'pl'){
+        $awayFav = "<div class='fav away'><h2>Z nimi podróżowałeś/aś najcześciej</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." meczy)</h3></div>";
+    }else{
+        $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+    }
 
     //pack datas for json
     $data = [
@@ -121,7 +143,11 @@ if($season == 'season'){
             $result = $query->get_result();
             $ovrCount = $result->fetch_assoc()['SUM(count)'];
 
-            $gamesText = "<h1>You watched $ovrCount games!</h1>"; //info to website
+            if($lang == 'pl'){
+                $gamesText = "<h1>Obejrzałeś $ovrCount meczy!</h1>"; 
+            }else{
+                $gamesText = "<h1>You watched $ovrCount games!</h1>";
+            }
         
             //top 5 leagues
             $sql = "SELECT lol_leagues.name, count, images.img FROM lol_leagues JOIN images ON lol_leagues.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
@@ -129,7 +155,11 @@ if($season == 'season'){
 
             //table 
             $leagueTable = "<table class='topLeagues'>";
-            $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $leagueTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
 
             $n = 1;
 
@@ -148,7 +178,11 @@ if($season == 'season'){
 
             //tabel
             $teamTable = "<table class='topTeams'>";
-            $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $teamTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
 
             $n = 1;
 
@@ -200,7 +234,11 @@ if($season == 'season'){
             $result = $query->get_result();
             $ovrCount = $result->fetch_assoc()['SUM(count)'];
 
-            $gamesText = "<h1>You watched $ovrCount games!</h1>"; //info to website
+            if($lang == 'pl'){
+                $gamesText = "<h1>Obejrzałeś $ovrCount meczy!</h1>"; 
+            }else{
+                $gamesText = "<h1>You watched $ovrCount games!</h1>";
+            }
         
             //top 5 leagues
             $sql = "SELECT cs_leagues.name, count, images.img FROM cs_leagues JOIN images ON cs_leagues.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
@@ -208,7 +246,11 @@ if($season == 'season'){
 
             //table
             $leagueTable = "<table class='topLeagues'>";
-            $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $leagueTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
 
             $n = 1;
 
@@ -227,7 +269,11 @@ if($season == 'season'){
 
             //tabel
             $teamTable = "<table class='topTeams'>";
-            $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $teamTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
  
             $n = 1;
  
@@ -281,7 +327,11 @@ if($season == 'season'){
             $result = $query->get_result();
             $ovrCount = $result->fetch_assoc()['SUM(count)'];
 
-            $gamesText = "<h1>You watched $ovrCount games!</h1>"; //info to website
+            if($lang == 'pl'){
+                $gamesText = "<h1>Obejrzałeś $ovrCount meczy!</h1>"; 
+            }else{
+                $gamesText = "<h1>You watched $ovrCount games!</h1>";
+            }
         
             //top 5 leagues
             $sql = "SELECT $tableLeague.name, count, images.img FROM $tableLeague JOIN images ON $tableLeague.img = images.id WHERE id_user = $userID ORDER BY count DESC LIMIT 5";
@@ -289,7 +339,11 @@ if($season == 'season'){
         
             //table 
             $leagueTable = "<table class='topLeagues'>";
-            $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $leagueTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $leagueTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
 
             $n = 1;
 
@@ -308,7 +362,11 @@ if($season == 'season'){
 
             //tabel
             $teamTable = "<table class='topTeams'>";
-            $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            if($lang == 'pl'){
+                $teamTable .= "<tr><th>lp.</th><th colspan='2'>Nazwa</th><th>Meczy</th></tr>";
+            }else{
+                $teamTable .= "<tr><th>on.</th><th colspan='2'>Name</th><th>Matches</th></tr>";
+            }
 
             $n = 1;
 
@@ -330,8 +388,12 @@ if($season == 'season'){
             $mimeType = $finfo->buffer($topHome['img']); //taikng file type
             $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topHome['img']); //code this to base64
 
-            $homeFav = "<div class='fav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
-        
+            if($lang == 'pl'){
+                $homeFav = "<div class='fav'><h2>Ulubieniec domowy</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." meczy)</h3></div>";
+            }else{
+                $homeFav = "<div class='fav'><h2>Home favourite</h2><img src='$base64'><h3>".$topHome['name']." (".$topHome['home_count']." matches)</h3></div>";
+            }
+
             //top away team
             $sql = "SELECT $tableTeams.name, away_count, images.img FROM $tableTeams JOIN images ON $tableTeams.img = images.id WHERE id_user = $userID ORDER BY away_count DESC LIMIT 1";
             $result = mysqli_query($connection, $sql);
@@ -341,7 +403,11 @@ if($season == 'season'){
             $mimeType = $finfo->buffer($topAway['img']); //taikng file type
             $base64 = 'data:'.$mimeType.';base64,'.base64_encode($topAway['img']); //code this to base64
 
-            $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+            if($lang == 'pl'){
+                $awayFav = "<div class='fav away'><h2>Z nimi podróżowałeś/aś najcześciej</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." meczy)</h3></div>";
+            }else{
+                $awayFav = "<div class='fav away'><h2>You traveled with them most often</h2><img src='$base64'><h3>".$topAway['name']." (".$topAway['away_count']." matches)</h3></div>";
+            }
 
             //pack datas for json
             $data = [

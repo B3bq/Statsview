@@ -1,0 +1,130 @@
+{
+    "menu": {
+        "option2": "About",
+        "logout": "Log in"
+    },
+    "menu_account": {
+        "option1": "My account",
+        "option2": "Action panel",
+        "logout": "Log out"
+    },
+    "menu_titles": {
+        "logo": "Back to home page",
+        "about": "About the project",
+        "download": "Download page",
+        "login": "Log in site"
+    },
+    "download": "Download app",
+    "mainpage": {
+        "cookie": {
+            "text": "This website uses cookies to improve your browsing experience and serve personalized content. By continuing to use our site, you agree to our use of cookies.",
+            "reject": "Reject all",
+            "accept": "Accept all"
+        },
+        "header": {
+            "text": "Start counting your matches",
+            "btn": "SIGN UP"
+        },
+        "about": {
+            "h1": "About",
+            "text": "If whenever you was thought how many matches or games you watched, or which team/league you watched the most, now it is possible due to Statsview. Statsview is the project which count games you watched by the season or year. With end of the season or year you will get your own summary.",
+            "diag": "Desktop app screen"
+        },
+        "how": {
+            "h1": "How it's work?",
+            "text": "First you sign up and then you can choose which sport you want to add. Available sport to count: Footabll, Basketball, Volleyball, Handball, Counter Strike and League of Legends. Then you can choose game from competition in our base or add your own game in different competition. Make it regularly and the effect will be awesome.",
+            "diag": "Desktop app adding screen"
+        }
+    },
+    "sign": {
+        "h1": "Create your account",
+        "pass": "Password",
+        "re_pass": "Repeat password",
+        "show": "Show password",
+        "btn": "Create account"
+    },
+    "login": {
+        "login": {
+            "login": "Log in",
+            "pass": "Password",
+            "re_me": "Remember me",
+            "show":"Show password",
+            "forgot": "Forgot your password?"
+        },
+        "sign": {
+            "h3": "Don't have an account",
+            "text": "Make it for free",
+            "register": "Register"
+        }
+    },
+    "forgot": {
+        "block": {
+            "h1": "Enter your e-mail",
+            "btn": "Send mail"
+        },
+        "after": {
+            "h3": "Check your mail to resert your password",
+            "text": "E-mail don't arrived",
+            "link": "Click link to send mail again"
+        }
+    },
+    "code": {
+        "h1": "Enter your verification code",
+        "btn": "Verify"
+    },
+    "download_site": {
+        "desktop": "Download app for desktop",
+        "btn": "Download",
+        "mobile": "Dowland app for mobile"
+    },
+    "added": {
+        "h1": "Added teams  and  to the competition ",
+        "btn": "Go Back"
+    },
+    "select": {
+        "default": "Choose sport",
+        "foot": "Football",
+        "basket": "Basketball",
+        "volley": "Volleyball",
+        "hand": "Handball"
+    },
+    "summary": {
+      "year": "Check your year summary",
+      "season": "Chcek your season summary"
+    },
+    "changepass": {
+        "reset": "Reset your password",
+        "form": {
+            "pass": "Enter new password",
+            "re_pass": "Repeat password",
+            "show": "Show password",
+            "message": "Passwords are not the same",
+            "btn": "Change password"
+        },
+        "back": {
+            "h1": "Password is changed",
+            "btn": "Go back to login"
+        }
+    },
+    "add_new": {
+        "h1": "Add new match",
+        "league": "League Name",
+        "first": "First Team",
+        "second": "Second Team",
+        "btn": "Add match",
+        "desc": "Writing leagues names correctly give better effect in the future. For example:",
+        "desc2": "When the short team name is more popular than full name. Fro example:"
+    },
+    "add_ex": {
+        "h1": "Choose your game",
+        "btn": "Add match"
+    },
+    "action": {
+        "exist": "➕Add match form exist",
+        "new": "➕Add new match",
+        "summary": "📊Summary"
+    },
+    "response": {
+        "mail": "Invalid e-mail"
+    }
+}

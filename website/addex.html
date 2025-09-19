@@ -12,12 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script type="module" src="src/js/script.js" defer></script>
+    <script src="https://unpkg.com/i18next@23.4.6/dist/umd/i18next.min.js"></script>
+    <script src="src/js/i18n.js"></script>
     <script src="src/js/functions.js"></script>
     <script type="module" src="src/js/adding.js" defer></script>
 </head>
 <body>
     <header>
-        <a href="index.html" title="Back to home page">
+        <a href="index.html" data-i18n-attr="title:menu_titles.logo">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
         <nav>
@@ -26,30 +28,30 @@
             </button>
 
             <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="#about" title="About the project" id="option2">About</a></li>
-                <li><a href="download.html" title="Dowland page">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+                <li id="first" hidden><a id="option1"></a></li>
+                <li><a href="index.html#about" data-i18n-attr="title:menu_titles.about" id="option2" data-i18n="menu.option2">About</a></li>
+                <li><a href="download.html" data-i18n-attr="title:menu_titles.download" data-i18n="download">Download app</a></li>
+                <li><a href="login.html" data-i18n-attr="title:menu_titles.login" id="logout" data-i18n="menu.logout">Log in</a></li>
             </ul>
         </nav>
     </header>
     <main class="addex">
         <div>
-            <h1>Choose your game</h1>
+            <h1 data-i18n="add_ex.h1">Choose your game</h1>
             <form action="script.php?from=ex" method="post" class="menu">
                 <select name="sport" id="sportAdd">
-                    <option selected disabled hidden>Choose sport</option>
-                    <option value="football">Footabll</option>
-                    <option value="basketball">Basketball</option>
-                    <option value="volleyball">Volleyball</option>
-                    <option value="handball">Handball</option>
+                    <option selected disabled hidden data-i18n="select.default">Choose sport</option>
+                    <option value="football" data-i18n="select.foot">Footabll</option>
+                    <option value="basketball" data-i18n="select.basket">Basketball</option>
+                    <option value="volleyball" data-i18n="select.volley">Volleyball</option>
+                    <option value="handball" data-i18n="select.hand">Handball</option>
                     <option value="cs">Counter Strike</option>
                     <option value="lol">League of Legends</option>
                 </select>
                 <select name="league" id="league" hidden></select>
-                <select name="team_one" id="first" hidden></select>
+                <select name="team_one" id="fteam" hidden></select>
                 <select name="team_two" id="second" hidden></select>
-                <input type="submit" id="add_btn" hidden value="Add Match">
+                <input type="submit" id="add_btn" hidden data-i18n-attr="value:add_ex.btn">
             </form>
         </div>
     </main>
