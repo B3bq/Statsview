@@ -49,7 +49,7 @@ $photo = $result->fetch_assoc()['photo'];
 </head>
 <body>
     <header>
-        <a href="index.html" title="Back to home page">
+        <a href="index.html" data-i18n-attr="title:menu_titles.logo">
             <img src="src/img/logo.svg" alt="logo" width="64px" height="64px">
         </a>
         <nav>
@@ -58,10 +58,10 @@ $photo = $result->fetch_assoc()['photo'];
             </button>
 
             <ul id="js-toggleable-menu">
-                <li><a href="" title="" id="option1"></a></li>
-                <li><a href="index.html#about" title="About the project" id="option2">About</a></li>
-                <li><a href="download.html" title="">Dowland app</a></li>
-                <li><a href="login.html" title="Log in site" id="logout">Log in</a></li>
+                <li id="first" hidden><a id="option1"></a></li>
+                <li><a href="index.html#about" data-i18n-attr="title:menu_titles.about" id="option2" data-i18n="menu.option2">About</a></li>
+                <li><a href="download.html" data-i18n-attr="title:menu_titles.download" data-i18n="download">Download app</a></li>
+                <li><a href="login.html" data-i18n-attr="title:menu_titles.login" id="logout" data-i18n="menu.logout">Log in</a></li>
             </ul>
         </nav>
     </header>
