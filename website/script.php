@@ -584,7 +584,20 @@ mysqli_close($connection);
         </nav>
     </header>
     <main class="added">
-        <h1 data-i18n="added.h1">Added teams <span><?php echo $teamOne;?></span> and <span><?php echo $teamTwo;?></span> to the competition <span><?php echo $league;?></span></h1>
+    <?php
+        // taking brower language
+        $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
+        if ($lang === 'pl') {
+            ?>
+            <h1>Dodano drużyny <span><?php echo $teamOne; ?></span> i <span><?php echo $teamTwo; ?></span> do rozgrywek <span><?php echo $league; ?></span></h1>
+            <?php
+        } else {
+            ?>
+            <h1>Added teams <span><?php echo $teamOne; ?></span> and <span><?php echo $teamTwo; ?></span> to the competition <span><?php echo $league; ?></span></h1>
+            <?php
+        }
+    ?>
         <button onclick="goBack()" data-i18n="added.btn">Go Back</button>
     </main>
     <footer>
