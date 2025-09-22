@@ -24,7 +24,7 @@ class Summary(QWidget):
 
         self.sport_box = QComboBox(self)
         self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
+        self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(415, 150)
 
