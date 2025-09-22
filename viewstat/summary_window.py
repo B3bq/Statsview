@@ -5,8 +5,9 @@ import os, json
 from translator import Translator
 
 class Summary(QWidget):
-    def __init__(self, menu):
+    def __init__(self, main_window):
         super().__init__()
+        self.main_window = main_window
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
@@ -16,7 +17,6 @@ class Summary(QWidget):
         else:
             self.translator = Translator("en")
 
-        self.menu = menu
 
         # choose a sport
         self.SportLabel = QLabel(self)
@@ -49,7 +49,7 @@ class Summary(QWidget):
 
         # back to menu button
         self.back_btn = QPushButton(self)
-        self.back_btn.clicked.connect(self.back_menu)
+        self.back_btn.clicked.connect(self.main_window.open_main_window)
 
 
         #basic window settings
@@ -105,10 +105,6 @@ class Summary(QWidget):
             with open(file_path, "wt") as file:
                 json.dump(user_data, file)
         self.retranslate_ui()
-
-    def back_menu(self):
-        self.menu.show()
-        self.close()
 
     def summary(self):
 
@@ -239,3 +235,9 @@ class Summary(QWidget):
         # back
         self.back_btn.move(400, 300)
         self.back_btn.show()
+
+    def reset_summary(self):
+        for child in self.findChildren(QLabel):
+            child.hide()
+
+        self.setup()

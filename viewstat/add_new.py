@@ -6,8 +6,9 @@ from translator import Translator
 
 
 class Add_New(QWidget):
-    def __init__(self, menu):
+    def __init__(self, main_window):
         super().__init__()
+        self.main_window = main_window
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
@@ -17,7 +18,6 @@ class Add_New(QWidget):
         else:
             self.translator = Translator("en")
 
-        self.menu = menu
 
         # add next button
         self.add_next = QPushButton(self)
@@ -59,7 +59,7 @@ class Add_New(QWidget):
         # back button
         self.back_btn =QPushButton(self)
         self.back_btn.move(150, 300)
-        self.back_btn.clicked.connect(self.back)
+        self.back_btn.clicked.connect(self.main_window.open_main_window)
 
         # change language
         self.lang_btn = QComboBox(self)
@@ -71,8 +71,10 @@ class Add_New(QWidget):
         #basic window settings
         self.setFixedSize(1000, 400)
         self.setWindowTitle("Statsview")
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        self.setWindowIcon(QIcon(icon_path))
         self.retranslate_ui()
-        self.show()
 
     def retranslate_ui(self):
         self.add_next.setText(self.tr("add_more"))
@@ -108,10 +110,6 @@ class Add_New(QWidget):
             with open(file_path, "wt") as file:
                 json.dump(user_data, file)
         self.retranslate_ui()
-
-    def back(self):
-        self.menu.show()
-        self.close()
 
     def submit(self):
         # taking a varibles

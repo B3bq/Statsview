@@ -6,8 +6,9 @@ from insert import add_datas_to_base
 from translator import Translator
 
 class Add_Exist(QWidget):
-    def __init__(self, menu):
+    def __init__(self, main_window):
         super().__init__()
+        self.main_window = main_window
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
@@ -16,8 +17,6 @@ class Add_Exist(QWidget):
             self.translator = Translator(user_data["lang"])
         else:
             self.translator = Translator("en")
-
-        self.menu = menu
 
         # add more button
         self.add_more_btn = QPushButton(self)
@@ -30,9 +29,10 @@ class Add_Exist(QWidget):
 
         self.sport_box = QComboBox(self)
         self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Counter Strike", "League of legends"])
+        self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(150, 150)
+        self.sport_box.currentTextChanged.connect(self.take_sport)
 
         # choose league list
         self.LeagueLabel = QLabel(self)
@@ -42,6 +42,7 @@ class Add_Exist(QWidget):
         self.league_box = QComboBox(self)
         self.league_box.setFixedSize(150, 50)
         self.league_box.move(325, 150)
+        self.league_box.currentTextChanged.connect(self.take_league_name)
 
         # choose team_one list
         self.TeamOneLabel = QLabel(self)
@@ -62,10 +63,12 @@ class Add_Exist(QWidget):
         # submit button
         self.submit_btn = QPushButton(self)
         self.submit_btn.move(745, 300)
+        self.submit_btn.clicked.connect(self.submit)
 
         # back button
         self.back_btn =QPushButton(self)
         self.back_btn.move(150, 300)
+        self.back_btn.clicked.connect(self.main_window.open_main_window)
 
         # change language
         self.lang_btn = QComboBox(self)
@@ -74,11 +77,13 @@ class Add_Exist(QWidget):
         self.lang_btn.move(900, 10)
         self.lang_btn.currentTextChanged.connect(self.switch_language)
         
+        self.setFixedSize(1000, 400)
+        self.setWindowTitle("Statsview")
         base_path = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(base_path, "logo.svg")
         self.setWindowIcon(QIcon(icon_path))
         self.retranslate_ui()
-        self.setup()
+
 
     def retranslate_ui(self):
         self.add_more_btn.setText(self.tr("add_more"))
@@ -118,9 +123,6 @@ class Add_Exist(QWidget):
                 json.dump(user_data, file)
         self.retranslate_ui()
 
-    def back(self): 
-        self.menu.show()
-        self.close()
 
     def take_league_name(self):
         league_name = [self.league_box.currentText()]
@@ -185,22 +187,4 @@ class Add_Exist(QWidget):
         self.team_one_box.show()
         self.TeamTwoLabel.show()
         self.team_two_box.show()
-        self.submit_btn.show()
-
-    def setup(self):
-
-        self.sport_box.currentTextChanged.connect(self.take_sport)
-
-        
-        self.league_box.currentTextChanged.connect(self.take_league_name)
-         
-        self.submit_btn.clicked.connect(self.submit)
-
-        
-        self.back_btn.clicked.connect(self.back)
-
-        self.show()
-
-        #basic window settings
-        self.setFixedSize(1000, 400)
-        self.setWindowTitle("Statsview")
+        self.submit_btn.show()  
