@@ -3,7 +3,7 @@ import bcrypt # to password encryption
 
 # connection to database
 connection = connect
-mycursor = connection.cursor()
+mycursor = connection.cursor(buffered=True)
 
 class User:
     user_id = ''

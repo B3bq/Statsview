@@ -70,7 +70,6 @@ class Add_Exist(QWidget):
 
         # text
         self.label = QLabel(self)
-        self.label.move(365,150)
 
         # back button
         self.back_btn =QPushButton(self)
@@ -177,6 +176,7 @@ class Add_Exist(QWidget):
 
         # show text and add more button
         self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
+        self.label.move(365, 150)
         self.label.show()
         self.add_more_btn.show()
         self.add_more_btn.clicked.connect(self.reset)

@@ -58,7 +58,6 @@ class Add_New(QWidget):
 
         # text
         self.label = QLabel(self)
-        self.label.move(365,150)
 
         # back button
         self.back_btn =QPushButton(self)
@@ -134,6 +133,7 @@ class Add_New(QWidget):
 
         # show text and add more button
         self.label = QLabel(f"Added {teamOne_name} and {teamTwo_name} to the competition {league_name}", self)
+        self.label.move(365, 150)
         self.label.show()
         self.add_next.show()
         self.add_next.clicked.connect(self.restart)
