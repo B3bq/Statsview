@@ -34,6 +34,8 @@ class Program(QMainWindow):
 
     def open_main_window(self):
         self.summary_window.reset_summary()
+        self.add_ex_window.reset()
+        self.add_new_window.restart()
         self.stack.setCurrentWidget(self.main_window)
 
     def open_add_new(self):

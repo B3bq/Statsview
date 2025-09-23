@@ -68,6 +68,10 @@ class Add_Exist(QWidget):
         self.submit_btn.move(745, 300)
         self.submit_btn.clicked.connect(self.submit)
 
+        # text
+        self.label = QLabel(self)
+        self.label.move(365,150)
+
         # back button
         self.back_btn =QPushButton(self)
         self.back_btn.move(150, 300)
@@ -173,15 +177,15 @@ class Add_Exist(QWidget):
 
         # show text and add more button
         self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
-        self.label.move(365,150)
         self.label.show()
         self.add_more_btn.show()
         self.add_more_btn.clicked.connect(self.reset)
 
     def reset(self):
         # hide text and button
-        self.label.hide()
-        self.add_more_btn.hide()
+        if self.label.isVisible():
+            self.label.hide()
+            self.add_more_btn.hide()
 
         self.league_box.clear()
 
@@ -194,4 +198,4 @@ class Add_Exist(QWidget):
         self.team_one_box.show()
         self.TeamTwoLabel.show()
         self.team_two_box.show()
-        self.submit_btn.show()  
+        self.submit_btn.show()
