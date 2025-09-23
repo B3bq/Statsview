@@ -34,10 +34,13 @@ class Add_Exist(QWidget):
         self.sport_box.move(150, 150)
         self.sport_box.currentTextChanged.connect(self.take_sport)
 
+        self.annonation = QLabel("No data", self)
+        self.annonation.move(465, 230)
+        self.annonation.hide()
+
         # choose league list
         self.LeagueLabel = QLabel(self)
         self.LeagueLabel.move(330, 130)
-
 
         self.league_box = QComboBox(self)
         self.league_box.setFixedSize(150, 50)
@@ -139,8 +142,12 @@ class Add_Exist(QWidget):
     def take_sport(self):
         sport_name = self.sport_box.currentText()
         self.league_box.clear()
+        self.annonation.hide()
 
         league_names = show_leagues(sport_name)
+
+        if league_names == []:
+            self.annonation.show()
 
         self.league_box.addItems(league_names)
 
