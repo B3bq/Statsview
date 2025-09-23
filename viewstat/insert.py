@@ -437,7 +437,7 @@ def insert_user(name, mail, password):
     if myresult != []:
         return False
     else:
-        sql_insert = "INSERT INTO users (id_users, mail, name, password) VALUES (NULL, %s, %s, %s)"
+        sql_insert = "INSERT INTO users (id_users, mail, name, password, photo) VALUES (NULL, %s, %s, %s, 'src/img/user.png')"
         mycursor.execute(sql_insert, (mail, name, hashed))
 
     connection.commit()
