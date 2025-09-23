@@ -56,6 +56,9 @@ class Add_New(QWidget):
         self.submit_btn.move(745, 300)
         self.submit_btn.clicked.connect(self.submit)
 
+        # text
+        self.label = QLabel(self)
+
         # back button
         self.back_btn =QPushButton(self)
         self.back_btn.move(150, 300)
@@ -137,8 +140,9 @@ class Add_New(QWidget):
 
     def restart(self):
         # hide text and add button
-        self.label.hide()
-        self.add_next.hide()
+        if self.label.isVisible():
+            self.label.hide()
+            self.add_next.hide()
 
         # show and clear inputs
         self.league_input.clear()
