@@ -1,22 +1,18 @@
 from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from summary import *
 import os, json
-from translator import Translator
 
 class Summary(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
+        self.translator = translator
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
             user_data = json.load(file)
-        if user_data["lang"] != "":
-            self.translator = Translator(user_data["lang"])
-        else:
-            self.translator = Translator("en")
-
 
         # choose a sport
         self.SportLabel = QLabel(self)
@@ -24,7 +20,10 @@ class Summary(QWidget):
 
         self.sport_box = QComboBox(self)
         self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        if user_data["lang"] == "en":
+            self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        else:
+            self.sport_box.addItems(["Piłka nożna", "Koszykówka", "Siatkówka", "Piłka ręczna", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(415, 150)
 
@@ -61,24 +60,37 @@ class Summary(QWidget):
         self.retranslate_ui()
 
         # change language
+        img_src = os.path.join(os.path.dirname(__file__), 'languages.png')
         self.lang_btn = QComboBox(self)
+        self.lang_btn.addItem(QIcon(img_src), "")
         self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setCurrentIndex(0)
+        self.lang_btn.activated.connect(self.on_lang_selected)
         self.lang_btn.setFixedSize(80 ,50)
         self.lang_btn.move(900, 10)
+
+        model = self.lang_btn.model()
+        for i in range(model.rowCount()):
+            item = model.item(i)
+            item.setTextAlignment(Qt.AlignCenter)
         self.lang_btn.currentTextChanged.connect(self.switch_language)
 
         self.setup()
 
+    def on_lang_selected(self, index):
+        if index == 0:
+            self.lang_btn.setCurrentIndex(0)
+
     def retranslate_ui(self):
-        self.SportLabel.setText(self.tr("sport_label"))
-        self.submit_btn.setText(self.tr("submit"))
-        self.back_btn.setText(self.tr("back_btn"))
-        self.top_league_text.setText(self.tr("top_leagues"))
-        self.count_league_text.setText(self.tr("count"))
-        self.top_teams_text.setText(self.tr("top_teams"))
-        self.count_teams_text.setText(self.tr("count"))
-        self.top_home_text.setText(self.tr("top_home"))
-        self.top_away_text.setText(self.tr("top_away"))
+        self.SportLabel.setText(self.translator.tr("sport_label"))
+        self.submit_btn.setText(self.translator.tr("submit"))
+        self.back_btn.setText(self.translator.tr("back_btn"))
+        self.top_league_text.setText(self.translator.tr("top_leagues"))
+        self.count_league_text.setText(self.translator.tr("count"))
+        self.top_teams_text.setText(self.translator.tr("top_teams"))
+        self.count_teams_text.setText(self.translator.tr("count"))
+        self.top_home_text.setText(self.translator.tr("top_home"))
+        self.top_away_text.setText(self.translator.tr("top_away"))
 
     def switch_language(self):
         new_lang = self.lang_btn.currentText()

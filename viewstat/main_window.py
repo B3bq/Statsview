@@ -1,23 +1,15 @@
-from PySide6.QtGui import  QPalette, QColor
+from PySide6.QtGui import  QPalette, QColor, QIcon
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 import re, datetime, json, os, random
 from insert import * # functions to insert user datas to database and check log in
 from mail import * # import mail script
-from translator import Translator
 
 class Main_window(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
-
-        # language for app
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
-        if user_data["lang"] != "":
-            self.translator = Translator(user_data["lang"])
-        else:
-            self.translator = Translator("en")
+        self.translator = translator
 
         # setup buttons
         self.addEX_btn = QPushButton(self)
@@ -62,7 +54,8 @@ class Main_window(QWidget):
         self.password.setFixedSize(200, 50)
         self.password.move(400, 100)
         # checkbox remember me
-        self.remember_me = QCheckBox(self)
+        self.remember_me = QCheckBox("Re_me", self)
+        self.remember_me.setMinimumWidth(150)
         self.remember_me.move(400, 170)
 
         # back button
@@ -91,7 +84,8 @@ class Main_window(QWidget):
         self.btn_verification.setCheckable(True)
         self.btn_verification.move(460, 220)
         #checkbox to show pass
-        self.show_pass = QCheckBox(self)
+        self.show_pass = QCheckBox("show", self)
+        self.show_pass.setMinimumWidth(150)
         self.show_pass.move(400, 150)
         # create new account btn
         self.create_btn = QPushButton(self)
@@ -107,12 +101,15 @@ class Main_window(QWidget):
 
         # things to check user
         self.ck_label = QLabel(self)
-        self.ck_label.move(400, 175)
+        self.ck_label.setMinimumWidth(200)
+        self.ck_label.move(455, 183)
         self.ck_label2 = QLabel(self)
-        self.ck_label2.move(400, 175)
+        self.ck_label2.setMinimumWidth(200)
+        self.ck_label2.move(455, 183)
         self.label1 = QLabel(self)
         self.label1.move(440, 215)
         self.label2 = QLabel(self)
+        self.label2.setMinimumWidth(250)
         self.label2.move(440, 215)
         self.labelMail = QLabel(self)
         self.labelMail.move(440, 215)
@@ -130,14 +127,29 @@ class Main_window(QWidget):
             self.login_screen() # false then show login screen
 
         # change language
+        img_src = os.path.join(os.path.dirname(__file__), 'languages.png')
+
         self.lang_btn = QComboBox(self)
+        self.lang_btn.addItem(QIcon(img_src), "")
         self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setCurrentIndex(0)
+        self.lang_btn.activated.connect(self.on_lang_selected)
         self.lang_btn.setFixedSize(80 ,50)
         self.lang_btn.move(900, 10)
+
+        model = self.lang_btn.model()
+        for i in range(model.rowCount()):
+            item = model.item(i)
+            item.setTextAlignment(Qt.AlignCenter)
+
         self.lang_btn.currentTextChanged.connect(self.switch_language)
 
 
         self.retranslate_ui() # language
+
+    def on_lang_selected(self, index):
+        if index == 0:
+            self.lang_btn.setCurrentIndex(0)
 
     def retranslate_ui(self):
         # action screen
@@ -178,7 +190,7 @@ class Main_window(QWidget):
     def switch_language(self):
         new_lang = self.lang_btn.currentText()
         if new_lang == "English":
-            self.translator.set_language("en")
+            self.main_window.lang_change('en')
             
             file_path = os.path.join(os.path.dirname(__file__), 'save.json')
             with open(file_path, 'r') as file:
@@ -189,7 +201,7 @@ class Main_window(QWidget):
             with open(file_path, "wt") as file:
                 json.dump(user_data, file)
         else:
-            self.translator.set_language("pl")
+            self.main_window.lang_change("pl")
 
             file_path = os.path.join(os.path.dirname(__file__), 'save.json')
             with open(file_path, 'r') as file:
@@ -334,7 +346,7 @@ class Main_window(QWidget):
 
         # date for view statistics
         today = datetime.date.today()
-        end_date = [datetime.date(datetime.date.today().year, 9, 23), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
+        end_date = [datetime.date(datetime.date.today().year, 9, 24), datetime.date(datetime.date.today().year, 7, 15), datetime.date(datetime.date.today().year, 7, 16), datetime.date(datetime.date.today().year, 7, 17), datetime.date(datetime.date.today().year, 7, 18), datetime.date(datetime.date.today().year, 1, 1), datetime.date(datetime.date.today().year, 1, 2), datetime.date(datetime.date.today().year, 1, 3), datetime.date(datetime.date.today().year, 1, 4)]
         
 
         #menu
@@ -527,8 +539,15 @@ class Main_window(QWidget):
                 self.btn_verification.hide()
                 self.label_ver.hide()
 
+                file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+                with open(file_path, 'r') as file:
+                    user_data = json.load(file)
+
                 # show info
-                self.label.setText(f"Added user {login}")
+                if user_data["lang"] == "en":
+                    self.label.setText(f"Added user {login}")
+                else:
+                    self.label.setText(f"Dodano użytkownika {login}")
                 self.label.show()
 
                 self.back.show()

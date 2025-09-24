@@ -19,5 +19,7 @@ class Translator:
         self.lang = lang
         self.load_language(lang)
 
-    def tr(self, key):
+    def tr(self, key:str)-> str:
+        if key not in self.translations:
+             print(f"[⚠️ DEBUG] Missing translation for key: '{key}' in language '{self.lang}'")
         return self.translations.get(key, key)

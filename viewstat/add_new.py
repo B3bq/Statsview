@@ -1,23 +1,19 @@
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 import os, json
 from insert import add_datas_to_base # import function
-from translator import Translator
 
 
 class Add_New(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
+        self.translator = translator
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
             user_data = json.load(file)
-        if user_data["lang"] != "":
-            self.translator = Translator(user_data["lang"])
-        else:
-            self.translator = Translator("en")
-
 
         # add next button
         self.add_next = QPushButton(self)
@@ -33,7 +29,10 @@ class Add_New(QWidget):
 
         self.sport_box = QComboBox(self)
         self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        if user_data["lang"] == "en":
+            self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        else:
+            self.sport_box.addItems(["Piłka nożna", "Koszykówka", "Siatkówka", "Piłka ręczna", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(150, 150)
 
@@ -65,10 +64,19 @@ class Add_New(QWidget):
         self.back_btn.clicked.connect(self.main_window.open_main_window)
 
         # change language
+        img_src = os.path.join(os.path.dirname(__file__), 'languages.png')
         self.lang_btn = QComboBox(self)
+        self.lang_btn.addItem(QIcon(img_src), "")
         self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setCurrentIndex(0)
+        self.lang_btn.activated.connect(self.on_lang_selected)
         self.lang_btn.setFixedSize(80 ,50)
         self.lang_btn.move(900, 10)
+
+        model = self.lang_btn.model()
+        for i in range(model.rowCount()):
+            item = model.item(i)
+            item.setTextAlignment(Qt.AlignCenter)
         self.lang_btn.currentTextChanged.connect(self.switch_language)
 
         #basic window settings
@@ -79,14 +87,18 @@ class Add_New(QWidget):
         self.setWindowIcon(QIcon(icon_path))
         self.retranslate_ui()
 
+    def on_lang_selected(self, index):
+        if index == 0:
+            self.lang_btn.setCurrentIndex(0)
+
     def retranslate_ui(self):
-        self.add_next.setText(self.tr("add_more"))
-        self.SportLabel.setText("sport_label")
-        self.league_input.setPlaceholderText(self.tr("league"))
-        self.team_one_input.setPlaceholderText(self.tr("team_one"))
-        self.team_two_input.setPlaceholderText(self.tr("team_two"))
-        self.submit_btn.setText(self.tr("submit"))
-        self.back_btn.setText(self.tr("back_btn"))
+        self.add_next.setText(self.translator.tr("add_more"))
+        self.SportLabel.setText(self.translator.tr("sport_label"))
+        self.league_input.setPlaceholderText(self.translator.tr("league"))
+        self.team_one_input.setPlaceholderText(self.translator.tr("team_one"))
+        self.team_two_input.setPlaceholderText(self.translator.tr("team_two"))
+        self.submit_btn.setText(self.translator.tr("submit"))
+        self.back_btn.setText(self.translator.tr("back_btn"))
 
     def switch_language(self):
         new_lang = self.lang_btn.currentText()
@@ -131,8 +143,16 @@ class Add_New(QWidget):
         self.team_two_input.hide()
         self.submit_btn.hide()
 
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+
         # show text and add more button
-        self.label = QLabel(f"Added {teamOne_name} and {teamTwo_name} to the competition {league_name}", self)
+        if user_data["lang"] == 'en':
+            self.label = QLabel(f"Added {teamOne_name} and {teamTwo_name} to the competition {league_name}", self)
+        else:
+            self.label = QLabel(f"Dodano {teamOne_name} i {teamTwo_name} do rozgrywek {league_name}", self)
+
         self.label.move(365, 150)
         self.label.show()
         self.add_next.show()

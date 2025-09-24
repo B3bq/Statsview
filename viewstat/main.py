@@ -1,6 +1,7 @@
 from PySide6.QtGui import QCloseEvent, QIcon
 from PySide6.QtWidgets import *
-import add_new, add_ex, summary_window, main_window, sys, os
+from translator import Translator
+import add_new, add_ex, summary_window, main_window, sys, os, json
 
 
 class Program(QMainWindow):
@@ -11,11 +12,20 @@ class Program(QMainWindow):
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
 
+        # language for app
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+        if user_data["lang"] != "":
+            self.translator = Translator(user_data["lang"])
+        else:
+            self.translator = Translator("en")
+
         # widgets
-        self.add_new_window = add_new.Add_New(self)
-        self.add_ex_window = add_ex.Add_Exist(self)
-        self.summary_window = summary_window.Summary(self)
-        self.main_window = main_window.Main_window(self)
+        self.add_new_window = add_new.Add_New(self, self.translator)
+        self.add_ex_window = add_ex.Add_Exist(self, self.translator)
+        self.summary_window = summary_window.Summary(self, self.translator)
+        self.main_window = main_window.Main_window(self, self.translator)
 
         # adding widgets to stack
         self.stack.addWidget(self.main_window)
@@ -31,6 +41,14 @@ class Program(QMainWindow):
         self.setWindowIcon(QIcon(icon_path))
 
         self.stack.setCurrentWidget(self.main_window)
+
+    def lang_change(self, lang):
+        self.translator.set_language(lang)
+
+        self.main_window.retranslate_ui()
+        self.add_ex_window.retranslate_ui()
+        self.add_new_window.retranslate_ui()
+        self.summary_window.retranslate_ui()
 
     def open_main_window(self):
         self.summary_window.reset_summary()
@@ -49,11 +67,30 @@ class Program(QMainWindow):
 
     # close app event
     def closeEvent(self, event: QCloseEvent):
-        should_close = QMessageBox.question(self, "Close App", "Do you want to close app",
-                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)#create message box
+
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            user_data = json.load(file)
+
+        msg = QMessageBox(self)
         
+        if user_data["lang"] == "en":
+            msg.setWindowTitle("Close App")
+            msg.setText("Do you want to close the app?")
+            yes_button = msg.addButton("Yes", QMessageBox.YesRole)
+            no_button = msg.addButton("No", QMessageBox.NoRole)
+        else:
+            msg.setWindowTitle("Zamknij")
+            msg.setText("Czy chcesz zamknąć aplikację?")
+            
+            yes_button = msg.addButton("Tak", QMessageBox.YesRole)
+            no_button = msg.addButton("Nie", QMessageBox.NoRole)
+            
+        msg.setDefaultButton(no_button)
+        msg.exec()
+
         #check what an user clicked
-        if should_close == QMessageBox.StandardButton.Yes:
+        if msg.clickedButton() == yes_button:
             event.accept()
         else:
             event.ignore()

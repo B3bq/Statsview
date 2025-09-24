@@ -1,22 +1,19 @@
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 import os, json
 from show_ex import show_leagues, show_teams
 from insert import add_datas_to_base
-from translator import Translator
 
 class Add_Exist(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
+        self.translator = translator
 
         file_path = os.path.join(os.path.dirname(__file__), 'save.json')
         with open(file_path, 'r') as file:
             user_data = json.load(file)
-        if user_data["lang"] != "":
-            self.translator = Translator(user_data["lang"])
-        else:
-            self.translator = Translator("en")
 
         # add more button
         self.add_more_btn = QPushButton(self)
@@ -29,12 +26,19 @@ class Add_Exist(QWidget):
 
         self.sport_box = QComboBox(self)
         self.sport_box.setPlaceholderText("Sport")
-        self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        if user_data["lang"] == "en":
+            self.sport_box.addItems(["Football", "Basketball", "Volleyball", "Handball", "Counter Strike", "League of legends"])
+        else:
+            self.sport_box.addItems(["Piłka nożna", "Koszykówka", "Siatkówka", "Piłka ręczna", "Counter Strike", "League of legends"])
         self.sport_box.setFixedSize(150, 50)
         self.sport_box.move(150, 150)
         self.sport_box.currentTextChanged.connect(self.take_sport)
 
-        self.annonation = QLabel("No data", self)
+
+        if user_data["lang"] == 'en':
+            self.annonation = QLabel("No data", self)
+        else:
+            self.annonation = QLabel("Brak danych", self)
         self.annonation.move(465, 230)
         self.annonation.hide()
 
@@ -77,10 +81,20 @@ class Add_Exist(QWidget):
         self.back_btn.clicked.connect(self.main_window.open_main_window)
 
         # change language
+        img_src = os.path.join(os.path.dirname(__file__), 'languages.png')
         self.lang_btn = QComboBox(self)
+        self.lang_btn.addItem(QIcon(img_src), "")
         self.lang_btn.addItems(["English", "Polski"])
+        self.lang_btn.setCurrentIndex(0)
+        self.lang_btn.activated.connect(self.on_lang_selected)
         self.lang_btn.setFixedSize(80 ,50)
         self.lang_btn.move(900, 10)
+
+        model = self.lang_btn.model()
+        for i in range(model.rowCount()):
+            item = model.item(i)
+            item.setTextAlignment(Qt.AlignCenter)
+            
         self.lang_btn.currentTextChanged.connect(self.switch_language)
         
         self.setFixedSize(1000, 400)
@@ -90,23 +104,26 @@ class Add_Exist(QWidget):
         self.setWindowIcon(QIcon(icon_path))
         self.retranslate_ui()
 
+    def on_lang_selected(self, index):
+        if index == 0:
+            self.lang_btn.setCurrentIndex(0)
 
     def retranslate_ui(self):
-        self.add_more_btn.setText(self.tr("add_more"))
-        self.SportLabel.setText(self.tr("sport_label"))
-        self.LeagueLabel.setText(self.tr("league_label"))
-        self.league_box.setPlaceholderText(self.tr("league"))
-        self.TeamOneLabel.setText(self.tr("team_one_label"))
-        self.team_one_box.setPlaceholderText(self.tr("team_one"))
-        self.TeamTwoLabel.setText(self.tr("team_two_label"))
-        self.team_two_box.setPlaceholderText(self.tr("team_two"))
-        self.submit_btn.setText(self.tr("submit"))
-        self.back_btn.setText(self.tr("back_btn"))
+        self.add_more_btn.setText(self.translator.tr("add_more"))
+        self.SportLabel.setText(self.translator.tr("sport_label"))
+        self.LeagueLabel.setText(self.translator.tr("league_label"))
+        self.league_box.setPlaceholderText(self.translator.tr("league"))
+        self.TeamOneLabel.setText(self.translator.tr("team_one_label"))
+        self.team_one_box.setPlaceholderText(self.translator.tr("team_one"))
+        self.TeamTwoLabel.setText(self.translator.tr("team_two_label"))
+        self.team_two_box.setPlaceholderText(self.translator.tr("team_two"))
+        self.submit_btn.setText(self.translator.tr("submit"))
+        self.back_btn.setText(self.translator.tr("back_btn"))
 
     def switch_language(self):
         new_lang = self.lang_btn.currentText()
         if new_lang == "English":
-            self.translator.set_language("en")
+            self.main_window.lang_change('en')
             
             file_path = os.path.join(os.path.dirname(__file__), 'save.json')
             with open(file_path, 'r') as file:
@@ -117,7 +134,7 @@ class Add_Exist(QWidget):
             with open(file_path, "wt") as file:
                 json.dump(user_data, file)
         else:
-            self.translator.set_language("pl")
+            self.main_window.lang_change("pl")
 
             file_path = os.path.join(os.path.dirname(__file__), 'save.json')
             with open(file_path, 'r') as file:
@@ -174,8 +191,16 @@ class Add_Exist(QWidget):
         self.team_two_box.hide()
         self.submit_btn.hide()
 
+        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+        with open(file_path, 'r') as file:
+            use_data = json.load(file)
+
         # show text and add more button
-        self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
+        if use_data["lang"] == 'en':
+            self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
+        else:
+            self.label = QLabel(f"Dodano {first_team} i {second_team} do rozgrywek {league_name}", self)
+
         self.label.move(365, 150)
         self.label.show()
         self.add_more_btn.show()
