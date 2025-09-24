@@ -1,3 +1,18 @@
+## version 0.1.6 (2025-09-24)
+
+### Added
+- site translate
+
+### Changed
+- main page of website
+- database tables (added tables for 2 new sports, added basic datas like imges for teams and leagues)
+- the entire app is in one window and is tranlated
+
+### Repaired
+- selectors in app for new system
+- inserting datas
+- user take basic photo
+
 ## version 0.1.5 (2025-08-19)
 
 ### Added
