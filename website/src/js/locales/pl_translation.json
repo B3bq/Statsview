@@ -17,9 +17,9 @@
     "download": "Pobierz apke",
     "mainpage": {
         "cookie": {
-            "text": "Strona ta używa plików cookies do polepszenia doświadczenia z użytkowania i dostosowanej zawartości. Żeby kontynuować na naszej stronie, pozwól nam korzystać z plików cookies.",
-            "reject": "Odrzuć wszystkie",
-            "accept": "Akceptuj wszystkie"
+            "text": "Ta strona korzysta z plików cookie niezbędnych do jej prawidłowego działania. Cookies służą wyłącznie do obsługi logowania i identyfikacji użytkownika. Szczegóły znajdziesz w naszej ",
+            "link": "Polityka prywatności",
+            "accept": "Rozumiem"
         },
         "header": {
             "text": "Zacznij zliczać twoje mecze",
@@ -126,5 +126,56 @@
     },
     "response": {
         "mail": "Niepoprawny adres e-mail"
+    },
+    "privacy": {
+        "one": {
+            "heading": "Administrator danych",
+            "text": "Administratorem danych jest B3bq. Jest to projekt non profit. W sprawach z ochroną danych możesz skontaktować się pod adresem e-mail:"
+        },
+        "two": {
+            "heading": "Jakie dane zbieramy",
+            "text": "Podczas korzystania z naszej strony zbieramy i przetwarzamy wyłącznie dane niezbędne do korzystania z serwisu:",
+            "text2": "Nie gromadzimy dodatkowych danych analitycznych ani marketingowych",
+            "list": {
+                "one": "nazwa użytkownika",
+                "two": "identyfikator użytkownika w bazie danych",
+                "three": "dane zapisywane w plikach cookie w celu utrzymania zalogowanej sesji"
+            }
+        },
+        "three": {
+            "heading": "Cel i podstawa prawna przetwarzania",
+            "text": "Dane są przetwarzane wyłącznie w celu:",
+            "text2": "Podstawą prawną przetwarzania jest art. 6 ust. 1 lit. b RODO – niezbędność do wykonania umowy lub świadczenia usługi.",
+            "list": {
+                "one": "umożliwienia logowania i korzystania z konta użytkownika",
+                "two": "zapewnienia prawidłowego działania serwisu"
+            }
+        },
+        "four": {
+            "heading": "Pliki cookie",
+            "text": "Nasza strona wykorzystuje tylko pliki cookie niezbędne do prawidłowego działania (utrzymanie sesji użytkownika). Nie używamy plików cookie w celach marketingowych, reklamowych ani analitycznych."
+        },
+        "five": {
+            "heading": "Okres przechowywania danych",
+            "list": {
+                "one": "Dane zapisane w cookies są przechowywane przez czas trwania sesji użytkownika lub do momentu wylogowania",
+                "two": "Dane w bazie użytkowników są przechowywane przez czas posiadania konta w serwisie"
+            }
+        },
+        "six": {
+            "heading": "Odbiorcy danych",
+            "text": "Dane nie są przekazywane podmiotom trzecim, poza przypadkami wymaganymi prawem."
+        },
+        "seven": {
+            "heading": "Prawa użytkownika",
+            "text": "Masz prawo do:",
+            "list": {
+                "one": "dostępu do swoich danych",
+                "two": "sprostowania danych",
+                "three": "usunięcia danych („prawo do bycia zapomnianym”)",
+                "four": "ograniczenia przetwarzania",
+                "five": "wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (UODO)"
+            }
+        }
     }
 }

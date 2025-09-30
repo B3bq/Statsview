@@ -17,9 +17,9 @@
     "download": "Download app",
     "mainpage": {
         "cookie": {
-            "text": "This website uses cookies to improve your browsing experience and serve personalized content. By continuing to use our site, you agree to our use of cookies.",
-            "reject": "Reject all",
-            "accept": "Accept all"
+            "text": "This website uses cookies that are necessary for its proper functioning. Cookies are used solely for login and user identification purposes. Details can be found in our ",
+            "link": "Privacy policy",
+            "accept": "Understand"
         },
         "header": {
             "text": "Start counting your matches",
@@ -126,5 +126,56 @@
     },
     "response": {
         "mail": "Invalid e-mail"
+    },
+    "privacy": {
+        "one": {
+            "heading": "Data controller",
+            "text": "The data controller is B3bq. This is a non-profit project. For data protection matters, you can contact us at:"
+        },
+        "two": {
+            "heading": "What data do we collect?",
+            "text": "When using our website, we collect and process only the data necessary to use the service:",
+            "text2": "We do not collect additional analytical and marketing data",
+            "list": {
+                "one": "username",
+                "two": "user ID in the database",
+                "three": "data saved in cookies to maintain a logged-in session"
+            }
+        },
+        "three": {
+            "heading": "Purpose and legal basis of processing",
+            "text": "Data is processed solely for the purpose of:",
+            "text2": "The legal basis for processing is Article 6(1)(b) of the GDPR – necessity for the performance of a contract or the provision of a service.",
+            "list": {
+                "one": "enabling logging in and using the user account",
+                "two": "ensuring proper operation of the website"
+            }
+        },
+        "four": {
+            "heading": "Cookies",
+            "text": "Our website only uses cookies that are strictly necessary for proper operation (maintaining user sessions). We do not use cookies for marketing, advertising, or analytics purposes."
+        },
+        "five": {
+            "heading": "Data storage period",
+            "list": {
+                "one": "Data stored in cookies are stored for the duration of the user's session or until logging out.",
+                "two": "Data in the user database is stored for the duration of the account on the website"
+            }
+        },
+        "six": {
+            "heading": "Data recipients",
+            "text": "Data is not transferred to third parties, except as required by law."
+        },
+        "seven": {
+            "heading": "User rights",
+            "text": "You have the right to:",
+            "list": {
+                "one": "access to your data",
+                "two": "data rectification",
+                "three": "deletion of data (“right to be forgotten”)",
+                "four": "processing restrictions",
+                "five": "filing a complaint with the President of the Personal Data Protection Office (UODO)"
+            }
+        }
     }
 }

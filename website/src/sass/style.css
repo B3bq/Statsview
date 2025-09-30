@@ -60,6 +60,17 @@ footer a:first-child {
   width: 40px;
   height: 40px;
 }
+footer div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+footer div a {
+  text-decoration: none;
+}
+footer div a:hover {
+  text-decoration: underline;
+}
 
 input[type=submit], input[type=button], button {
   cursor: pointer;
@@ -849,6 +860,21 @@ main > header {
   transition: background-position-x 600ms;
 }
 
+.privacy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.privacy h1 {
+  text-align: center;
+}
+.privacy ol {
+  font-size: 1.35em;
+}
+.privacy ol > li {
+  font-weight: bold;
+}
+
 .forgot {
   display: flex;
   flex-direction: column;
@@ -950,6 +976,11 @@ main > header {
   margin: 19px 10px 19px 10px;
   font-size: 1.35em;
   color: #f0f3f4;
+}
+.cookie-banner a {
+  margin: 0px 10px;
+  text-decoration: underline dotted;
+  font-size: 1.35em;
 }
 
 .about, .how {

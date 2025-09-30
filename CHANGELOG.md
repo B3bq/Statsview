@@ -1,3 +1,8 @@
+## version 0.1.7 (2025-09-30)
+
+### Added
+- added privacy
+
 ## version 0.1.6 (2025-09-24)
 
 ### Added

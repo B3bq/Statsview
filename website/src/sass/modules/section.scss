@@ -749,3 +749,20 @@
     background-position-x: -150%;
     transition: background-position-x 600ms;
 }
+
+.privacy{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    h1{
+        text-align: center;
+    }
+
+    ol{
+        font-size: 1.35em;
+    }
+    ol>li{
+        font-weight: bold;
+    }
+}

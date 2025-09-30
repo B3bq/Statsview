@@ -27,6 +27,3 @@ function agree(){
     setCookie('agree', true, 1);
     document.getElementById('cookie-banner').style.visibility = 'hidden';
 }
-function reject(){
-    document.getElementById('cookie-banner').style.visibility = 'hidden';
-}
