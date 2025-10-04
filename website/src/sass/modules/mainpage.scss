@@ -77,7 +77,7 @@
 .about, .how{
     display: flex;
     flex-direction: column;
-    margin-right: 14px;
+    margin: auto 14px;
 
     .crop::after, .frame::after{
         content: attr(data-diag);

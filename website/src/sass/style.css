@@ -986,7 +986,7 @@ main > header {
 .about, .how {
   display: flex;
   flex-direction: column;
-  margin-right: 14px;
+  margin: auto 14px;
 }
 .about .crop::after, .about .frame::after, .how .crop::after, .how .frame::after {
   content: attr(data-diag);
