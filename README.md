@@ -70,7 +70,10 @@ Install dependencies
   npm install
 ```
 
-
+Language bibliotec
+```bash
+  npm install i18next
+```
 
 ## Environment Variables
 
