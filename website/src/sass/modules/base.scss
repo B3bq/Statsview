@@ -9,6 +9,10 @@
 *, *::before, *::after{
     box-sizing: inherit;
 }
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     margin: 0;
     background-color: $secondaryColor;
