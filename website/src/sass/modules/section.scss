@@ -547,6 +547,9 @@
             letter-spacing: 15px;
             background: content-box radial-gradient($fifthColor, $secondaryColor);
             border-radius: 25px;
+            @media (min-width: $laptopBreakPoint){
+                width: 10%;
+            }
         }
     }
 }

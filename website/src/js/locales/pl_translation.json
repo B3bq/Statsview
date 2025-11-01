@@ -1,7 +1,8 @@
 {
     "menu": {
         "option2": "O projekcie",
-        "logout": "Zaloguj"
+        "logout": "Zaloguj",
+        "buycoffee": "Postaw nam wirtualną kawę"
     },
     "menu_account": {
         "option1": "Konto",
@@ -12,7 +13,8 @@
         "logo": "Strona główna",
         "about": "O projekcie",
         "download": "Pobierz",
-        "login": "Zaloguj"
+        "login": "Zaloguj",
+        "buycoffee": "Wesprzyj nas"
     },
     "download": "Pobierz apke",
     "mainpage": {

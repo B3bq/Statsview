@@ -1,7 +1,8 @@
 {
     "menu": {
         "option2": "About",
-        "logout": "Log in"
+        "logout": "Log in",
+        "buycoffee": "Buy us a virtual coffee"
     },
     "menu_account": {
         "option1": "My account",
@@ -12,7 +13,8 @@
         "logo": "Back to home page",
         "about": "About the project",
         "download": "Download page",
-        "login": "Log in site"
+        "login": "Log in site",
+        "buycoffee": "Support us"
     },
     "download": "Download app",
     "mainpage": {

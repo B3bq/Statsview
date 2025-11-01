@@ -61,6 +61,7 @@ $photo = $result->fetch_assoc()['photo'];
                 <li id="first" hidden><a id="option1"></a></li>
                 <li><a href="index.html#about" data-i18n-attr="title:menu_titles.about" id="option2" data-i18n="menu.option2">About</a></li>
                 <li><a href="download.html" data-i18n-attr="title:menu_titles.download" data-i18n="download">Download app</a></li>
+                <li><a href="https://buycoffee.to/s3qu" data-i18n-attr="title:menu_titles.buycoffee" data-i18n="menu.buycoffee">Buycoffee</a></li>
                 <li><a href="login.html" data-i18n-attr="title:menu_titles.login" id="logout" data-i18n="menu.logout">Log in</a></li>
             </ul>
         </nav>

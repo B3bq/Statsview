@@ -683,6 +683,11 @@ main > header {
   background: content-box radial-gradient(#73787a, #a7b5be);
   border-radius: 25px;
 }
+@media (min-width: 1025px) {
+  .download__buttons::after {
+    width: 10%;
+  }
+}
 
 .thanks {
   display: flex;
