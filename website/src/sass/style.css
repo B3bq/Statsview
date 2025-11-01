@@ -647,16 +647,48 @@ main > header {
   border-radius: 15px;
   margin-top: 50px;
 }
-.download__moblie {
+.download__mobile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.download__moblie__buttons {
+.download__buttons {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+@media (min-width: 1025px) {
+  .download__buttons {
+    width: auto;
+  }
+}
+.download__buttons img {
+  width: 64px;
+  height: 64px;
+}
+.download__buttons::after {
+  content: attr(data-diag);
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  transform-origin: center;
+  white-space: nowrap;
+  width: 70%;
+  text-align: center;
+  font-size: x-large;
+  letter-spacing: 15px;
+  background: content-box radial-gradient(#73787a, #a7b5be);
+  border-radius: 25px;
+}
+
+.thanks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .addex {
@@ -969,9 +1001,6 @@ main > header {
 .cookie-banner__buttons button {
   margin: 10px;
   height: 50px !important;
-}
-.cookie-banner__buttons #reject {
-  background-color: #f0f3f4;
 }
 .cookie-banner__buttons #accept {
   background-color: #2ECC71;

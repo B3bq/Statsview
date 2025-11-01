@@ -75,7 +75,13 @@
     "download_site": {
         "desktop": "Pobierz aplikacje na komputer",
         "btn": "Pobierz",
-        "mobile": "Pobierz aplikacje na telefon"
+        "mobile": "Pobierz aplikacje na telefon",
+        "soon": "WKRÓTCE"
+    },
+    "thx": {
+        "heading": "Dziekuję za pobranie aplikacji",
+        "ifnot": "Jeśli pobieranie nie zaczeło się zutomatycznie",
+        "again": "Kliknij tutaj"
     },
     "added": {
         "h1": "Dodano drużyny  i  do rozgrywek ",

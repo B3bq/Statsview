@@ -130,3 +130,8 @@ inputs.forEach((input, index)=>{
         }
       });
 });
+
+const downloadBtn = document.getElementById('download');
+downloadBtn.addEventListener('click', ()=>{
+    window.location.href = 'thanks.html';
+})

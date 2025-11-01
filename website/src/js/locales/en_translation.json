@@ -75,7 +75,13 @@
     "download_site": {
         "desktop": "Download app for desktop",
         "btn": "Download",
-        "mobile": "Dowland app for mobile"
+        "mobile": "Dowland app for mobile",
+        "soon": "COMING SOON"
+    },
+    "thx": {
+        "heading": "Thank you for download",
+        "ifnot": "If download not started",
+        "again": "Click here"
     },
     "added": {
         "h1": "Added teams  and  to the competition ",
