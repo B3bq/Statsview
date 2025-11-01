@@ -2,8 +2,11 @@ from connect import connect
 import bcrypt # to password encryption
 
 # connection to database
-connection = connect
-mycursor = connection.cursor(buffered=True)
+connection = connect()
+if connection is None:
+    print("No connection")
+else:
+    mycursor = connection.cursor(buffered=True)
 
 class User:
     user_id = ''

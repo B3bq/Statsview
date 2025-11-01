@@ -1,10 +1,20 @@
-from PySide6.QtGui import  QPalette, QColor, QIcon
+from PySide6.QtGui import  QPalette, QColor, QIcon, QPixmap
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 import re, datetime, json, os, random
 from insert import * # functions to insert user datas to database and check log in
 from mail import * # import mail script
+from connect import connect
+from mysql.connector import Error
+import requests
+import webbrowser
 
+APP_VERSION = '1.0.0'
+UPDATE_URL = ''
+
+file_path = os.path.join(os.path.dirname(__file__), 'save.json')
+with open(file_path, 'r') as file:
+    user_data = json.load(file)
 class Main_window(QWidget):
     def __init__(self, main_window, translator):
         super().__init__()
@@ -213,7 +223,73 @@ class Main_window(QWidget):
                 json.dump(user_data, file)
         self.retranslate_ui()
 
+    # checking database connection
+    def check_connection(self):
+        try:
+            connection = connect()
+            if connection.is_connected():
+                connection.close()
+        except:
+            self.show_message(user_data['lang'])
+
+    def show_message(self, lang):
+        msg = QMessageBox(self)
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_path, "logo.svg")
+        msg.setWindowIcon(QIcon(icon_path))
+        
+        if lang=='en':
+            msg.setWindowTitle("Connection Error")
+            msg.setText("Cannot connect to database")
+        else:
+            msg.setWindowTitle("Błąd połączenia")
+            msg.setText("Błąd połaczenia z bazą")
+            
+        msg.exec_()
+
+    def check_for_updates(self):
+        try:
+            response = requests.get(UPDATE_URL, timeout=5)
+            if response.status_code == 200:
+                data = response.json()
+                latest_version = data['version']
+                download_url = data['url']
+                changelog = data.get("changelog", "")
+
+                if latest_version != APP_VERSION:
+                    msg = QMessageBox()
+                    base_path = os.path.dirname(os.path.abspath(__file__))
+                    icon_path = os.path.join(base_path, "logo.svg")
+                    msg.setWindowIcon(QIcon(icon_path))
+                    if user_data['lang'] == 'en':
+                        msg.setWindowTitle("Update available")
+                        msg.setText(f"New version available: {latest_version}n\Current version: {APP_VERSION}")
+                        msg.setInformativeText(f"Changes: \n{changelog}")
+                        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+                        ok_button = msg.button(QMessageBox.Ok)
+                        cancel_button = msg.button(QMessageBox.Cancel)
+                        ok_button.button(QMessageBox.Ok).setText("Download")
+                        cancel_button.button(QMessageBox.Cancel).setText("Later")
+                    else:
+                        msg.setWindowTitle("Dostępna aktualizacja")
+                        msg.setText(f"Dostępna nowa wersja: {latest_version}n\Obecna wersja: {APP_VERSION}")
+                        msg.setInformativeText(f"Zmiany: \n{changelog}")
+                        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+                        ok_button = msg.button(QMessageBox.Ok)
+                        cancel_button = msg.button(QMessageBox.Cancel)
+                        ok_button.button(QMessageBox.Ok).setText("Pobierz")
+                        cancel_button.button(QMessageBox.Cancel).setText("Póżniej")
+
+                    result = msg.exec()
+
+                    if result == QMessageBox.Ok:
+                        webbrowser.open(download_url)
+        except Exception as e:
+            print("Nie udało się sprawdzić: ", e)
+
     def login_screen(self):
+        self.check_connection()
+        self.check_for_updates()
 
         # hiding
         self.label.hide()
@@ -318,6 +394,8 @@ class Main_window(QWidget):
         self.back_btn.clicked.connect(self.login_screen)
 
     def setup(self):
+        self.check_connection()
+        self.check_for_updates()
 
         #hiding login screen
         self.name.hide()

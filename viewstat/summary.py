@@ -2,8 +2,11 @@ from connect import connect
 from insert import User
 
 # connection to database
-connection = connect
-mycursor = connection.cursor()
+connection = connect()
+if connection is None:
+    print("No connection")
+else:
+    mycursor = connection.cursor(buffered=True)
 
 # selecting names and counts for league
 def top_leagues(sport):

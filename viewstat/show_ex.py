@@ -1,8 +1,11 @@
 from connect import connect
 
 # connection to database
-connection = connect
-mycursor = connection.cursor()
+connection = connect()
+if connection is None:
+    print("No connection")
+else:
+    mycursor = connection.cursor(buffered=True)
 
 # function to show league names
 def show_leagues(sport):
