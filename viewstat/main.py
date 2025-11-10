@@ -1,9 +1,14 @@
+import os
+os.environ["USE_PURE"] = "True"
+
 from PySide6.QtGui import QCloseEvent, QIcon
 from PySide6.QtWidgets import *
 from translator import Translator
 import add_new, add_ex, summary_window, main_window, sys, os, json
+from save_manager import load_save
 
 
+user_data = load_save()
 class Program(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -13,9 +18,6 @@ class Program(QMainWindow):
         self.setCentralWidget(self.stack)
 
         # language for app
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
         if user_data["lang"] != "":
             self.translator = Translator(user_data["lang"])
         else:
@@ -67,11 +69,6 @@ class Program(QMainWindow):
 
     # close app event
     def closeEvent(self, event: QCloseEvent):
-
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
-
         msg = QMessageBox(self)
         
         if user_data["lang"] == "en":

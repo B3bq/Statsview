@@ -5,16 +5,14 @@ import re, datetime, json, os, random
 from insert import * # functions to insert user datas to database and check log in
 from mail import * # import mail script
 from connect import connect
-from mysql.connector import Error
+from save_manager import save_data, load_save
 import requests
 import webbrowser
 
 APP_VERSION = '1.0.0'
 UPDATE_URL = ''
 
-file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-with open(file_path, 'r') as file:
-    user_data = json.load(file)
+user_data = load_save()
 class Main_window(QWidget):
     def __init__(self, main_window, translator):
         super().__init__()
@@ -126,10 +124,6 @@ class Main_window(QWidget):
 
 
         # checking if user is log in
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
-        # here must be if user is log in 
         if user_data["user_id"] != 0:
             self.setup() # true then show main screen
             User.user_id = user_data["user_id"] # set class user to user whose is remember
@@ -202,25 +196,15 @@ class Main_window(QWidget):
         if new_lang == "English":
             self.main_window.lang_change('en')
             
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
-            
             user_data["lang"] = "en"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         else:
             self.main_window.lang_change("pl")
-
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
             
             user_data["lang"] = "pl"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         self.retranslate_ui()
 
     # checking database connection
@@ -289,7 +273,7 @@ class Main_window(QWidget):
 
     def login_screen(self):
         self.check_connection()
-        self.check_for_updates()
+        #self.check_for_updates()
 
         # hiding
         self.label.hide()
@@ -316,17 +300,10 @@ class Main_window(QWidget):
 
         # reset user id
         User.user_id = ''
-
-        # reset locl file which save user id
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
-
         user_data["user_id"] = 0
+        save_data(user_data)
 
-        with open(file_path, 'wt') as file:
-            json.dump(user_data, file)
-
+        
         #login
         self.name.clear()
         self.name.show()
@@ -395,7 +372,7 @@ class Main_window(QWidget):
 
     def setup(self):
         self.check_connection()
-        self.check_for_updates()
+        #self.check_for_updates() comment bc no servwer yet
 
         #hiding login screen
         self.name.hide()
@@ -518,10 +495,6 @@ class Main_window(QWidget):
 
     # remeber me
     def rem_me(self):
-        # reading data from json file
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
 
         # taking user id
         password = self.password.text()
@@ -533,8 +506,7 @@ class Main_window(QWidget):
         else:
             user_data["user_id"] = 0
         
-        with open(file_path, "wt") as file:
-            json.dump(user_data, file)
+        save_data(user_data)
 
     def check_user(self):
         password = self.password.text()
@@ -616,10 +588,6 @@ class Main_window(QWidget):
                 self.ver_code.hide()
                 self.btn_verification.hide()
                 self.label_ver.hide()
-
-                file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-                with open(file_path, 'r') as file:
-                    user_data = json.load(file)
 
                 # show info
                 if user_data["lang"] == "en":

@@ -10,3 +10,7 @@ composer.lock
 /website/src/img/admin.png
 package-lock.json
 website/node_modules
+viewstat/build
+viewstat/dist
+viewstat/logo.ico
+viewstat/Statsview.spec

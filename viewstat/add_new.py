@@ -1,19 +1,17 @@
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
-import os, json
+import os
+from save_manager import save_data, load_save
 from insert import add_datas_to_base # import function
 
+user_data = load_save()
 
 class Add_New(QWidget):
     def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
         self.translator = translator
-
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
 
         # add next button
         self.add_next = QPushButton(self)
@@ -105,25 +103,15 @@ class Add_New(QWidget):
         if new_lang == "English":
             self.translator.set_language("en")
             
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
-            
             user_data["lang"] = "en"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         else:
             self.translator.set_language("pl")
-
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
             
             user_data["lang"] = "pl"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         self.retranslate_ui()
 
     def submit(self):
@@ -132,6 +120,17 @@ class Add_New(QWidget):
         league_name = self.league_input.text()
         teamOne_name = self.team_one_input.text()
         teamTwo_name = self.team_two_input.text()
+
+        if sport_name in ["Piłka nożna", "Football"]:
+            sport_name = 'football'
+        elif sport_name in ["Piłka ręczna", "Handball"]:
+            sport_name = 'handball'
+        elif sport_name in ["Koszykówka", "Basketball"]:
+            sport_name = 'basketball'
+        elif sport_name in ["Siatkówka", "Voleyball"]:
+            sport_name = 'volleyball'
+        else:
+            sport_name = sport_name 
 
         add_datas_to_base(sport_name, league_name=league_name, teamOne_name=teamOne_name, teamTwo_name=teamTwo_name) # insert datas to database
 
@@ -142,10 +141,6 @@ class Add_New(QWidget):
         self.team_one_input.hide()
         self.team_two_input.hide()
         self.submit_btn.hide()
-
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
 
         # show text and add more button
         if user_data["lang"] == 'en':

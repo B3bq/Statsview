@@ -2,17 +2,16 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from summary import *
-import os, json
+import os
+from save_manager import save_data, load_save
+
+user_data = load_save()
 
 class Summary(QWidget):
     def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
         self.translator = translator
-
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
 
         # choose a sport
         self.SportLabel = QLabel(self)
@@ -97,25 +96,15 @@ class Summary(QWidget):
         if new_lang == "English":
             self.translator.set_language("en")
             
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
-            
             user_data["lang"] = "en"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         else:
             self.translator.set_language("pl")
-
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
             
             user_data["lang"] = "pl"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         self.retranslate_ui()
 
     def summary(self):

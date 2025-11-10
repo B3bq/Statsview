@@ -1,19 +1,18 @@
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
-import os, json
+import os
+from save_manager import save_data, load_save
 from show_ex import show_leagues, show_teams
 from insert import add_datas_to_base
+
+user_data = load_save()
 
 class Add_Exist(QWidget):
     def __init__(self, main_window, translator):
         super().__init__()
         self.main_window = main_window
         self.translator = translator
-
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            user_data = json.load(file)
 
         # add more button
         self.add_more_btn = QPushButton(self)
@@ -125,31 +124,32 @@ class Add_Exist(QWidget):
         if new_lang == "English":
             self.main_window.lang_change('en')
             
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
-            
             user_data["lang"] = "en"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         else:
             self.main_window.lang_change("pl")
-
-            file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-            with open(file_path, 'r') as file:
-                user_data = json.load(file)
             
             user_data["lang"] = "pl"
 
-            with open(file_path, "wt") as file:
-                json.dump(user_data, file)
+            save_data(user_data)
         self.retranslate_ui()
 
 
     def take_league_name(self):
         league_name = [self.league_box.currentText()]
         sport_name = self.sport_box.currentText()
+
+        if sport_name in ["Piłka nożna", "Football"]:
+            sport_name = 'football'
+        elif sport_name in ["Piłka ręczna", "Handball"]:
+            sport_name = 'handball'
+        elif sport_name in ["Koszykówka", "Basketball"]:
+            sport_name = 'basketball'
+        elif sport_name in ["Siatkówka", "Voleyball"]:
+            sport_name = 'volleyball'
+        else:
+            sport_name = sport_name 
 
         team_names = show_teams(league_name, sport_name)
 
@@ -163,6 +163,17 @@ class Add_Exist(QWidget):
         sport_name = self.sport_box.currentText()
         self.league_box.clear()
         self.annonation.hide()
+
+        if sport_name in ["Piłka nożna", "Football"]:
+            sport_name = 'football'
+        elif sport_name in ["Piłka ręczna", "Handball"]:
+            sport_name = 'handball'
+        elif sport_name in ["Koszykówka", "Basketball"]:
+            sport_name = 'basketball'
+        elif sport_name in ["Siatkówka", "Voleyball"]:
+            sport_name = 'volleyball'
+        else:
+            sport_name = sport_name 
 
         league_names = show_leagues(sport_name)
 
@@ -178,6 +189,17 @@ class Add_Exist(QWidget):
         first_team = self.team_one_box.currentText()
         second_team = self.team_two_box.currentText()
 
+        if sport_name in ["Piłka nożna", "Football"]:
+            sport_name = 'football'
+        elif sport_name in ["Piłka ręczna", "Handball"]:
+            sport_name = 'handball'
+        elif sport_name in ["Koszykówka", "Basketball"]:
+            sport_name = 'basketball'
+        elif sport_name in ["Siatkówka", "Voleyball"]:
+            sport_name = 'volleyball'
+        else:
+            sport_name = sport_name 
+
         add_datas_to_base(sport_name, league_name=league_name, teamOne_name=first_team, teamTwo_name=second_team) # insert datas to database
 
         # hide lists
@@ -191,12 +213,8 @@ class Add_Exist(QWidget):
         self.team_two_box.hide()
         self.submit_btn.hide()
 
-        file_path = os.path.join(os.path.dirname(__file__), 'save.json')
-        with open(file_path, 'r') as file:
-            use_data = json.load(file)
-
         # show text and add more button
-        if use_data["lang"] == 'en':
+        if user_data["lang"] == 'en':
             self.label = QLabel(f"Added {first_team} and {second_team} to the competition {league_name}", self)
         else:
             self.label = QLabel(f"Dodano {first_team} i {second_team} do rozgrywek {league_name}", self)
