@@ -1,5 +1,5 @@
 <?php
-require 'c:/xampp/htdocs/statsview/website/src/php/connect.php'; //connection
+require 'src/php/connect.php'; //connection
 
 //getting a data from user
 $sport = $_POST['sport'];
@@ -95,7 +95,7 @@ switch($sport){
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
             $query = $connection->prepare($sqlImgSearch);
-            $query->bind_param("s", $teamOne);
+            $query->bind_param("s", $teamTwo);
             $query->execute();
             $result = $query->get_result();
 
@@ -227,7 +227,7 @@ switch($sport){
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
             $query = $connection->prepare($sqlImgSearch);
-            $query->bind_param("s", $teamOne);
+            $query->bind_param("s", $teamTwo);
             $query->execute();
             $result = $query->get_result();
             
@@ -428,7 +428,7 @@ switch($sport){
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
             $query = $connection->prepare($sqlImgSearch);
-            $query->bind_param("s", $teamOne);
+            $query->bind_param("s", $teamTwo);
             $query->execute();
             $result = $query->get_result();
 
@@ -459,7 +459,7 @@ switch($sport){
         }else{
             $sqlImgSearch = "SELECT id FROM images WHERE name = ?";
             $query = $connection->prepare($sqlImgSearch);
-            $query->bind_param("s", $teamOne);
+            $query->bind_param("s", $teamTwo);
             $query->execute();
             $result = $query->get_result();
 

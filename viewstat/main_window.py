@@ -10,7 +10,7 @@ import requests
 import webbrowser
 
 APP_VERSION = '1.0.0'
-UPDATE_URL = ''
+UPDATE_URL = 'https://statsview.xo.je/update_info.json'
 
 user_data = load_save()
 class Main_window(QWidget):
@@ -273,7 +273,7 @@ class Main_window(QWidget):
 
     def login_screen(self):
         self.check_connection()
-        #self.check_for_updates()
+        self.check_for_updates()
 
         # hiding
         self.label.hide()
@@ -372,7 +372,7 @@ class Main_window(QWidget):
 
     def setup(self):
         self.check_connection()
-        #self.check_for_updates() comment bc no servwer yet
+        self.check_for_updates()
 
         #hiding login screen
         self.name.hide()

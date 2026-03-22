@@ -12,7 +12,10 @@ document.getElementById('sportAdd').addEventListener("change", function(){
     const mm = String(today.getMonth()+1).padStart(2, '0');
     const todayString = `${mm}`;
 
-    if(todayString == '07'){
+    // zrob try catcha, aby brac napierw z sezonowych jak sa puste to z rocznych
+    // tak nie zapewanisz wyboru 
+
+    if(todayString != '07'){
         season = 'season';
     }else{
         season = 'year';
@@ -44,7 +47,7 @@ document.getElementById('league').addEventListener("change", function(){
     const mm = String(today.getMonth()+1).padStart(2, '0');
     const todayString = `${mm}`;
 
-    if(todayString == '07'){
+    if(todayString != '07'){
         season = 'season';
     }else{
         season = 'year';

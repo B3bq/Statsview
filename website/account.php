@@ -1,5 +1,5 @@
 <?php
-require 'c:/xampp/htdocs/statsview/website/src/php/connect.php';
+require 'src/php/connect.php';
 
 $userID = $_COOKIE['user']; //get user id from cookie
 
