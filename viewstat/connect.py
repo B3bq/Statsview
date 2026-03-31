@@ -43,7 +43,7 @@ def connect():
             host="localhost",
             user="root",
             password="",
-            database="base",
+            database="statsview",
             use_pure=True
         )
 
