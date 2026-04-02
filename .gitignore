@@ -1,7 +1,7 @@
 .vscode
-__pycache__
 /img
-/mobile
+
+# web
 /viewstat/save.json
 .env
 vendor
@@ -10,6 +10,9 @@ composer.lock
 /website/src/img/admin.png
 package-lock.json
 website/node_modules
+
+# desktop
+__pycache__
 viewstat/build
 viewstat/dist
 viewstat/logo.ico
