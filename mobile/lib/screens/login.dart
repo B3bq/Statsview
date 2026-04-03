@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/bottomMenu.dart';
 import '../widgets/button.dart';
 import '../widgets/input.dart';
 
@@ -11,16 +14,26 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Login")),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
             Input(controller: emailController, label: 'Email'),
+            TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+              ),
+            ),
             SizedBox(height: 16),
-            Button(text: 'Zaloguj', onPressed: () {
-              // Tu można dodać logikę logowania
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-            }
+            Button(
+              text: 'Zaloguj',
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BottomMenu()),
+                );
+              },
             ),
           ],
         ),
