@@ -5,8 +5,6 @@ import 'package:mobile/screens/bottomMenu.dart';
 import '../widgets/button.dart';
 import '../widgets/input.dart';
 
-import 'home.dart';
-
 class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
 
