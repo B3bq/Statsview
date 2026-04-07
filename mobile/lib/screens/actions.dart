@@ -44,27 +44,35 @@ class _ActionsScreenState extends State<ActionsScreen> {
 
   Widget _buildMenu() {
     return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Button(
-            text: 'Add From Existing',
-            onPressed: () {
-              setState(() {
-                currentView = ActionView.adding;
-              });
-            },
-          ),
-          Button(
-            text: 'Summary',
-            onPressed: () {
-              setState(() {
-                currentView = ActionView.summary;
-              });
-            },
-          ),
-        ],
-      )
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AppBar(
+              title: Text('Actions'),
+              centerTitle: true,
+            ),
+            Button(
+              text: 'Add From Existing',
+              onPressed: () {
+                setState(() {
+                  currentView = ActionView.adding;
+                });
+              },
+            ),
+            Button(
+              text: 'Summary',
+              onPressed: () {
+                setState(() {
+                  currentView = ActionView.summary;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -14,20 +14,27 @@ class ProfileScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/profile.jpg'), // Replace with your profile image
-                ),
-                SizedBox(height: 16),
-                Text('John Doe', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-                Input(controller: emailController, label: 'Email'),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                  labelText: 'Password',
-                  ),
-                ),
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 100, 16, 0),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage('assets/profile.jpg'), // Replace with your profile image
+                        ),
+                        SizedBox(height: 16),
+                        Text('John Doe', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 8),
+                        Input(controller: emailController, label: 'Email'),
+                        TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Password',
+                          ),
+                        ),
+                      ],
+                    )
+                )
               ],
           ),
         )

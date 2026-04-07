@@ -22,6 +22,12 @@ class Dropdown extends StatelessWidget {
           child: Text(item),
         );
       }).toList(),
+      elevation: 16,
+      style: TextStyle(color: Colors.black, fontSize: 16),
+      underline: Container(
+        height: 2,
+        color: Colors.grey,
+      ),
     );
   }
 }
