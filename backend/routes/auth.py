@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-from db import get_connection
+from db.connection import get_connection
 import bcrypt
 
 router = APIRouter()
