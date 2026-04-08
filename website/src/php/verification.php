@@ -3,13 +3,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 
-require 'c:/xampp/htdocs/statsview/website/vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $to = $_POST['mail'] ?? '';
 $from = $_POST['from'] ?? '';
 
 $mail = new PHPMailer(true);
-$dotenv = Dotenv::createImmutable('c:/xampp/htdocs/statsview/website');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
 //verification code generate
