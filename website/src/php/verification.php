@@ -9,7 +9,7 @@ $to = $_POST['mail'] ?? '';
 $from = $_POST['from'] ?? '';
 
 $mail = new PHPMailer(true);
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv = Dotenv::createImmutable(__DIR__. '/../../');
 $dotenv->load();
 
 //verification code generate
