@@ -233,6 +233,7 @@ function changeMail(from){
                 if(data == 'generate'){
                     window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from);
                 }else{
+                    alert('Server error: ' + data);
                     console.log(data);
                 }
                })
@@ -259,6 +260,7 @@ function changeMail(from){
                     if(data == 'generate'){
                         window.location.href = 'code.html?mail=' + encodeURIComponent(mail) + '&from=' + encodeURIComponent(from) + '&name=' + encodeURIComponent(name) + '&pass=' + encodeURIComponent(pass);
                     }else{
+                        alert('Server error: ' + data);
                         console.log(data);
                     }
                    })

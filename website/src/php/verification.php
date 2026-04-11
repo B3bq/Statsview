@@ -23,12 +23,12 @@ try{
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
 
-    $mail->Username = getenv('EMAIL_LOGIN');
-    $mail->Password = getenv('EMAIL_PASSWORD');
+    $mail->Username = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
+    $mail->Password = $_ENV['EMAIL_PASSWORD'] ?? getenv('EMAIL_PASSWORD');
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
-    $mail->setFrom(getenv('EMAIL_LOGIN'), 'Statsview');
+    $mail->setFrom($_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN'), 'Statsview');
 
     $mail->addAddress($to);
 
