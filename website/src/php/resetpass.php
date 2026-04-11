@@ -9,7 +9,7 @@ $to = $_POST['mail'];
 
 $mail = new PHPMailer(true);
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+$dotenv->safeLoad();
 
 try {
     $mail->isSMTP();

@@ -5,8 +5,6 @@
 /viewstat/save.json
 .env
 vendor
-composer.json
-composer.lock
 /website/src/img/admin.png
 package-lock.json
 website/node_modules

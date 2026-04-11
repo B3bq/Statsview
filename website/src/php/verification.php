@@ -10,7 +10,7 @@ $from = $_POST['from'] ?? '';
 
 $mail = new PHPMailer(true);
 $dotenv = Dotenv::createImmutable(__DIR__. '/../../');
-$dotenv->load();
+$dotenv->safeLoad();
 
 //verification code generate
 session_start();
