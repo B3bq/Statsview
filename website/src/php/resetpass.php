@@ -13,13 +13,13 @@ $dotenv->safeLoad();
 
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = $_ENV['SMTP_HOST'] ?? getenv('SMTP_HOST') ?: 'smtp-relay.brevo.com';
     $mail->SMTPAuth = true;
 
     $mail->Username = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
     $mail->Password = $_ENV['EMAIL_PASSWORD'] ?? getenv('EMAIL_PASSWORD');
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = $_ENV['SMTP_PORT'] ?? getenv('SMTP_PORT') ?: 2525;
 
     $mail->setFrom($_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN'), 'Statsview');
 

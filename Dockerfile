@@ -21,4 +21,8 @@ RUN cd /var/www/html && composer install --no-dev --optimize-autoloader
 # Ustaw uprawnienia by Apache mógł czytać pliki
 RUN chown -R www-data:www-data /var/www/html/
 
-EXPOSE 80
+# Ustaw port nasłuchu na zmienną PORT (Render tego wymaga, inaczej daje 502 Bad Gateway)
+ENV PORT=80
+
+# Modyfikacja plików konfiguracyjnych Apache przy starcie kontenera
+CMD sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && docker-php-entrypoint apache2-foreground
