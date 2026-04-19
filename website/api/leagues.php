@@ -21,7 +21,7 @@ class Leagues
         }
 
         switch ($sport) {
-            case "League of Legends":
+            case "League of legends":
                 $tableLeague = "lol_leagues";
                 $result = $this->takeLeagues($tableLeague);
                 break;
@@ -81,7 +81,7 @@ class Leagues
         }
 
         switch ($sport) {
-            case "League of Legends":
+            case "League of legends":
                 $tableLeague = "lol_leagues";
                 break;
             case "Counter Strike":
