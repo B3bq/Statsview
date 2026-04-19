@@ -1,13 +1,16 @@
 <?php
 
-class Teams{
+class Teams
+{
     private $db;
 
-    public function __construct($conn){
+    public function __construct($conn)
+    {
         $this->db = $conn;
     }
 
-    public function showTeams(){
+    public function showTeams()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $sport = $data['sport'] ?? null;
         $league = $data['league'] ?? null;
@@ -18,7 +21,7 @@ class Teams{
             return;
         }
 
-        switch($sport){
+        switch ($sport) {
             case "League of legends":
                 $tableLeague = "lol_leagues";
                 $tableTeam = "lol_teams";
@@ -32,37 +35,43 @@ class Teams{
                 $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
                 break;
             default:
-                $tableLeague = strtolower($sport)."_leagues_season";
-                $tableTeam = strtolower($sport)."_teams_season";
-                $tableBroker = strtolower($sport)."_broker_season";
+                $tableLeague = strtolower($sport) . "_league_season";
+                $tableTeam = strtolower($sport) . "_teams_season";
+                $tableBroker = strtolower($sport) . "_broker_season";
 
                 $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
-                if($result->num_rows === 0){
-                    $tableLeague = strtolower($sport)."_league_year";
-                    $tableTeam = strtolower($sport)."_teams_year";
-                    $tableBroker = strtolower($sport)."_broker_year";
+                if ($result && $result->num_rows === 0) {
+                    $tableLeague = strtolower($sport) . "_league_year";
+                    $tableTeam = strtolower($sport) . "_teams_year";
+                    $tableBroker = strtolower($sport) . "_broker_year";
                     $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
                 }
         }
 
         $teamsNames = [];
 
-        while($row = $result->fetch_assoc()){
-            $teamsNames[] = $row['name'];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $teamsNames[] = $row['name'];
+            }
         }
 
         echo json_encode(["status" => "ok", "data" => $teamsNames]);
     }
 
-    private function takeTeams($league, $tableLeague, $tableTeam, $tableBroker){
-        $sql = "SELECT $tableTeam.name FROM $tableTeam JOIN  $tableBroker ON $tableTeam.id = $tableBroker.id_team JOIN $tableLeague ON $tableBroker.id_league = $tableLeague.id WHERE $tableLeague.name = '$league' ORDER BY $tableTeam.name ASC";
+    private function takeTeams($league, $tableLeague, $tableTeam, $tableBroker)
+    {
+        $sql = "SELECT DISTINCT $tableTeam.name FROM $tableTeam JOIN  $tableBroker ON $tableTeam.id = $tableBroker.id_team JOIN $tableLeague ON $tableBroker.id_league = $tableLeague.id WHERE $tableLeague.name = '$league' ORDER BY $tableTeam.name ASC";
         $query = $this->db->prepare($sql);
+        if (!$query)
+            return false;
         $query->execute();
         $result = $query->get_result();
         return $result;
     }
 
-    public function topTeams(){
+    public function topTeams()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $sport = $data['sport'] ?? null;
         $userID = $data['user'] ?? null;
@@ -74,7 +83,7 @@ class Teams{
             return;
         }
 
-        switch($sport){
+        switch ($sport) {
             case "League of legends":
                 $tableTeam = "lol_teams";
                 break;
@@ -82,10 +91,11 @@ class Teams{
                 $tableTeam = "cs_teams";
                 break;
             default:
-                if($season == 'season'){
-                    $tableTeam = strtolower($sport)."_teams_season";
-                }else{
-                    $tableTeam = strtolower($sport)."_teams_years";
+                if ($season == 'season') {
+                    $tableTeam = strtolower($sport) . "_teams_season";
+                }
+                else {
+                    $tableTeam = strtolower($sport) . "_teams_year";
                 }
         }
         $sql = "SELECT $tableTeam.name, (home_count+away_count) AS total_count, images.img FROM $tableTeam JOIN images ON $tableTeam.img = images.id WHERE id_user = ? ORDER BY total_count LIMIT 5";
@@ -96,14 +106,15 @@ class Teams{
 
         $topTeams = [];
 
-        while($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             $topTeams[] = $row;
         }
 
         echo json_encode(["status" => "ok", "data" => $topTeams]);
     }
 
-    public function homeTeam(){
+    public function homeTeam()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $sport = $data['sport'] ?? null;
         $userID = $data['user'] ?? null;
@@ -115,7 +126,7 @@ class Teams{
             return;
         }
 
-        switch($sport){
+        switch ($sport) {
             case "League of legends":
                 $tableTeam = "lol_teams";
                 break;
@@ -123,10 +134,11 @@ class Teams{
                 $tableTeam = "cs_teams";
                 break;
             default:
-                if($season == 'season'){
-                    $tableTeam = strtolower($sport)."_teams_season";
-                }else{
-                    $tableTeam = strtolower($sport)."_teams_years";
+                if ($season == 'season') {
+                    $tableTeam = strtolower($sport) . "_teams_season";
+                }
+                else {
+                    $tableTeam = strtolower($sport) . "_teams_year";
                 }
         }
         $sql = "SELECT $tableTeam.name, home_count, images.img FROM $tableTeam JOIN images ON $tableTeam.img = images.id WHERE id_user = ? ORDER BY home_count DESC LIMIT 1";
@@ -138,7 +150,8 @@ class Teams{
         echo json_encode(["status" => "ok", "data" => $result]);
     }
 
-    public function awayTeam(){
+    public function awayTeam()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $sport = $data['sport'] ?? null;
         $userID = $data['user'] ?? null;
@@ -150,7 +163,7 @@ class Teams{
             return;
         }
 
-        switch($sport){
+        switch ($sport) {
             case "League of legends":
                 $tableTeam = "lol_teams";
                 break;
@@ -158,10 +171,11 @@ class Teams{
                 $tableTeam = "cs_teams";
                 break;
             default:
-                if($season == 'season'){
-                    $tableTeam = strtolower($sport)."_teams_season";
-                }else{
-                    $tableTeam = strtolower($sport)."_teams_years";
+                if ($season == 'season') {
+                    $tableTeam = strtolower($sport) . "_teams_season";
+                }
+                else {
+                    $tableTeam = strtolower($sport) . "_teams_year";
                 }
         }
         $sql = "SELECT $tableTeam.name, away_count, images.img FROM $tableTeam JOIN images ON $tableTeam.img = images.id WHERE id_user = ? ORDER BY away_count DESC LIMIT 1";
@@ -173,5 +187,3 @@ class Teams{
         echo json_encode(["status" => "ok", "data" => $result]);
     }
 }
-
-?>

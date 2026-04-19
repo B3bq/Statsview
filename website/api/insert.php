@@ -40,11 +40,11 @@ class Insert
                 $this->addData($league, $firstTeam, $secondTeam, $userID, $tabelLeagues, $tabelTeams, $tabelBroker);
                 break;
             default:
-                $seasonLeague = strtolower($sport) . "_league_season";
+                $seasonLeague = strtolower($sport) . "_leagues_season";
                 $seasonTeam = strtolower($sport) . "_teams_season";
                 $seasonBroker = strtolower($sport) . "_broker_season";
 
-                $yearLeague = strtolower($sport) . "_league_year";
+                $yearLeague = strtolower($sport) . "_leagues_year";
                 $yearTeam = strtolower($sport) . "_teams_year";
                 $yearBroker = strtolower($sport) . "_broker_year";
 
@@ -174,5 +174,3 @@ class Insert
         return $img;
     }
 }
-
-?>
