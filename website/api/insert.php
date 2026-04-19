@@ -86,7 +86,7 @@ class Insert
         if ($result->num_rows > 0) {
             $sqlUpdateFirst = "UPDATE $tabelTeams SET home_count = home_count + 1 WHERE name = ? AND id_user = ?";
             $query = $this->db->prepare($sqlUpdateFirst);
-            $query->bind_param("ss", $league, $userID);
+            $query->bind_param("ss", $firstTeam, $userID);
             $query->execute();
         }
         else {
@@ -94,7 +94,7 @@ class Insert
 
             $sqlFirstTeamInsert = "INSERT INTO $tabelTeams (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 1, 0, ?)";
             $query = $this->db->prepare($sqlFirstTeamInsert);
-            $query->bind_param("isi", $userID, $league, $img);
+            $query->bind_param("isi", $userID, $firstTeam, $img);
             $query->execute();
         }
 
@@ -107,7 +107,7 @@ class Insert
         if ($result->num_rows > 0) {
             $sqlUpdateSecond = "UPDATE $tabelTeams SET away_count = away_count + 1 WHERE name = ? AND id_user = ?";
             $query = $this->db->prepare($sqlUpdateSecond);
-            $query->bind_param("ss", $league, $userID);
+            $query->bind_param("ss", $secondTeam, $userID);
             $query->execute();
         }
         else {
@@ -115,7 +115,7 @@ class Insert
 
             $sqlSecondTeamInsert = "INSERT INTO $tabelTeams (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 0, 1, ?)";
             $query = $this->db->prepare($sqlSecondTeamInsert);
-            $query->bind_param("isi", $userID, $league, $img);
+            $query->bind_param("isi", $userID, $secondTeam, $img);
             $query->execute();
         }
 
@@ -123,7 +123,8 @@ class Insert
         $sqlTakeIDLeague = $this->db->prepare($sqlTakeIDLeague);
         $sqlTakeIDLeague->bind_param("s", $league);
         $sqlTakeIDLeague->execute();
-        $LeagueID = $sqlTakeIDLeague->get_result()->fetch_assoc()['id'];
+        $resLeague = $sqlTakeIDLeague->get_result()->fetch_assoc();
+        $LeagueID = $resLeague ? $resLeague['id'] : null;
 
         $teams = [$firstTeam, $secondTeam];
         $teamsIDs = [];
@@ -132,9 +133,10 @@ class Insert
             $sqlTakeIDTeam = $this->db->prepare($sqlTakeIDTeam);
             $sqlTakeIDTeam->bind_param("s", $team);
             $sqlTakeIDTeam->execute();
-            $result = $sqlTakeIDTeam->get_result()->fetch_assoc()['id'];
+            $resTeam = $sqlTakeIDTeam->get_result()->fetch_assoc();
+            $resultId = $resTeam ? $resTeam['id'] : null;
 
-            $teamsIDs[] = $result;
+            $teamsIDs[] = $resultId;
         }
 
         try {
