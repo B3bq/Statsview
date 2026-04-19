@@ -9,7 +9,7 @@ $to = $_POST['mail'] ?? '';
 $from = $_POST['from'] ?? '';
 
 $mail = new PHPMailer(true);
-$dotenv = Dotenv::createImmutable(__DIR__. '/../../');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->safeLoad();
 
 //verification code generate
@@ -18,11 +18,11 @@ $code = rand(1000, 9999);
 $_SESSION['code'] = $code; //make session for forward code to another code
 
 
-    $apiKey = $_ENV['BREVO_API_KEY'] ?? getenv('BREVO_API_KEY');
-    $senderEmail = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
+$apiKey = $_ENV['BREVO_API_KEY'] ?? getenv('BREVO_API_KEY');
+$senderEmail = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
 
-    if($from == 'account'){
-        $body = '
+if ($from == 'account') {
+    $body = '
         <html lang="en" style="font-size: 87.5%; box-sizing: border-box;">
         <body style="display: flex; flex-direction: column;">
             <main style="box-shadow: 0px 2px 2px 2px;">
@@ -32,7 +32,7 @@ $_SESSION['code'] = $code; //make session for forward code to another code
                 </header>
                 <h2 style="display: flex; flex-direction: column; align-items: center;">Your verification code</h2>
                 <section style=" display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px 0px 20px 0px;">
-                    <p style=" display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 100px; background-color: #e8e8e8; border-radius: 25px; font-size: 50px">'.$code.'</p>
+                    <p style=" display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 100px; background-color: #e8e8e8; border-radius: 25px; font-size: 50px">' . $code . '</p>
                 </section>
                 <footer style="display: flex; flex-direction: column; align-items: center;">
                     <p style="margin-bottom: 0;">If this is not you, ignore the message</p>
@@ -41,8 +41,9 @@ $_SESSION['code'] = $code; //make session for forward code to another code
             </main>
         </body>
         </html>';
-    }else{
-        $body = '
+}
+else {
+    $body = '
         <html lang="en" style="font-size: 87.5%; box-sizing: border-box;">
         <body style="display: flex; flex-direction: column;">
             <main style="box-shadow: 0px 2px 2px 2px;">
@@ -53,7 +54,7 @@ $_SESSION['code'] = $code; //make session for forward code to another code
                 </header>
                 <h2 style="display: flex; flex-direction: column; align-items: center;">Your verification code</h2>
                 <section style=" display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px 0px 20px 0px;">
-                    <p style=" display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 100px; background-color: #e8e8e8; border-radius: 25px; font-size: 50px">'.$code.'</p>
+                    <p style=" display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 100px; background-color: #e8e8e8; border-radius: 25px; font-size: 50px">' . $code . '</p>
                 </section>
                 <footer style="display: flex; flex-direction: column; align-items: center;">
                     <p style="margin-bottom: 0;">If this is not you, ignore the message</p>
@@ -62,38 +63,39 @@ $_SESSION['code'] = $code; //make session for forward code to another code
             </main>
         </body>
         </html>';
-    }
+}
 
-    $data = [
-        "sender" => [
-            "name" => "Statsview",
-            "email" => $senderEmail
-        ],
-        "to" => [
-            [ "email" => $to ]
-        ],
-        "subject" => 'Verification E-mail',
-        "htmlContent" => $body
-    ];
+$data = [
+    "sender" => [
+        "name" => "Statsview",
+        "email" => $senderEmail
+    ],
+    "to" => [
+        ["email" => $to]
+    ],
+    "subject" => 'Verification E-mail',
+    "htmlContent" => $body
+];
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://api.brevo.com/v3/smtp/email');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'accept: application/json',
-        'api-key: ' . $apiKey,
-        'content-type: application/json'
-    ]);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.brevo.com/v3/smtp/email');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'accept: application/json',
+    'api-key: ' . $apiKey,
+    'content-type: application/json'
+]);
 
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
 
-    if ($httpCode >= 200 && $httpCode < 300) {
-        echo 'generate';
-    } else {
-        echo "Error: HTTP Code $httpCode Response: $response";
-    }
+if ($httpCode >= 200 && $httpCode < 300) {
+    echo 'generate';
+}
+else {
+    echo "Error: HTTP Code $httpCode Response: $response";
+}
 ?>

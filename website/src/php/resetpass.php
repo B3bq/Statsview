@@ -11,10 +11,10 @@ $mail = new PHPMailer(true);
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->safeLoad();
 
-    $apiKey = $_ENV['BREVO_API_KEY'] ?? getenv('BREVO_API_KEY');
-    $senderEmail = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
+$apiKey = $_ENV['BREVO_API_KEY'] ?? getenv('BREVO_API_KEY');
+$senderEmail = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
 
-    $body = '
+$body = '
         <html lang="en" style="font-size: 87.5%; box-sizing: border-box;">
             <body style="display: flex; flex-direction: column;">
                 <main style="box-shadow: 0px 2px 2px 2px;">
@@ -36,36 +36,37 @@ $dotenv->safeLoad();
             </html>
         ';
 
-    $data = [
-        "sender" => [
-            "name" => "Statsview",
-            "email" => $senderEmail
-        ],
-        "to" => [
-            [ "email" => $to ]
-        ],
-        "subject" => 'Reset password',
-        "htmlContent" => $body
-    ];
+$data = [
+    "sender" => [
+        "name" => "Statsview",
+        "email" => $senderEmail
+    ],
+    "to" => [
+        ["email" => $to]
+    ],
+    "subject" => 'Reset password',
+    "htmlContent" => $body
+];
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://api.brevo.com/v3/smtp/email');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'accept: application/json',
-        'api-key: ' . $apiKey,
-        'content-type: application/json'
-    ]);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.brevo.com/v3/smtp/email');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'accept: application/json',
+    'api-key: ' . $apiKey,
+    'content-type: application/json'
+]);
 
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
 
-    if ($httpCode >= 200 && $httpCode < 300) {
-        echo 'sent';
-    } else {
-        echo "Error: HTTP Code $httpCode Response: $response";
-    }
+if ($httpCode >= 200 && $httpCode < 300) {
+    echo 'sent';
+}
+else {
+    echo "Error: HTTP Code $httpCode Response: $response";
+}
 ?>
