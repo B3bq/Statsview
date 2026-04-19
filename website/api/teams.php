@@ -61,13 +61,19 @@ class Teams
 
     private function takeTeams($league, $tableLeague, $tableTeam, $tableBroker)
     {
-        $sql = "SELECT DISTINCT $tableTeam.name FROM $tableTeam JOIN  $tableBroker ON $tableTeam.id = $tableBroker.id_team JOIN $tableLeague ON $tableBroker.id_league = $tableLeague.id WHERE $tableLeague.name = '$league' ORDER BY $tableTeam.name ASC";
-        $query = $this->db->prepare($sql);
-        if (!$query)
-            return false;
-        $query->execute();
-        $result = $query->get_result();
-        return $result;
+        try {
+            $sql = "SELECT DISTINCT $tableTeam.name FROM $tableTeam JOIN  $tableBroker ON $tableTeam.id = $tableBroker.id_team JOIN $tableLeague ON $tableBroker.id_league = $tableLeague.id WHERE $tableLeague.name = '$league' ORDER BY $tableTeam.name ASC";
+            $query = $this->db->prepare($sql);
+            if (!$query)
+                return false;
+            $query->execute();
+            $result = $query->get_result();
+            return $result;
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+            exit;
+        }
     }
 
     public function topTeams()

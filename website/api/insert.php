@@ -137,13 +137,21 @@ class Insert
             $teamsIDs[] = $result;
         }
 
-        foreach ($teamsIDs as $team) {
-            $sqlInsertBroker = "INSERT IGNORE INTO $tabelBroker VALUES (?, ?)";
-            $query = $this->db->prepare($sqlInsertBroker);
-            $query->bind_param("ii", $LeagueID, $team);
-            $query->execute();
+        try {
+            foreach ($teamsIDs as $team) {
+                $sqlInsertBroker = "INSERT IGNORE INTO $tabelBroker (id_league, id_team) VALUES (?, ?)";
+                $query = $this->db->prepare($sqlInsertBroker);
+                if (!$query) throw new \Exception("Prepare failed for broker: " . $this->db->error);
+                $query->bind_param("ii", $LeagueID, $team);
+                $query->execute();
+            }
+            $this->db->commit();
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+            exit;
         }
-        $this->db->commit();
     }
 
     private function imgSearch($varible, $teamOrLeague)
