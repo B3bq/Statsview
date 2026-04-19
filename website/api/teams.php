@@ -35,13 +35,13 @@ class Teams
                 $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
                 break;
             default:
-                $tableLeague = strtolower($sport) . "_league_season";
+                $tableLeague = strtolower($sport) . "_leagues_season";
                 $tableTeam = strtolower($sport) . "_teams_season";
                 $tableBroker = strtolower($sport) . "_broker_season";
 
                 $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
                 if ($result && $result->num_rows === 0) {
-                    $tableLeague = strtolower($sport) . "_league_year";
+                    $tableLeague = strtolower($sport) . "_leagues_year";
                     $tableTeam = strtolower($sport) . "_teams_year";
                     $tableBroker = strtolower($sport) . "_broker_year";
                     $result = $this->takeTeams($league, $tableLeague, $tableTeam, $tableBroker);
@@ -70,8 +70,8 @@ class Teams
             $result = $query->get_result();
             return $result;
         } catch (\Exception $e) {
-            http_response_code(200);
-            echo json_encode(["status" => "ok", "data" => ["SQL ERROR: " . $e->getMessage()]]);
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
             exit;
         }
     }

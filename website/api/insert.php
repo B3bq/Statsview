@@ -148,7 +148,7 @@ class Insert
             $this->db->commit();
         } catch (\Exception $e) {
             $this->db->rollback();
-            http_response_code(500);
+            http_response_code(200);
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);
             exit;
         }
