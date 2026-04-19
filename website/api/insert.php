@@ -25,7 +25,7 @@ class Insert
         }
 
         switch ($sport) {
-            case "League of Legends":
+            case "League of legends":
                 $tabelLeagues = "lol_leagues";
                 $tabelTeams = "lol_teams";
                 $tabelBroker = "lol_broker";
@@ -143,12 +143,14 @@ class Insert
             foreach ($teamsIDs as $team) {
                 $sqlInsertBroker = "INSERT IGNORE INTO $tabelBroker (id_league, id_team) VALUES (?, ?)";
                 $query = $this->db->prepare($sqlInsertBroker);
-                if (!$query) throw new \Exception("Prepare failed for broker: " . $this->db->error);
+                if (!$query)
+                    throw new \Exception("Prepare failed for broker: " . $this->db->error);
                 $query->bind_param("ii", $LeagueID, $team);
                 $query->execute();
             }
             $this->db->commit();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $this->db->rollback();
             http_response_code(200);
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);
