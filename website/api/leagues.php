@@ -52,13 +52,19 @@ class Leagues
 
     private function takeLeagues($tableLeague)
     {
-        $sql = "SELECT DISTINCT name FROM $tableLeague ORDER BY name ASC";
-        $query = $this->db->prepare($sql);
-        if (!$query)
-            return false;
-        $query->execute();
-        $result = $query->get_result();
-        return $result;
+        try {
+            $sql = "SELECT DISTINCT name FROM $tableLeague ORDER BY name ASC";
+            $query = $this->db->prepare($sql);
+            if (!$query)
+                return false;
+            $query->execute();
+            $result = $query->get_result();
+            return $result;
+        } catch (\Exception $e) {
+            http_response_code(200);
+            echo json_encode(["status" => "ok", "data" => ["SQL ERROR: " . $e->getMessage()]]);
+            exit;
+        }
     }
 
     public function topLeagues()
