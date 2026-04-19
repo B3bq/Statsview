@@ -18,25 +18,11 @@ $code = rand(1000, 9999);
 $_SESSION['code'] = $code; //make session for forward code to another code
 
 
-try{
-    $mail->isSMTP();
-    $mail->Host = $_ENV['SMTP_HOST'] ?? getenv('SMTP_HOST') ?: 'smtp-relay.brevo.com';
-    $mail->SMTPAuth = true;
-
-    $mail->Username = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
-    $mail->Password = $_ENV['EMAIL_PASSWORD'] ?? getenv('EMAIL_PASSWORD');
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = $_ENV['SMTP_PORT'] ?? getenv('SMTP_PORT') ?: 2525;
-
-    $mail->setFrom($_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN'), 'Statsview');
-
-    $mail->addAddress($to);
-
-    $mail->isHTML(true);
-    $mail->Subject = 'Verification E-mail';
+    $apiKey = $_ENV['BREVO_API_KEY'] ?? getenv('BREVO_API_KEY');
+    $senderEmail = $_ENV['EMAIL_LOGIN'] ?? getenv('EMAIL_LOGIN');
 
     if($from == 'account'){
-        $mail->Body = '
+        $body = '
         <html lang="en" style="font-size: 87.5%; box-sizing: border-box;">
         <body style="display: flex; flex-direction: column;">
             <main style="box-shadow: 0px 2px 2px 2px;">
@@ -56,7 +42,7 @@ try{
         </body>
         </html>';
     }else{
-        $mail->Body = '
+        $body = '
         <html lang="en" style="font-size: 87.5%; box-sizing: border-box;">
         <body style="display: flex; flex-direction: column;">
             <main style="box-shadow: 0px 2px 2px 2px;">
@@ -78,9 +64,36 @@ try{
         </html>';
     }
 
-    $mail->send();
-    echo 'generate';
-}catch(Exception $e){
-    echo "Error: {$mail->ErrorInfo}";
-}
+    $data = [
+        "sender" => [
+            "name" => "Statsview",
+            "email" => $senderEmail
+        ],
+        "to" => [
+            [ "email" => $to ]
+        ],
+        "subject" => 'Verification E-mail',
+        "htmlContent" => $body
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.brevo.com/v3/smtp/email');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'accept: application/json',
+        'api-key: ' . $apiKey,
+        'content-type: application/json'
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode >= 200 && $httpCode < 300) {
+        echo 'generate';
+    } else {
+        echo "Error: HTTP Code $httpCode Response: $response";
+    }
 ?>

@@ -152,7 +152,8 @@ class Insert
         $sqlIMGSearch = $this->db->prepare($sqlIMGSearch);
         $sqlIMGSearch->bind_param("s", $varible);
         $sqlIMGSearch->execute();
-        $imgID = $sqlIMGSearch->get_result()->fetch_assoc()['id'];
+        $result = $sqlIMGSearch->get_result()->fetch_assoc();
+        $imgID = $result ? $result['id'] : null;
 
         if ($teamOrLeague == "league") {
             if ($imgID === null) {
