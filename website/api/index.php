@@ -5,6 +5,16 @@ header('Access-Control-Allow-Origin: *');
 // Pobieranie globalnego połączenia do bazy (z pliku website na Dockerze)
 require_once '../src/php/connect.php';
 
+if (!$connection) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false, 
+        "status" => "error", 
+        "message" => "Database connection error: " . ($connection_error ?? "Unknown error")
+    ]);
+    exit;
+}
+
 $action = $_GET['action'] ?? '';
 
 if ($action === 'system.ping') {

@@ -7,7 +7,11 @@ $league = $_POST['league'];
 $teamOne = strtolower($_POST['team_one']);
 $teamTwo = strtolower($_POST['team_two']);
 
-$userID = $_COOKIE['user']; //getting user id
+$userID = $_COOKIE['user'] ?? null; //getting user id
+
+if (!$userID) {
+    die("Error: User not logged in.");
+}
 
 
 switch($sport){
@@ -40,8 +44,10 @@ switch($sport){
             }
 
             // if a league isn't exist then add the league
-            $sqlInsert = "INSERT INTO lol_leagues (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO lol_leagues (id, id_user, name, count, img) VALUES (NULL, ?, ?, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $league, $img);
+            $query->execute();
         }
 
         // TEAM ONE
@@ -73,8 +79,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and home_count +1
-            $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 1, 0, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamOne, $img);
+            $query->execute();
         }
 
         // TEAM TWO
@@ -106,8 +114,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and away_count +1
-            $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connection, $sqlInsert); //execute query
+            $sqlInsert = "INSERT INTO lol_teams (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 0, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamTwo, $img);
+            $query->execute(); //execute query
         }
 
         // insert references to leagues_teamas table
@@ -312,8 +322,10 @@ switch($sport){
             }
 
             // if a league isn't exist then add the league
-            $sqlInsert = "INSERT INTO {$tabelLeagueY} (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO {$tabelLeagueY} (id, id_user, name, count, img) VALUES (NULL, ?, ?, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $league, $img);
+            $query->execute();
         }
 
         //checking if exist a league in season
@@ -342,8 +354,10 @@ switch($sport){
             }
 
             // if a league isn't exist then add the league
-            $sqlInsert = "INSERT INTO {$tabelLeagueS} (id, id_user, name, count, img) VALUES (NULL, $userID, '$league', 1, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO {$tabelLeagueS} (id, id_user, name, count, img) VALUES (NULL, ?, ?, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $league, $img);
+            $query->execute();
         }
 
         // TEAM ONE
@@ -375,8 +389,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and home_count +1
-            $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 1, 0, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamOne, $img);
+            $query->execute();
         }
 
         //checking if exist a team in season
@@ -406,8 +422,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and home_count +1
-            $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamOne', 1, 0, $img)";
-            mysqli_query($connection, $sqlInsert);
+            $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 1, 0, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamOne, $img);
+            $query->execute();
         }
 
         // TEAM TWO
@@ -439,8 +457,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and away_count +1
-            $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connection, $sqlInsert); //execute query
+            $sqlInsert = "INSERT INTO {$tabelTeamsY} (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 0, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamTwo, $img);
+            $query->execute(); //execute query
         }
 
         //checking if exist a team in season
@@ -470,8 +490,10 @@ switch($sport){
             }
 
             // if a team isn't exist then add the team and away_count +1
-            $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, $userID, '$teamTwo', 0, 1, $img)";
-            mysqli_query($connection, $sqlInsert); //execute query
+            $sqlInsert = "INSERT INTO {$tabelTeamsS} (id, id_user, name, home_count, away_count, img) VALUES (NULL, ?, ?, 0, 1, ?)";
+            $query = $connection->prepare($sqlInsert);
+            $query->bind_param("ssi", $userID, $teamTwo, $img);
+            $query->execute(); //execute query
         }
 
         //BROKER YEAR
