@@ -24,32 +24,43 @@ class Insert
             exit;
         }
 
-        switch ($sport) {
-            case "League of legends":
-                $tabelLeagues = "lol_leagues";
-                $tabelTeams = "lol_teams";
-                $tabelBroker = "lol_broker";
+        try {
+            switch ($sport) {
+                case "League of legends":
+                    $tabelLeagues = "lol_leagues";
+                    $tabelTeams = "lol_teams";
+                    $tabelBroker = "lol_broker";
 
-                $this->addData($league, $firstTeam, $secondTeam, $userID, $tabelLeagues, $tabelTeams, $tabelBroker);
-                break;
-            case "Counter Strike":
-                $tabelLeagues = "cs_leagues";
-                $tabelTeams = "cs_teams";
-                $tabelBroker = "cs_broker";
+                    $this->addData($league, $firstTeam, $secondTeam, $userID, $tabelLeagues, $tabelTeams, $tabelBroker);
+                    break;
+                case "Counter Strike":
+                    $tabelLeagues = "cs_leagues";
+                    $tabelTeams = "cs_teams";
+                    $tabelBroker = "cs_broker";
 
-                $this->addData($league, $firstTeam, $secondTeam, $userID, $tabelLeagues, $tabelTeams, $tabelBroker);
-                break;
-            default:
-                $seasonLeague = strtolower($sport) . "_leagues_season";
-                $seasonTeam = strtolower($sport) . "_teams_season";
-                $seasonBroker = strtolower($sport) . "_broker_season";
+                    $this->addData($league, $firstTeam, $secondTeam, $userID, $tabelLeagues, $tabelTeams, $tabelBroker);
+                    break;
+                default:
+                    $seasonLeague = strtolower($sport) . "_leagues_season";
+                    $seasonTeam = strtolower($sport) . "_teams_season";
+                    $seasonBroker = strtolower($sport) . "_broker_season";
 
-                $yearLeague = strtolower($sport) . "_leagues_year";
-                $yearTeam = strtolower($sport) . "_teams_year";
-                $yearBroker = strtolower($sport) . "_broker_year";
+                    $yearLeague = strtolower($sport) . "_leagues_year";
+                    $yearTeam = strtolower($sport) . "_teams_year";
+                    $yearBroker = strtolower($sport) . "_broker_year";
 
-                $this->addData($league, $firstTeam, $secondTeam, $userID, $seasonLeague, $seasonTeam, $seasonBroker);
-                $this->addData($league, $firstTeam, $secondTeam, $userID, $yearLeague, $yearTeam, $yearBroker);
+                    $this->addData($league, $firstTeam, $secondTeam, $userID, $seasonLeague, $seasonTeam, $seasonBroker);
+                    $this->addData($league, $firstTeam, $secondTeam, $userID, $yearLeague, $yearTeam, $yearBroker);
+            }
+            
+            // Success response
+            http_response_code(200);
+            echo json_encode(["success" => true, "message" => "Data inserted successfully"]);
+            exit;
+        } catch (\Exception $e) {
+            http_response_code(200);
+            echo json_encode(["success" => false, "message" => $e->getMessage()]);
+            exit;
         }
     }
 
@@ -152,9 +163,7 @@ class Insert
         }
         catch (\Exception $e) {
             $this->db->rollback();
-            http_response_code(200);
-            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
-            exit;
+            throw $e;
         }
     }
 
